@@ -1,0 +1,7 @@
+# name: Cocktail
+# key:cocktail
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+\begin{Cocktail}${1:[]}{${2:(name)}}
+$0
+\end{Cocktail}
