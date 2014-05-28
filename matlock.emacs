@@ -163,12 +163,36 @@
 ;;           '(lambda()
 ;;              (local-set-key [tab] 'yas/expand)))
 
-;; in fact, I think this is how you bind special yasnippets to minor modes:
-;; source: http://capitaomorte.github.io/yasnippet/snippet-expansion.html
-;; Controlling Expansion -> Eligible snippets -> yas-activate-extra-mode
-(add-hook 'cocktail-mode-hook
-          #'(lambda ()
-              (yas-activate-extra-mode 'cocktail-mode)))
+;; iedit
+;; (part 2 of making Emacs a good C/C++ editor/IDE,
+;; source: https://www.youtube.com/watch?v=r_HW0EB67eY)
+
+;; fix iedit keybinding bug for Macs
+(define-key global-map (kbd "C-c ;") 'iedit-mode)
+
+;; CEDET mode
+;; (part 3 of making Emacs a good C/C++ editor/IDE,
+;; source: https://www.youtube.com/watch?v=Ib914gNr0ys)
+
+;; turn on Semantic mode
+(semantic-mode 1)
+;; define a function to add  Semantic as a suggestion backend to auto-complete
+;; and hook said function into c-mode-common-hook
+(defun my:add-semantic-to-auto-complete ()
+  (add-to-list 'ac-sources 'ac-source-semantic))
+(add-hook 'c-mode-common-hook 'my:add-semantic-to-auto-complete)
+
+;; turn on EDE mode
+(global-ede-mode 1)
+;;;; template for creating projects for a program
+;; (ede-cpp-root-project "my project"
+;;                       :file "/path/to/src/main.cpp"
+;;                       :include-path '("/../include_folder"))
+;;;; you can use system-include-path for setting up system header file
+;;;; locations
+
+;; turn on automatic reparsing of open buffers in Semantic
+(global-semantic-idle-scheduler-mode 1)
 
 ;;;; Python ;;;;
 
@@ -287,6 +311,7 @@
 ;;      (yafolding-temp-toggle t)))
 
 
+;;;; LaTeX/Cocktails ;;;;
 
 ;;;; define minor mode for LaTeX'd cocktail recipes -- totally pesonal
 (define-minor-mode cocktail-mode
@@ -295,3 +320,49 @@
    cocktail creation easier."
   :init-value nil
   :lighter " cktl")
+
+;; in fact, I think this is how you bind special yasnippets to minor modes:
+;; source: http://capitaomorte.github.io/yasnippet/snippet-expansion.html
+;; Controlling Expansion -> Eligible snippets -> yas-activate-extra-mode
+(add-hook 'cocktail-mode-hook
+          #'(lambda ()
+              (yas-activate-extra-mode 'cocktail-mode)))
+
+
+;;;; Arduino ;;;;
+
+;; see: http://www.emacswiki.org/emacs/ArduinoSupport
+;; it seems that CEDET (v2.0) is built-in
+
+;; Matlock's note: I don't think this line is necessary because according to
+;; MELPA, CEDET is already built in, so there's actually nothing CEDET-y in my
+;; .emacs.d folder
+;; Actually, I was WRONG!  Figure out how to load CEDET (and Semantic, too, 
+;; I believe)
+;; Load CEDET.
+;; See cedet/common/cedet.info for configuration details.
+;; IMPORTANT: For Emacs >= 23.2, you must place this *before* any
+;; CEDET component (including EIEIO) gets activated by another 
+;; package (Gnus, auth-source, ...).
+;; (load-file "~/.emacs.d/vendor/cedet/cedet-devel-load.el")
+
+
+
+;; Add further minor-modes to be enabled by semantic-mode.
+;; See doc-string of `semantic-default-submodes' for other things
+;; you can use here.
+(add-to-list 'semantic-default-submodes 
+             'global-semantic-idle-summary-mode t)
+(add-to-list 'semantic-default-submodes 
+             'global-semantic-idle-completions-mode t)
+(add-to-list 'semantic-default-submodes 
+             'global-cedet-m3-minor-mode t)
+
+;; Enable Semantic -- already did that
+;; (semantic-mode 1)
+
+;; Enable EDE (Project Management) features -- already did that, too
+;; (global-ede-mode 1)
+
+;; Configure arduino OS X dirs.
+(setq ede-arduino-appdir "/Applications/Arduino.app/Contents/Resources/Java")
