@@ -366,3 +366,11 @@
 
 ;; Configure arduino OS X dirs.
 (setq ede-arduino-appdir "/Applications/Arduino.app/Contents/Resources/Java")
+
+;; configure Emacs to use arduino-mode
+(add-to-list 'load-path "~/.emacs.d/plugins/arduino-mode")
+(setq auto-mode-alist
+      (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode)
+            auto-mode-alist))
+(autoload 'arduino-mode "arduino" "Arduino editing mode" t)
+
