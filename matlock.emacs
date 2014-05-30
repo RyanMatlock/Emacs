@@ -373,3 +373,12 @@
       (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode)
             auto-mode-alist))
 (autoload 'arduino-mode "arduino-mode" "Arduino editing mode" t)
+
+;;;; JavaScript ;;;;
+
+;; didn't quite follow the instructions at
+;; https://code.google.com/p/js2-mode/wiki/InstallationInstructions
+;; instead, copied downloaded  js2-mode.el into ~/.emacs.d/plugins/js2-mode.el
+(add-to-list 'load-path "~/.emacs.d/plugins/js2-mode.el")
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
