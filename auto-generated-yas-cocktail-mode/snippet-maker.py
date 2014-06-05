@@ -25,13 +25,21 @@ CONTRIBUTOR = "Ryan Matlock <ryan.matlock@gmail.com>"
 SEPARATOR = "# --"
 
 OUTPUT_SUBFOLDER = "generated/"
+LATEX_OUTPUT_FILE = "add_to_latex.tex"
 
-print(snippet_templates)
+# this should overwrite old versions of the output file
+with open(LATEX_OUTPUT_FILE, "w"):
+    pass
 
 for snippet_template in snippet_templates:
     name = snippet_template[0]
     key = snippet_template[1]
     snippet = snippet_template[2]
+
+    # I'd prefer to explicity add a newline when I want it, so I'll get rid of
+    # it if it's there                      
+    if snippet[-1] == "\n":
+        snippet = snippet[:-1]
 
     with open(os.path.join(OUTPUT_SUBFOLDER + name), "w") as snippet_file:
         snippet_file.write(NAME_PREFIX + name + "\n")
@@ -39,5 +47,7 @@ for snippet_template in snippet_templates:
         snippet_file.write(CONTRIBUTOR_PREFIX + CONTRIBUTOR + "\n")
         snippet_file.write(SEPARATOR + "\n")
         snippet_file.write(snippet)
+    with open(LATEX_OUTPUT_FILE, "a") as latex_file:
+        latex_file.write("%% " + key + ": " + snippet + "\n")
 
 print("Snippet writing finished!")
