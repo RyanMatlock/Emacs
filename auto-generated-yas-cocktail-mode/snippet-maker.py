@@ -28,6 +28,7 @@ OUTPUT_SUBFOLDER = "generated/"
 LATEX_OUTPUT_FILE = "add_to_latex.tex"
 
 # this should overwrite old versions of the output file
+# note that "a" = append, "w" = (over)write, "r" = read
 with open(LATEX_OUTPUT_FILE, "w"):
     pass
 
