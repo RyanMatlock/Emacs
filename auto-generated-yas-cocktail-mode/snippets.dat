@@ -1,6 +1,46 @@
 #name;;key;;snippet
-strain-coupe;;strain-c;;strain into a coupe
-strain-Collins;;strain-co;;strain into an ice-filled Collins glass
-strain-old-fashioned;;strain-ofg;;strain into an old fashioned glass
-strain-ice-filled-old-fashioned;;strain-iofg;;strain into an ice-filled old fashioned glass
-strain-single-cube-old-fashioned;;strain-Iofg;;strain into an old fashioned glass with a single large ice cube
+SI;;SI;;\SI{${1:(num)}}{${2:(unit)}} $0
+si-small;;si;;\si{$1} $0
+double-dash;;--;;\item \SI{${1:(num)}}{${2:\oz}} $0
+#
+Inline-Cocktail;;inline;;\InlineCocktail{${1:(name)}} $0
+Inline-Cocktail*;;inline*;;\InlineCocktail*{${1:(name)}} $0
+Book-Title;;book;;\BookTitle{${1:(title)}} $0
+#
+stir;;stir;;Stir ingredients with ice, $0
+stir-except;;stex;;Stir ingredients except {${1:<ingredient>}} with ice, $0
+shake;;shake;;Shake ingredients with ice, $0
+shake-except;;shex;;Shake ingredients except {${1:<ingredient>}} with ice, $0
+#
+strain-coupe;;strc;;strain into a coupe
+strain-Collins;;strco;;strain into an ice-filled Collins glass
+strain-Collins-no-ice;;strconi;;strain into a Collins glass
+strain-old-fashioned;;stro;;strain into an old fashioned glass
+strain-ice-filled-old-fashioned;;strio;;strain into an ice-filled old fashioned glass
+strain-single-cube-old-fashioned;;strIo;;strain into an old fashioned glass with a single large ice cube
+strain-flute;;strf;;strain into a champagne flute
+#
+top-soda;;tops;;top with \soda
+top-champagne;;topc;;top with champagne
+#
+garnish-with;;gnw;;garnish with $0
+garnish-lemon-twist;;gnlet;;garnish with a lemon twist.
+garnish-orange-twist;;gnot;;garnish with an orange twist.
+garnish-thick-orange-twist;;gntot;;garnish with a thick orange twist.
+garnish-cherry;;gnch;;garnish with a cherry.
+garnish-lemon-wheel;;gnlew;;garnish with a lemon wheel.
+garnish-lime-wheel;;gnliw;;garnish with a lime wheel.
+garnish-orange-wheel;;gnow;;garniwh with an orange wheel.
+garnish-grapefruit-wheel;;gngfw;;garnish with a grapefruit wheel.
+garnish-mint-sprig;;gnms;;garnish with a sprig of mint.
+garnish-lemon-slice;;gnles;;garnish with a lemon slice.
+garnish-lime-slice;;gnlis;;garnish with a lime slice.
+#
+old-fashioned-glass;;ofg;;old fashioned glass
+rocks-glass;;rocks;;old fashioned glass
+benedictine;;benedictine;;B\'en\'edictine
+benedictine-short;;bene;;B\'en\'edictine
+angostura;;angostura;;Angostura bitters
+angostura-short;;ango;;Angostura bitters
+curacao;;curacao;;cura\c cao
+cacacha;;cachaca;;cacha\c ca

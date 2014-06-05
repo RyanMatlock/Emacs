@@ -1,0 +1,7 @@
+# name: Ingredients-short
+# key: ingr
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+\begin{Ingredients}
+  --$0
+\end{Ingredients}

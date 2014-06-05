@@ -1,5 +1,5 @@
-# name: benedictine
-# key: benedictine
+# name: SI
+# key: SI
 # contributor: Ryan Matlock <ryan.matlock@gmail.com>
 # --
-B\'en\'edictine
+\SI{${1:(num)}}{${2:(unit)}} $0
