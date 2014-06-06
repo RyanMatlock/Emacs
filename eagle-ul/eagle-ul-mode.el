@@ -1,8 +1,13 @@
+;; eagle-ul-mode.el
+;; Ryan Matlock, 2014
+
+;; This was first started with EAGLE-6.6.0, although the User Language Manual
+;; that I'm using dates back to 2009.  Things may change in the future.
+
 ;; source for how to do this: http://ergoemacs.org/emacs/elisp_syntax_coloring.html
 
-;; (setq eagle-ul-keywords
-;;       '(("schematic" . font-lock-function-name-face)
-;;         ("name\\|value" . font-lock-constant-face)))
+(setq eagle-ul-directives
+      '("#include" "#require" "#usage"))
 
 (setq eagle-ul-single-valued-constants
       '("EAGLE_VERSION" "EAGLE_RELEASE" "EAGLE_SIGNATURE" "EAGLE_DIR"
@@ -46,6 +51,28 @@
       '("board" "deviceset" "library" "output" "package" "schematic" "sheet"
         "symbol"))
 
+(setq eagle-ul-predefined-dialogs
+      '("dlgDirectory" "dlgFileOpen" "dlgFileSave" "dlgMessageBox"))
+
+(setq eagle-ul-dialog-objects
+      '("dlgCell" "dlgCheckBox" "dlgComboBox" "dlgDialog" "dlgGridLayout"
+        "dlgGroup" "dlgHBoxLayout" "dlgIntEdit" "dlgLabel" "dlgListView"
+        "dlgPushButton" "dlgRadioButton" "dlgRealEdit" "dlgSpacing"
+        "dlgSpinBox" "dlgStretch" "dlgStringEdit" "dlgTabPage" "dlgTabWidget"
+        "dlgTextEdit" "dlgTextView" "dlgVBoxLayout"))
+
+(setq eagle-ul-dialog-functions
+      '("dlgAccept" "dlgRedisplay" "dlgReset" "dlgReject"))
+
+(setq eagle-ul-html-tags
+      '("html" "h1" "h2" "h3" "p" "center" "blockquote" "ul" "ol" "li" "pre"
+        "a" "em" "strong" "i" "b" "u" "big" "small" "code" "tt" "font" "img"
+        "hr" "br" "nobr" "table" "tr" "td" "th" "author" "dl" "dt" "dd"
+        "&lt;" "&gt;" "&amp;" "&nbsp;" "&auml;" "&ouml;" "&uuml;" "&Auml;"
+        "&Ouml;" "&Uuml;" "&szlig;" "&copy;" "&deg;" "&micro;" "&plusmn;"))
+
+;; concatenate all kinds into single keyword class (directives aren't included 
+;; because they'd be the only members of their class)
 (setq eagle-ul-all-constants
       eagle-ul-single-valued-constants
       eagle-ul-array-constants)
@@ -60,8 +87,75 @@
       eagle-ul-time-functions
       eagle-ul-object-functions)
 
+(setq eagle-ul-all-builtins
+      eagle-ul-builtin-statements
+      eagle-ul-predefined-dialogs
+      eagle-ul-dialog-objects
+      eagle-ul-dialog-functions
+      eagle-ul-html-tags)
+
+(setq eagle-ul-directives-regexp
+      (regexp-opt eagle-ul-directives 'words))
+(setq eagle-ul-constants-regexp
+      (regexp-opt eagle-ul-all-constants 'words))
+(setq eagle-ul-functions-regexp
+      (regexp-opt eagle-ul-all-functions 'words))
+(setq eagle-ul-builtins-regexp
+      (regexp-opt eagle-ul-all-builtins 'words))
+
+;;;; now we can free up lots of memory
+;;;; directives
+(setq eagle-ul-directives nil)
+;;;; constants
+(setq eagle-ul-single-valued-constants nil)
+(setq eagle-ul-array-constants nil)
+(setq eagle-ul-all-constants)
+;;;; functions
+(setq eagle-ul-character-functions nil)
+(setq eagle-ul-file-handling-functions nil)
+(setq eagle-ul-mathematical-functions nil)
+(setq eagle-ul-unit-conversion-functions nil)
+(setq eagle-ul-misc-functions nil)
+(setq eagle-ul-string-functions nil)
+(setq eagle-ul-time-functions nil)
+(setq eagle-ul-object-functions nil)
+(setq eagle-ul-all-functions nil)
+;;;; builtins
+(setq eagle-ul-builtin-statements nil)
+(setq eagle-ul-predefined-dialogs nil)
+(setq eagle-ul-dialog-objects nil)
+(setq eagle-ul-dialog-functions nil)
+(setq eagle-ul-html-tags nil)
+(setq eagle-ul-all-builtins nil)
+
+;; create the list for font-lock
+(setq eagle-ul-font-lock-keywords
+      `(
+        (,eagle-ul-directives-regexp . font-lock-preprocessor-face)
+        (,eagle-ul-constants-regexp . font-lock-constant-face)
+        (,eagle-ul-functions-regexp . font-lock-function)
+        (,eagle-ul-builtins-regexp . font-lock-builtin-face)))
+
 (define-derived-mode eagle-ul-mode c-mode
-  (setq font-lock-defaults '(eagle-ul-keywords))
-  (setq mode-name "EAGLE UL"))
+  "EAGLE UL mode"
+  "Major mode for writing EAGLE CAD ULPs"
+
+  ;; code for syntax highlighting
+  (font-lock-add-keywords 'eagle-ul-mode-hook
+                          '((eagle-ul-font-lock-keywords)))
+
+  ;; clear memory
+  ;; (setq eagle-ul-directives-regexp nil)
+  ;; (setq eagle-ul-constants-regexp nil)
+  ;; (setq eagle-ul-functions-regexp nil)
+  ;; (setq eagle-ul-builtins-regexp nil)
+
+  ;; you have to run eagle-ul-mode-hook to allow for outside customization
+  (run-hooks 'eagle-ul-mode-hook))
+
+(setq auto-mode-alist
+      (cons '("\\.ulp$" . eagle-ul-mode)
+            auto-mode-alist))
+
 
 (provide 'eagle-ul-mode)
