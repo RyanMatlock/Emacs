@@ -1,0 +1,5 @@
+# name: dry-shake-except
+# key: dshex
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+Dry shake ingredients except {${1:<ingredient>}}, then shake with ice, $0

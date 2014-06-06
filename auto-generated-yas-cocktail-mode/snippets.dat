@@ -11,6 +11,8 @@ stir;;stir;;Stir ingredients with ice, $0
 stir-except;;stex;;Stir ingredients except {${1:<ingredient>}} with ice, $0
 shake;;shake;;Shake ingredients with ice, $0
 shake-except;;shex;;Shake ingredients except {${1:<ingredient>}} with ice, $0
+dry-shake;;dshake;;Dry shake ingredients, then shake with ice, $0
+dry-shake-except;;dshex;;Dry shake ingredients except {${1:<ingredient>}}, then shake with ice, $0
 #
 strain-coupe;;strc;;strain into a coupe
 strain-Collins;;strco;;strain into an ice-filled Collins glass
