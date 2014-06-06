@@ -102,6 +102,40 @@
 (add-hook 'lisp-mode-hook 'set-newline-and-indent)
 (add-hook 'LaTeX-mode-hook 'set-newline-and-indent)
 
+;;;; yasnippet & Auto-Complete ;;;;
+
+;;;; Emacs as a C/C++ IDE: auto-complete, yasnippet, auto-complete c/c++
+;;;; headers
+;;;; source: https://www.youtube.com/watch?v=HTUE03LnaXA
+
+;; start package.el with Emacs
+(require 'package)
+;; add MELPA to repository list
+(add-to-list  'package-archives 
+              '("melpa" ."http://melpa.milkbox.net/packages/"))
+;; initialize package.el
+(package-initialize)
+
+;; yasnippet comes first so it plays nicely with auto-complete
+;; source: http://truongtx.me/2013/01/06/config-yasnippet-and-autocomplete-on-emacs/
+(require 'yasnippet)
+(yas-global-mode 1)
+
+;; I'm now looking at https://groups.google.com/forum/#!topic/smart-snippet/Cf1jjx_xZRw
+(setq yas-snippet-dirs (append yas-snippet-dirs
+                               '("~/emacs/yasnippets")))
+
+;; now we can load auto-complete
+(require 'auto-complete)
+(require 'auto-complete-config)
+;;
+(ac-config-default)
+;; set trigger key so that it can work together with yasnippet
+;; if word exists in yasnippet, pressing <TAB> will casue yasnippet to activate
+;; otherwise, auto-complete will
+(ac-set-trigger-key "TAB")
+(ac-set-trigger-key "<tab>")
+
 ;;;; C ;;;;
 
 ;;;; auto-indent on newline
@@ -118,35 +152,21 @@
 (setq c-default-style "bsd"
     c-basic-offset 4)
 
-;;;; Emacs as a C/C++ IDE: auto-complete, yasnippet, auto-complete c/c++
-;;;; headers
-;;;; source: https://www.youtube.com/watch?v=HTUE03LnaXA
-
-;; start package.el with Emacs
-(require 'package)
-;; add MELPA to repository list
-(add-to-list  'package-archives 
-              '("melpa" ."http://melpa.milkbox.net/packages/"))
-;; initialize package.el
-(package-initialize)
 
 ;; start auto-complete with Emacs
-(require 'auto-complete)
+;(require 'auto-complete)
 ;; default config for auto-complete
-(require 'auto-complete-config)
-(ac-config-default)
+;(require 'auto-complete-config)
+;(ac-config-default)
 
 ;; start yasnippet with Emacs
-(require 'yasnippet)
-(yas-global-mode 1)
+;(require 'yasnippet)
+;(yas-global-mode 1)
 
 ;; I was looking in here: https://groups.google.com/forum/#!topic/smart-snippet/igXJ9RsFFdg for the next two lines -- update: I modified this
 ;; (yas/initialize) ;; I guess I don't need this?
 
-;; I'm now looking at https://groups.google.com/forum/#!topic/smart-snippet/Cf1jjx_xZRw
-(setq yas-snippet-dirs (append yas-snippet-dirs
-                               '("~/emacs/yasnippets")))
-(yas-global-mode 1)
+;(yas-global-mode 1)
 
 ;; initialize auto-complete-c-headers and gets called for C/C++ hooks
 (defun my:ac-c-header-init ()
