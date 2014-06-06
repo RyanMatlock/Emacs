@@ -39,6 +39,13 @@
       '("t2day" "t2dayofweek" "t2hour" "t2minute" "t2month" "t2second"
         "t2string" "t2year" "time" "timems"))
 
+(setq eagle-ul-object-functions
+      '("ingroup"))
+
+(setq eagle-ul-builtin-statements
+      '("board" "deviceset" "library" "output" "package" "schematic" "sheet"
+        "symbol"))
+
 (setq eagle-ul-all-constants
       eagle-ul-single-valued-constants
       eagle-ul-array-constants)
@@ -50,7 +57,8 @@
       eagle-ul-unit-conversion-functions
       eagle-ul-misc-functions
       eagle-ul-string-functions
-      eagle-ul-time-functions)
+      eagle-ul-time-functions
+      eagle-ul-object-functions)
 
 (define-derived-mode eagle-ul-mode c-mode
   (setq font-lock-defaults '(eagle-ul-keywords))
