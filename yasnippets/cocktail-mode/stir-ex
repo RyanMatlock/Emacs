@@ -1,5 +1,0 @@
-# name: stir-except
-# key: stir-ex
-# contributor: Ryan Matlock <ryan.matlock@gmail.com>
-# --
-Stir ingredients except {${1:<ingredient>}} with ice, $0
