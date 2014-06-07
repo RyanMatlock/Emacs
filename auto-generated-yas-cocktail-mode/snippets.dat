@@ -4,6 +4,8 @@ si-small;;si;;\si{$1} $0
 double-dash;;--;;\item \SI{${1:(num)}}{${2:\oz}} $0
 dash-of;;adash;;a~\si{\dash} $0
 dashes-of;;dashes;;${1:(num)}~\si{\dashes} $0
+spritz;;spritz;;a~\si{\spritz} $0
+rinse;;rinse;;a~\si{\rinse} $0
 #
 Inline-Cocktail;;inline;;\InlineCocktail{${1:(name)}} $0
 Inline-Cocktail*;;inline*;;\InlineCocktail*{${1:(name)}} $0
@@ -43,8 +45,8 @@ garnish-lime-slice;;gnlis;;garnish with a lime slice.
 #
 old-fashioned-glass;;ofg;;old fashioned glass
 rocks-glass;;rocks;;old fashioned glass
-benedictine;;benedictine;;B\'en\'edictine
-benedictine-short;;bene;;B\'en\'edictine
+benedictine;;benedictine;;B\\'en\\'edictine
+benedictine-short;;bene;;B\\'en\\'edictine
 angostura;;angostura;;Angostura bitters
 angostura-short;;ango;;Angostura bitters
 angostura-orange;;angor;;Angostura orange bitters
