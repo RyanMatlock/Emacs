@@ -2,6 +2,8 @@
 SI;;SI;;\SI{${1:(num)}}{${2:(unit)}} $0
 si-small;;si;;\si{$1} $0
 double-dash;;--;;\item \SI{${1:(num)}}{${2:\oz}} $0
+dash-of;;adash;;a~\si{\dash} $0
+dashes-of;;dashes;;${1:(num)}~\si{\dashes} $0
 #
 Inline-Cocktail;;inline;;\InlineCocktail{${1:(name)}} $0
 Inline-Cocktail*;;inline*;;\InlineCocktail*{${1:(name)}} $0
@@ -44,5 +46,15 @@ benedictine;;benedictine;;B\'en\'edictine
 benedictine-short;;bene;;B\'en\'edictine
 angostura;;angostura;;Angostura bitters
 angostura-short;;ango;;Angostura bitters
+angostura-orange;;angor;;Angostura orange bitters
+peychauds;;peychauds;;Peychaud's bitters
+peychauds-short;;pey;;Peychaud's bitters
+orange-bitters;;orbit;;orange bitters
+Regans-orange-bitters;;rorbit;;Regan's orange bitters
+Fee-Bros-orange-bitters;;forbit;;Fee Brother's orange bitters
 curacao;;curacao;;cura\c cao
 cacacha;;cachaca;;cacha\c ca
+orange-juice;;oj;;orange juice
+lemon-juice;;lej;;lemon juice
+lime-juice;;lij;;lime juice
+simple-syrup;;ss;;simple syrup

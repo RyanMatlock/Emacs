@@ -5,6 +5,16 @@
 ;; that I'm using dates back to 2009.  Things may change in the future.
 
 ;; source for how to do this: http://ergoemacs.org/emacs/elisp_syntax_coloring.html
+;; actually, I'm starting this over again using http://www.emacswiki.org/emacs/ModeTutorial
+
+(defvar eagle-ul-mode-hook nil)
+
+(add-to-list 'auto-mode-alist '("\\.ulp$" . eagle-ul-mode))
+
+
+;; syntax table
+(defvar eagle-ul-mode-syntax-table
+  (let ((st (make-syntax-table))))) ;; uh??
 
 (setq eagle-ul-directives
       '("#include" "#require" "#usage"))
@@ -153,9 +163,9 @@
   ;; you have to run eagle-ul-mode-hook to allow for outside customization
   (run-hooks 'eagle-ul-mode-hook))
 
-(setq auto-mode-alist
-      (cons '("\\.ulp$" . eagle-ul-mode)
-            auto-mode-alist))
+;; (setq auto-mode-alist
+;;       (cons '("\\.ulp$" . eagle-ul-mode)
+;;             auto-mode-alist))
 
 
 (provide 'eagle-ul-mode)
