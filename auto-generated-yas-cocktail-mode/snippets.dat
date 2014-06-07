@@ -30,6 +30,7 @@ top-champagne;;topc;;top with champagne
 garnish-with;;gnw;;garnish with $0
 garnish-lemon-twist;;gnlet;;garnish with a lemon twist.
 garnish-orange-twist;;gnot;;garnish with an orange twist.
+garnish-grapefruit-twist;;gngt;;garnish with a grapefruit twist.
 garnish-thick-orange-twist;;gntot;;garnish with a thick orange twist.
 garnish-cherry;;gnch;;garnish with a cherry.
 garnish-lemon-wheel;;gnlew;;garnish with a lemon wheel.
@@ -57,4 +58,5 @@ cacacha;;cachaca;;cacha\c ca
 orange-juice;;oj;;orange juice
 lemon-juice;;lej;;lemon juice
 lime-juice;;lij;;lime juice
+grapefruit-juice;;gfj;;grapefruit juice
 simple-syrup;;ss;;simple syrup
