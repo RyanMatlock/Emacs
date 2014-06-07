@@ -19,9 +19,11 @@ dry-shake;;dshake;;Dry shake ingredients, then shake with ice, $0
 dry-shake-except;;dshex;;Dry shake ingredients except ${1:<ingredient>}, then shake with ice, $0
 #
 strain-coupe;;strc;;strain into a coupe
+strain-rinsed-coupe;;strcr;;strain into a ${1:(rinse)}-rinsed coupe
 strain-Collins;;strco;;strain into an ice-filled Collins glass
 strain-Collins-no-ice;;strconi;;strain into a Collins glass
 strain-old-fashioned;;stro;;strain into an old fashioned glass
+strain-rinsed-old-fashioned;;stror;;strain into a ${1:(rinse)}-rinsed old fashiond glass
 strain-ice-filled-old-fashioned;;strio;;strain into an ice-filled old fashioned glass
 strain-single-cube-old-fashioned;;strIo;;strain into an old fashioned glass with a single large ice cube
 strain-flute;;strf;;strain into a champagne flute
