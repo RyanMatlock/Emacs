@@ -81,6 +81,14 @@
         "&lt;" "&gt;" "&amp;" "&nbsp;" "&auml;" "&ouml;" "&uuml;" "&Auml;"
         "&Ouml;" "&Uuml;" "&szlig;" "&copy;" "&deg;" "&micro;" "&plusmn;"))
 
+;; (setq eagle-ul-schematic-data-members
+;;       '("alwaysvectorfont" "description" "grid" "headline" "name" 
+;;         "verticaltext" "xreflabel"))
+
+;; (setq eagle-ul-schematic-loop-members
+;;       '("attributes" "classes" "layers" "libraries" "nets" "parts" "sheets"
+;;         "variantdefs"))
+
 ;; concatenate all kinds into single keyword class (directives aren't included 
 ;; because they'd be the only members of their class)
 (setq eagle-ul-all-constants
@@ -97,6 +105,9 @@
       eagle-ul-time-functions
       eagle-ul-object-functions)
 
+;; curious (2014/06/09): the builtin statements keywords are being highlighted
+;; curiouser (2014/06/09): tried writing first word of each group up there in
+;; a .ulp file, and only EAGLE_VERSION and board had any change in text color
 (setq eagle-ul-all-builtins
       eagle-ul-builtin-statements
       eagle-ul-predefined-dialogs
