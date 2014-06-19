@@ -85,8 +85,9 @@
 (add-hook 'text-mode-hook (lambda ()
                             (setq indent-tabs-mode t)
                             (setq tab-stop-list (number-sequence 4 200 4))
-                            (setq tab-width 4)
-                            (setq indent-line-function 'insert-tab)))
+                            (setq tab-width 4)))
+;                            (setq indent-line-function 'insert-tab)))
+
 
 
 ;; set README, LICENSE.md files to open in text-mode
