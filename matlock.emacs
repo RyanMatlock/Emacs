@@ -396,3 +396,21 @@
 ;;;; EAGLE UL mode ;;;;
 (add-to-list 'load-path "~/.emacs.d/plugins/eagle-ul-mode")
 (require 'eagle-ul-mode)
+
+;;;; Org Mode ;;;;
+
+;; set org-mode keybinding C-c C-v C-b to the string "- [ ] " and
+;; C-c C-v C-v to "[ ] " and
+;; C-c C-b C-b to "\n- [ ] "
+;; source: http://stackoverflow.com/questions/5500035/set-custom-keybinding-for-specific-emacs-mode
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-v C-b") "- [ ] ")))
+;; (add-hook 'org-mode-hook
+;;           (lambda ()
+;;             (local-set-key (kbd "C-c C-v C-v")
+;;                            "[ ]")))
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-v C-c")
+                           "\n- [ ] ")))
