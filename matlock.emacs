@@ -76,8 +76,19 @@
 (global-set-key (kbd "M-w") 'kill-ring-save)
 
 ;; set columns to 80 characters long (as per PEP 8/good programming practice)
+;; !! maybe you need to do this for Fundamental as well ???
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 (setq-default fill-column 80)
+
+;; text mode 4 spaces instead of indent
+;; source: http://stackoverflow.com/questions/69934/set-4-space-indent-in-emacs-in-text-mode
+(add-hook 'text-mode-hook (lambda ()
+                            (setq indent-tabs-mode t)
+                            (setq tab-stop-list (number-sequence 4 200 4))
+                            (setq tab-width 4)))
+;                            (setq indent-line-function 'insert-tab)))
+
+
 
 ;; set README, LICENSE.md files to open in text-mode
 ;; source: http://www.gnu.org/software/emacs/manual/html_node/elisp/Auto-Major-Mode.html
@@ -401,3 +412,25 @@
 (add-to-list 'load-path "~/.emacs.d/plugins/js2-mode")
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
+;;;; EAGLE UL mode ;;;;
+(add-to-list 'load-path "~/.emacs.d/plugins/eagle-ul-mode")
+(require 'eagle-ul-mode)
+
+;;;; Org Mode ;;;;
+
+;; set org-mode keybinding C-c C-v C-b to the string "- [ ] " and
+;; C-c C-v C-v to "[ ] " and
+;; C-c C-b C-b to "\n- [ ] "
+;; source: http://stackoverflow.com/questions/5500035/set-custom-keybinding-for-specific-emacs-mode
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-v C-b") "- [ ] ")))
+;; (add-hook 'org-mode-hook
+;;           (lambda ()
+;;             (local-set-key (kbd "C-c C-v C-v")
+;;                            "[ ]")))
+(add-hook 'org-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-v C-c")
+                           "\n- [ ] ")))
