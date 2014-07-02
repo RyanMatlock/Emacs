@@ -91,13 +91,6 @@
 
 
 ;; set README, LICENSE.md files to open in text-mode
-;; source: http://www.gnu.org/software/emacs/manual/html_node/elisp/Auto-Major-Mode.html
-;; ok, that isn't working
-;; (setq auto-mode-alist
-;;       (append (;;("README*'" . text-mode)
-;;                ("\\.md\\'" . text-mode))
-;;               auto-mode-alist))
-
 ;; let's set README, LICENSE.md file to text-mode like this:
 ;; source: http://www.emacswiki.org/emacs/AutoModeAlist
 ;; (plus slight modification to make things more efficient?)
@@ -118,12 +111,6 @@
 ;;;; auto-indent on newline
 (add-hook 'c-mode-common-hook '(lambda ()
     (local-set-key (kbd "RET") 'newline-and-indent)))
-
-;;;; set default indentation
-;(setq-default c-basic-offset 4)
-
-;;;; Allman/ANSI/BSD-style indentation
-;(setq-default c-default-style '(other . "bsd"))
 
 ;;;; Allman-style indentation + indentation amount
 (setq c-default-style "bsd"
@@ -151,9 +138,6 @@
 (require 'yasnippet)
 (yas-global-mode 1)
 
-;; I was looking in here: https://groups.google.com/forum/#!topic/smart-snippet/igXJ9RsFFdg for the next two lines -- update: I modified this
-;; (yas/initialize) ;; I guess I don't need this?
-
 ;; I'm now looking at https://groups.google.com/forum/#!topic/smart-snippet/Cf1jjx_xZRw
 (setq yas-snippet-dirs (append yas-snippet-dirs
                                '("~/emacs/yasnippets")))
@@ -168,11 +152,6 @@
 ;; call this from C/C++ hooks
 (add-hook 'c++-mode-hook 'my:ac-c-header-init)
 (add-hook 'c-mode-hook 'my:ac-c-header-init)
-
-;; going to see if this fix works: https://github.com/capitaomorte/yasnippet/issues/231 -- actually, I don't think this is what I need
-;; (add-hook 'cocktail-mode-hook
-;;           '(lambda()
-;;              (local-set-key [tab] 'yas/expand)))
 
 ;; iedit
 ;; (part 2 of making Emacs a good C/C++ editor/IDE,
@@ -224,34 +203,6 @@
 
 ;;;; LaTeX ;;;;
 
-;;;; none of these lines seemed to work especially well, so I'm trying a new
-;;;; approach
-;; ;;;; use pdflatex instead of latex
-;; (setq latex-run-command "pdflatex")
-
-;; ;;;; set AUCTeX to pdf mode
-;; (setq TeX-PDF-mode t)
-
-;; ;;;; continuously use latexmk (for compilation & previewing)
-;; ;;;; source: http://stackoverflow.com/questions/15892486/how-to-have-latexmk-work-with-emacs-and-okular
-;; (add-hook 'LaTeX-mode-hook (lambda ()
-;;   (push
-;;     '("Latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
-;;       :help "Run Latexmk on file")
-;;     Tex-command-list)))
-
-;; ;;;; needed to get MELPA working (for LaTeXPreviewPane)
-;; ;;;; see: http://www.emacswiki.org/emacs/LaTeXPreviewPane
-;; ;;(require 'package)
-;; ;;(add-to-list 'package-archives
-;; ;;  '("melpa" . "http://melpa.milkbox.net/packages/") t)
-
-;; ;;;; load latex-preview-pane
-;; (load "~/elisp/latex-preview-pane.el")
-;; ;;(load "~/elisp/latex-preview-pane-pkg.el")
-
-;; ;;(latex-preview-pane-enable)
-
 ;;;; get Emacs to read the PATH variable
 ;;;; source: http://tex.stackexchange.com/questions/83594/problems-installing-auctex-over-emacs-24-osx
 (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
@@ -288,20 +239,9 @@
 
 ;; hopefully getting the default view to work well
 ;; source: http://alexkrispin.wordpress.com/2010/10/25/writing-with-emacs-and-auctex-part-1/
-;; I don't know why this didn't cause an error, because copy/pasting yielded:
-;; (setq TeX-output-view-style (quote (
-;; (“^pdf$” “.” “evince %o”)
-;; (“^ps$” “.” “gv %o”)
-;; (“^dvi$” “.” “xdvi %o”)
-;; )))
-;; originally
 (setq TeX-output-view-style (quote (("^pdf$" "." "vince %o")
                                     ("^ps$" "." "gv %o")
                                     ("^dvi$" "." "xdvi %o"))))
-;; got an error: Symbol's value as variable is void: “xdvi”
-;; I think the issue was how the quotes got copied and pasted
-;; here's how it looked originally:
-;; (setq tex-dvi-view-command “xdvi”)
 (setq tex-dvi-view-command "xdvi")
 (setq tex-dvi-print-command "dvips")
 (setq tex-alt-dvi-print-command "dvips")
@@ -314,13 +254,6 @@
 (define-key global-map (kbd "C-'") 'yafolding)
 ;;(define-key global-map (kbd "C-c C-f") 'yafolding-toggle-all)
 (define-key global-map (kbd "C-c C-f") 'yafolding-toggle-all-by-current-level)
-;;(add-hook 'indent-buffer-before-hook
-;;    (lambda ()
-;;      (yafolding-temp-toggle nil)))
-;;(add-hook 'indent-buffer-after-hook
-;;    (lambda ()
-;;      (yafolding-temp-toggle t)))
-
 
 ;;;; LaTeX/Cocktails ;;;;
 
@@ -341,23 +274,6 @@
 
 
 ;;;; Arduino ;;;;
-
-;; see: http://www.emacswiki.org/emacs/ArduinoSupport
-;; it seems that CEDET (v2.0) is built-in
-
-;; Matlock's note: I don't think this line is necessary because according to
-;; MELPA, CEDET is already built in, so there's actually nothing CEDET-y in my
-;; .emacs.d folder
-;; Actually, I was WRONG!  Figure out how to load CEDET (and Semantic, too, 
-;; I believe)
-;; Load CEDET.
-;; See cedet/common/cedet.info for configuration details.
-;; IMPORTANT: For Emacs >= 23.2, you must place this *before* any
-;; CEDET component (including EIEIO) gets activated by another 
-;; package (Gnus, auth-source, ...).
-;; (load-file "~/.emacs.d/vendor/cedet/cedet-devel-load.el")
-
-
 
 ;; Add further minor-modes to be enabled by semantic-mode.
 ;; See doc-string of `semantic-default-submodes' for other things
