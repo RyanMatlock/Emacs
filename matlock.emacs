@@ -4,63 +4,9 @@
 (add-to-list 'load-path "~/elisp")
 
 ;;;; General editing ;;;;
-;;;; reload .emacs with M-1
-;;(global-set-key (kbd "<f12>") (load-file "~/.emacs"))
-
-;;;; indent region using (select region) + > and unindent region using <
-;; (defun my-indent-region (N)
-;;   (interactive "p")
-;;   (if (use-region-p)
-;;       (progn (indent-rigidly (region-beginning) (region-end) (* N 4))
-;;              (setq deactivate-mark nil))
-;;     (self-insert-command N)))
-
-;; (defun my-unindent-region (N)
-;;   (interactive "p")
-;;   (if (use-region-p)
-;;       (progn (indent-rigidly (region-beginning) (region-end) (* N -4))
-;;              (setq deactivate-mark nil))
-;;     (self-insert-command N)))
-
-;; (global-set-key ">" 'my-indent-region)
-;; (global-set-key "<" 'my-unindent-region)
-
-;;(defun un-indent-region ('indent-rigidly -4))
-
-;;(global-set-key (kbd "M-[") 'indent-region)
-;;(global-set-key (kbd "M-]") 'un-indent-region)
-
-;;;; indent region with C->, unindent with C-<
-;;;; source: http://www.emacswiki.org/emacs-ja/IndentRigidlyN
-(defun indent-rigidly-n (n)
-      "Indent the region, or otherwise the current line, by N spaces."
-      (let* ((use-region (and transient-mark-mode mark-active))
-             (rstart (if use-region (region-beginning) (point-at-bol)))
-             (rend   (if use-region (region-end)       (point-at-eol)))
-             (deactivate-mark "irrelevant")) ; avoid deactivating mark
-        (indent-rigidly rstart rend n)))
-    ;;;; stock implementation is as follows:
-    ;; (defun indent-rigidly-4 ()
-    ;;   "Indent the region, or otherwise the current line, by 4 spaces."
-    ;;   (interactive)
-    ;;   (indent-rigidly-n 4))
-    ;; (defun outdent-rigidly-4 ()
-    ;;   "Indent the region, or otherwise the current line, by -4 spaces."
-    ;;   (interactive)
-    ;;   (indent-rigidly-n -4))
-    ;;;; I think it would be better to use c-basic-offset (4 spaces) instead
-    (defun indent-rigidly-4 ()
-      "Indent the region, or otherwise the current line, by 4 spaces."
-      (interactive)
-      (indent-rigidly-n 'c-basic-offset))
-    (defun outdent-rigidly-4 ()
-      "Indent the region, or otherwise the current line, by -4 spaces."
-      (interactive)
-      (indent-rigidly-n (- 'c-basic-offset)))
-    ;;;; stock value was [(control->)] and [(control-<)], respectively
-    ;;;; but (kbd "C->") seems like the way it's done
-    (global-set-key (kbd "C->") 'indent-rigidly-4)
-    (global-set-key (kbd "C-<") 'outdent-rigidly-4)
+;; get block indentation/unindentation working nicely at some point
+;; remember how great Command+[ used to be? Try to get C-[ and C-] working, or
+;; at least look into how Python-mode's C-c > and C-c < work so well
 
 ;;;; insert spaces instead of tabs
 (setq-default indent-tabs-mode nil)
@@ -86,9 +32,6 @@
                             (setq indent-tabs-mode t)
                             (setq tab-stop-list (number-sequence 4 200 4))
                             (setq tab-width 4)))
-;                            (setq indent-line-function 'insert-tab)))
-
-
 
 ;; set README, LICENSE.md files to open in text-mode
 ;; let's set README, LICENSE.md file to text-mode like this:
