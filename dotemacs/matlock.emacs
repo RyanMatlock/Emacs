@@ -268,7 +268,7 @@
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (kbd "M-)")
-                           "[ ]")))
+                           "[ ] ")))
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (kbd "M-|")
