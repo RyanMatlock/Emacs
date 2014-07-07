@@ -115,6 +115,19 @@
   (add-to-list 'ac-sources 'ac-source-semantic))
 (add-hook 'c-mode-common-hook 'my:add-semantic-to-auto-complete)
 
+;; make Auto Complete and yasnippet play nicely together
+;; source: http://stackoverflow.com/questions/15774807/emacs-24-autocomplete-yasnippet
+;;seems to work in LaTeX, except auto complete tries to take precedence
+(setq ac-source-yasnippet nil)
+
+;; bind ac-expand to RET
+;; source: http://stackoverflow.com/questions/19900949/how-to-make-auto-complete-work-with-yasnippet-and-abbrev
+;; (add-hook 'auto-complete-mode-hook
+;;           (lambda ()
+;;             (local-set-key (kbd "RET")
+;;                            'ac-expand)))
+;; this had the unfortunate effect of preventing me from entering a newline
+
 ;; turn on EDE mode
 (global-ede-mode 1)
 ;;;; template for creating projects for a program
