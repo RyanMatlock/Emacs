@@ -207,9 +207,25 @@
 (load "~/elisp/yafolding.el")
 
 ;;;; yafolding example config
-(define-key global-map (kbd "C-'") 'yafolding)
-;;(define-key global-map (kbd "C-c C-f") 'yafolding-toggle-all)
-(define-key global-map (kbd "C-c C-f") 'yafolding-toggle-all-by-current-level)
+;; these key bindings didn't work
+;; (define-key global-map (kbd "C-'") 'yafolding)
+;; ;;(define-key global-map (kbd "C-c C-f") 'yafolding-toggle-all)
+;; (define-key global-map (kbd "C-c C-f") 'yafolding-toggle-all-by-current-level)
+
+;; following yafolding instructions from https://github.com/zenozeng/yafolding.el as of 2014-07-07
+;; hook into prog-mode-hook
+(add-hook 'prog-mode-hook
+          (lambda () (yafolding-mode)))
+;; modify keybindings
+(require 'yafolding)
+(define-key yafolding-mode-map
+  (kbd "<C-S-return>") nil)
+(define-key yafolding-mode-map
+  (kbd "<C-return>") nil)
+(define-key yafolding-mode-map
+  (kbd "C-c <C-S-return>") 'yafolding-toggle-all)
+(define-key yafolding-mode-map
+  (kbd "C-c <C-return>") 'yafolding-toggle-element)
 
 ;;;; LaTeX/Cocktails ;;;;
 
