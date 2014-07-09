@@ -316,3 +316,11 @@
                          "~/org-mode/fantabulon.org"
                          "~/org-mode/shopping-list.org"))
 (setq org-mobile-inbox-for-pull "~/org-mode/from-mobile.org")
+
+;;;; Sunrise Commander ;;;;
+;; repo source: https://github.com/escherdragon/sunrise-commander
+;; documentation source: http://www.emacswiki.org/emacs/Sunrise_Commander
+;; noob documentation: http://www.emacswiki.org/emacs/Sunrise_Commander_For_Noobs
+;; so, I actually installed it through the github repo and 
+;; M-x package-install-file, and now I can bring it up using 
+;; M-x sunrise-commmander; still, there's much to learn about it
