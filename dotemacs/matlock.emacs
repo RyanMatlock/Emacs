@@ -246,9 +246,21 @@
 ;; source: http://capitaomorte.github.io/yasnippet/snippet-expansion.html
 ;; Controlling Expansion -> Eligible snippets -> yas-activate-extra-mode
 (add-hook 'cocktail-mode-hook
-          #'(lambda ()
-              (yas-activate-extra-mode 'cocktail-mode)))
+          '(lambda () ;; this line started with a # before -- pretty sure I can
+                      ;; remove that
+             (yas-activate-extra-mode 'cocktail-mode)))
 
+
+;;;; LaTeX/listings mode ;;;;
+(define-minor-mode listings-mode
+  "listings-mode makes it a little easier
+   to use LaTeX's listings package"
+  :init-value nil
+  :lighter " listings")
+
+(add-hook 'listings-mode-hook
+          '(lambda ()
+             (yas-activate-extra-mode 'listings-mode)))
 
 ;;;; Arduino ;;;;
 
