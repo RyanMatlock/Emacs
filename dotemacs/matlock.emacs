@@ -320,6 +320,10 @@
             (local-set-key (kbd "M-|")
                            "\n- [ ] ")))
 
+;; syntax highlighting in BEGIN_SRC ... END_SRC blocks
+;; source: http://stackoverflow.com/questions/10642888/syntax-highlighting-within-begin-src-block-in-emacs-orgmode-not-working
+(setq org-src-fontify-natively t)
+
 ;; org-extra-yas-mode
 (define-minor-mode org-extra-yas-mode
   "org-extra-yas-mode adds snippets in
