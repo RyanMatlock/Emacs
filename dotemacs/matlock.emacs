@@ -319,6 +319,19 @@
           (lambda ()
             (local-set-key (kbd "M-|")
                            "\n- [ ] ")))
+
+;; org-extra-yas-mode
+(define-minor-mode org-extra-yas-mode
+  "org-extra-yas-mode adds snippets in
+   such a way that it's unlikely to
+   conflict with other modes"
+  :init-value nil
+  :lighter " org-xtra-yas")
+
+(add-hook 'org-extra-yas-mode-hook
+          '(lambda ()
+             (yas-activate-extra-mode 'org-extra-yas-mode)))
+
 ;;;; MobileOrg ;;;;
 ;; source: http://orgmode.org/manual/MobileOrg.html#MobileOrg
 ;; additional source: http://stackoverflow.com/questions/11822353/how-to-make-org-mobile-work-in-android
