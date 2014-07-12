@@ -330,11 +330,16 @@
                                (python . t)
                                (clojure . t)
                                (C . t)
-                               (cpp . t)
+                               ;; (C++ . t)
                                (emacs-lisp . t)
                                (js . t)
                                (latex . t)
+                               (gnuplot . t)
+                               (haskell . t)
+                               (ditaa . t)
                                (org . t)))
+;; not sure why C++ isn't working
+;; see http://orgmode.org/manual/Languages.html#Languages
 
 ;; org-extra-yas-mode
 (define-minor-mode org-extra-yas-mode
