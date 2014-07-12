@@ -341,6 +341,12 @@
 ;; not sure why C++ isn't working
 ;; see http://orgmode.org/manual/Languages.html#Languages
 
+;; org-mode fancy HTML5 export
+;; source: http://orgmode.org/manual/HTML-doctypes.html
+(setq org-html-doctype "html5")
+(setq org-html-html5-fancy t)
+;; this HTML5 thing isn't working nicely yet
+
 ;; org-extra-yas-mode
 (define-minor-mode org-extra-yas-mode
   "org-extra-yas-mode adds snippets in
