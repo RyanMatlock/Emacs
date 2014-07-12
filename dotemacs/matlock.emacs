@@ -347,6 +347,9 @@
 (setq org-html-html5-fancy t)
 ;; this HTML5 thing isn't working nicely yet
 
+;; turn off Org Mode babel evaluation on C-c C-c
+(setq org-babel-no-eval-on-ctrl-c-ctrl-c t)
+
 ;; org-extra-yas-mode
 (define-minor-mode org-extra-yas-mode
   "org-extra-yas-mode adds snippets in
