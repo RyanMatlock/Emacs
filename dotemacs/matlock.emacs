@@ -323,6 +323,18 @@
 ;; syntax highlighting in BEGIN_SRC ... END_SRC blocks
 ;; source: http://stackoverflow.com/questions/10642888/syntax-highlighting-within-begin-src-block-in-emacs-orgmode-not-working
 (setq org-src-fontify-natively t)
+;; have to load org babel languages
+;; source: http://superuser.com/questions/429981/org-mode-is-there-a-way-i-can-make-emacs-treat-a-region-to-be-of-a-given-mode
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((sh . t)
+                               (python . t)
+                               (clojure . t)
+                               (C . t)
+                               (cpp . t)
+                               (emacs-lisp . t)
+                               (js . t)
+                               (latex . t)
+                               (org . t)))
 
 ;; org-extra-yas-mode
 (define-minor-mode org-extra-yas-mode
