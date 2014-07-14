@@ -379,3 +379,15 @@
 ;; so, I actually installed it through the github repo and 
 ;; M-x package-install-file, and now I can bring it up using 
 ;; M-x sunrise-commmander; still, there's much to learn about it
+
+;;;; Magzor-specific modes for extra yasnippets ;;;;
+(define-minor-mode magzor-cpp-mode
+  "magzor-cpp-mode allows for extra snippets
+   that are helpful when writing Magzor-related
+   C++ code"
+  :init-value nil
+  :lighter " magzor-C++")
+
+(add-hook 'magzor-cpp-mode-hook
+          '(lambda ()
+             (yas-activate-extra-mode 'magzor-cpp-mode)))

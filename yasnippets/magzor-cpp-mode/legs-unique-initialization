@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: legs-unique-initialization
+# key: ulegs
+# --
+legs.[${1:<num>}].i2c_addr = 0x${2:<i2c_addr>};
+legs.[$1].thresh = ${3:<thresh>};
+$0
