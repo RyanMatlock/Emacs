@@ -48,12 +48,14 @@
 (add-hook 'html-mode-hook 'set-newline-and-indent)
 (add-hook 'lisp-mode-hook 'set-newline-and-indent)
 (add-hook 'LaTeX-mode-hook 'set-newline-and-indent)
+(add-hook 'css-mode 'set-newline-and-indent)
+(add-hook 'c-mode-common-hook 'set-newline-and-indent)
 
 ;;;; C ;;;;
 
 ;;;; auto-indent on newline
-(add-hook 'c-mode-common-hook '(lambda ()
-    (local-set-key (kbd "RET") 'newline-and-indent)))
+;; (add-hook 'c-mode-common-hook '(lambda ()
+;;     (local-set-key (kbd "RET") 'newline-and-indent)))
 
 ;;;; Allman-style indentation + indentation amount
 (setq c-default-style "bsd"
