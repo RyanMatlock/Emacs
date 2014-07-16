@@ -17,6 +17,25 @@
 ;;;; turn column-number-mode on by default
 (setq column-number-mode t)
 
+;; untabify on save
+;; source: http://www.emacswiki.org/emacs/UntabifyUponSave and
+;; http://stackoverflow.com/questions/318553/getting-emacs-to-untabify-when-saving-certain-file-types-and-only-those-file-ty
+;; and a little help from http://ergoemacs.org/emacs/emacs_avoid_lambda_in_hook.html
+;; and help from http://stackoverflow.com/questions/1931784/emacs-is-before-save-hook-a-local-variable
+(defun untabify-everything ()
+  (untabify (point-min) (point-max)))
+(defun untabify-everything-on-save ()
+  (add-hook 'before-save-hook 'untabify-everything)
+  nil)
+
+(add-hook 'c-mode-common-hook 'untabify-everything-on-save)
+(add-hook 'python-mode-hook 'untabify-everything-on-save)
+(add-hook 'latex-mode-hook 'untabify-everything-on-save)
+(add-hook 'org-mode-hook 'untabify-everything-on-save)
+(add-hook 'css-mode-hook 'untabify-everything-on-save)
+(add-hook 'html-mode-hook 'untabify-everything-on-save)
+(add-hook 'emacs-lisp-mode-hook 'untabify-everything-on-save)
+
 ;;;; copy selection without killing it
 ;;;; see: http://stackoverflow.com/questions/3158484/emacs-copying-text-without-killing-it and http://www.emacswiki.org/emacs/KeyboardMacros
 (global-set-key (kbd "M-w") 'kill-ring-save)
@@ -48,7 +67,7 @@
 (add-hook 'html-mode-hook 'set-newline-and-indent)
 (add-hook 'lisp-mode-hook 'set-newline-and-indent)
 (add-hook 'LaTeX-mode-hook 'set-newline-and-indent)
-(add-hook 'css-mode 'set-newline-and-indent)
+;;(add-hook 'css-mode 'set-newline-and-indent)
 (add-hook 'c-mode-common-hook 'set-newline-and-indent)
 
 ;;;; C ;;;;
@@ -413,3 +432,14 @@
   "An adapted `makefile-mode' that knows about nmake."
   (setq font-lock-defaults
         `(makefile-nmake-font-lock-keywords ,@(cdr font-lock-defaults))))
+
+;;;; CSS ;;;;
+;; get indentation working nicely
+;; source: http://superuser.com/questions/381801/emacs-css-modes-most-feature-complete-and-maintained
+;; (setq cssm-indent-function #'cssm-c-style-indenter)
+
+;; ;; more attempts at getting it to work right
+;; ;; source: http://stackoverflow.com/questions/4006005/how-can-i-set-emacs-tab-settings-by-file-type
+;; (add-hook 'css-mode-hook
+;;           '(lambda ()
+;;              (setq indent-tabs-mode nil)))
