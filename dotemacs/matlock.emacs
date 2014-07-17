@@ -397,7 +397,10 @@
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 (setq org-mobile-files '("~/org-mode/magzor.org"
                          "~/org-mode/fantabulon.org"
-                         "~/org-mode/shopping-list.org"))
+                         "~/org-mode/shopping-list.org"
+                         "~/org-mode/personal-projects.org"
+                         "~/org-mode/things-to-learn.org"
+                         "~/org-mode/things-ive-learned.org"))
 (setq org-mobile-inbox-for-pull "~/org-mode/from-mobile.org")
 
 ;;;; Sunrise Commander ;;;;
