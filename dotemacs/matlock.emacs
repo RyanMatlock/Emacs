@@ -1,5 +1,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Matlock's .emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; reload .emacs when C-c <f12> is pressed
+(defun reload-dotemacs ()
+  (interactive)
+  (load-file "~/.emacs"))
+(global-set-key (kbd "C-c <f12>") 'reload-dotemacs)
+
 ;;;; load .el files
 (add-to-list 'load-path "~/elisp")
 
@@ -292,8 +298,9 @@
              'global-semantic-idle-summary-mode t)
 (add-to-list 'semantic-default-submodes 
              'global-semantic-idle-completions-mode t)
-(add-to-list 'semantic-default-submodes 
-             'global-cedet-m3-minor-mode t)
+;; having an issue with this line
+;; (add-to-list 'semantic-default-submodes 
+;;              'global-cedet-m3-minor-mode t)
 
 ;; Enable Semantic -- already did that
 ;; (semantic-mode 1)
