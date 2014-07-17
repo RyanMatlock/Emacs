@@ -325,6 +325,13 @@
 
 ;;;; Org Mode ;;;;
 
+;; C-c . isn't working for org-time-stamp (shadowed by another mode, yet 
+;; attempting to find which mode has been pretty fruitless), so I'm going to
+;; try using C-c q
+(defun my:org-time-stamp-key ()
+  (local-set-key (kbd "C-c q") 'org-time-stamp))
+(add-hook 'org-mode-hook 'my:org-time-stamp-key)
+
 ;; set org-mode keybinding C-c C-v C-b to the string "- [ ] " and
 ;; C-c C-v C-v to "[ ] " and
 ;; C-c C-b C-b to "\n- [ ] "
