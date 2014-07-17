@@ -1,6 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Matlock's .emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; reload .emacs when C-c <f12> is pressed
+;; source: http://stackoverflow.com/questions/24810079/key-binding-to-reload-emacs-after-changing-it
 (defun reload-dotemacs ()
   (interactive)
   (load-file "~/.emacs"))
