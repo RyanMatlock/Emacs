@@ -32,10 +32,15 @@
 (defun untabify-everything ()
   (untabify (point-min) (point-max)))
 (defun untabify-everything-on-save ()
-  (add-hook 'before-save-hook 'untabify-everything)
+  (add-hook 'write-contents-functions 'untabify-everything)
   nil)
 
+;; I think the c-mode-common-hook includes the makefile-modes, so it's untabifying those
+;; maybe not?
 (add-hook 'c-mode-common-hook 'untabify-everything-on-save)
+;; (add-hook 'c-mode-hook 'untabify-everything-on-save)
+;; (add-hook 'c++-mode-hook 'untabify-everything-on-save)
+;; (add-hook 'java-mode-hook 'untabify-everything-on-save)
 (add-hook 'python-mode-hook 'untabify-everything-on-save)
 (add-hook 'latex-mode-hook 'untabify-everything-on-save)
 (add-hook 'org-mode-hook 'untabify-everything-on-save)
@@ -408,7 +413,8 @@
                          "~/org-mode/shopping-list.org"
                          "~/org-mode/personal-projects.org"
                          "~/org-mode/things-to-learn.org"
-                         "~/org-mode/things-ive-learned.org"))
+                         "~/org-mode/things-ive-learned.org"
+                         "~/org-mode/movies.org"))
 (setq org-mobile-inbox-for-pull "~/org-mode/from-mobile.org")
 
 ;;;; Sunrise Commander ;;;;
