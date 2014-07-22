@@ -79,7 +79,7 @@ except OSError as e:
 
 for snippet_def in snippet_defs:
     try:
-        name, key, snippet = snippet_def.split[SPLIT_STR]
+        name, key, snippet = snippet_def.split(SPLIT_STR)
         try:
             with open(os.path.join(target_path, name), "w") as out:
                 out.write(NAME_PREFIX + name + "\n")
