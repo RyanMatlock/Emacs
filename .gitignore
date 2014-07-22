@@ -29,3 +29,6 @@
 
 # gitinfo -- including this file is disruptive to Git
 gitHeadInfo.gin
+
+# ignore clojure folder because it's stuff you've downloaded elsewhere
+clojure/
