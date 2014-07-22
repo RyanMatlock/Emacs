@@ -8,7 +8,7 @@
 (global-set-key (kbd "C-c <f12>") 'reload-dotemacs)
 
 ;;;; load .el files
-(add-to-list 'load-path "~/elisp")
+(add-to-list 'load-path "~/elisp/")
 
 ;;;; General editing ;;;;
 ;; get block indentation/unindentation working nicely at some point
@@ -108,8 +108,12 @@
 ;; start package.el with Emacs
 (require 'package)
 ;; add MELPA to repository list
+;; also need to add marmalade for Clojure packages (and other stuff eventually,
+;; probably)
 (add-to-list  'package-archives 
+              '("marmalade" . "http://marmalade-repo.org/packages/")
               '("melpa" ."http://melpa.milkbox.net/packages/"))
+              ;; '("gnu" . "http://elpa.gnu.org/packages/"))
 ;; initialize package.el
 (package-initialize)
 
@@ -476,3 +480,57 @@
 ;; (add-hook 'css-mode-hook
 ;;           '(lambda ()
 ;;              (setq indent-tabs-mode nil)))
+
+
+;;;; Clojure ;;;;
+;; source: http://clojure-doc.org/articles/tutorials/emacs.html
+;; (defvar my:clojure-packages '(better-defaults
+;;                       clojure-mode
+;;                       clojure-test-mode
+;;                       cider))
+
+;; (dolist (p my:clojure-packages)
+;;   (when (not (package-installed-p p))
+;;     (package-install p)))
+
+;; trying it some alternate horrible way (downloaded files from marmalade-repo
+;; manually, file names were <something-something>-<version>.el; symlinked them
+;; in ~/emacs/clojure to <something-something>.el, but cider seems a little too
+;; complicated
+;; still, cider-<version> was symlinked to cider
+(add-to-list 'load-path "~/emacs/clojure/cider/")
+(add-to-list 'load-path "~/emacs/clojure/")
+;; (load "~/emacs/clojure/clojure-mode.el")
+;; (load "~/emacs/clojure/clojure-test-mode.el")
+;; (load "~/emacs/clojure/better-defaults.el")
+
+;;;; supplemental yasnippet stuff ;;;;
+;; define .snip files to be snippet definition templates; have them use
+;; snippet-mode
+(setq auto-mode-alist
+      (cons '("\\.snip$" . snippet-mode)
+            auto-mode-alist))
+
+;; bracket-mode minor mode
+(define-minor-mode bracket-mode
+  "bracket-mode allows slightly more ergonomic
+   entry of brackets and parentheses -- useful
+   for a number of major modes"
+  :init-value nil
+  :lighter " brkt")
+
+;; entering minor mode with major mode
+;; source: http://stackoverflow.com/questions/7421445/emacs-entering-minor-mode-with-major-mode
+(add-hook 'bracket-mode-hook
+          '(lambda ()
+             (yas-activate-extra-mode 'bracket-mode)))
+;; (defun c-commmon-bracket-hook ()
+;;    (bracket-mode 1) nil)
+;; (add-hook 'c-mode-common-hook 'c-common-bracket-hook)
+;; see also http://stackoverflow.com/questions/4253473/emacs-how-do-i-automatically-enter-minor-modes-when-i-enter-a-major-mode
+(add-hook 'c-mode-common-hook '(lambda () (bracket-mode)))
+(add-hook 'org-mode-hook '(lambda () (bracket-mode)))
+(add-hook 'text-mode-hook '(lambda () (bracket-mode)))
+(add-hook 'latex-mode-hook '(lambda () (bracket-mode)))
+(add-hook 'python-mode-hook '(lambda () (bracket-mode)))
+(add-hook 'makefile-mode-hook '(lambda() (bracket-mode)))
