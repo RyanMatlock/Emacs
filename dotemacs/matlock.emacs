@@ -29,24 +29,33 @@
 ;; http://stackoverflow.com/questions/318553/getting-emacs-to-untabify-when-saving-certain-file-types-and-only-those-file-ty
 ;; and a little help from http://ergoemacs.org/emacs/emacs_avoid_lambda_in_hook.html
 ;; and help from http://stackoverflow.com/questions/1931784/emacs-is-before-save-hook-a-local-variable
-(defun untabify-everything ()
-  (untabify (point-min) (point-max)))
-(defun untabify-everything-on-save ()
-  (add-hook 'write-contents-functions 'untabify-everything)
-  nil)
+;; (defun untabify-everything ()
+;;   (untabify (point-min) (point-max)))
+;; (defun untabify-everything-on-save ()
+;;   (add-hook 'write-contents-functions 'untabify-everything)
+;;   nil)
+
+;; this runs for all modes except makefile-derived modes
+;; source: http://stackoverflow.com/questions/24832699/emacs-24-untabify-on-save-for-everything-except-makefiles/24857101#24857101
+(defun untabify-except-makefiles ()
+  (unless (derived-mode-p 'makefile-mode)
+    (untabify (point-min) (point-max))))
+
+(add-hook 'before-save-hook 'untabify-except-makefiles)
 
 ;; I think the c-mode-common-hook includes the makefile-modes, so it's untabifying those
 ;; maybe not?
-(add-hook 'c-mode-common-hook 'untabify-everything-on-save)
-;; (add-hook 'c-mode-hook 'untabify-everything-on-save)
-;; (add-hook 'c++-mode-hook 'untabify-everything-on-save)
-;; (add-hook 'java-mode-hook 'untabify-everything-on-save)
-(add-hook 'python-mode-hook 'untabify-everything-on-save)
-(add-hook 'latex-mode-hook 'untabify-everything-on-save)
-(add-hook 'org-mode-hook 'untabify-everything-on-save)
-(add-hook 'css-mode-hook 'untabify-everything-on-save)
-(add-hook 'html-mode-hook 'untabify-everything-on-save)
-(add-hook 'emacs-lisp-mode-hook 'untabify-everything-on-save)
+;; (add-hook 'c-mode-common-hook 'untabify-everything-on-save)
+;; ;; (add-hook 'c-mode-hook 'untabify-everything-on-save)
+;; ;; (add-hook 'c++-mode-hook 'untabify-everything-on-save)
+;; ;; (add-hook 'java-mode-hook 'untabify-everything-on-save)
+;; (add-hook 'python-mode-hook 'untabify-everything-on-save)
+;; (add-hook 'latex-mode-hook 'untabify-everything-on-save)
+;; (add-hook 'org-mode-hook 'untabify-everything-on-save)
+;; (add-hook 'css-mode-hook 'untabify-everything-on-save)
+;; (add-hook 'html-mode-hook 'untabify-everything-on-save)
+;; (add-hook 'emacs-lisp-mode-hook 'untabify-everything-on-save)
+;; save?
 
 ;;;; copy selection without killing it
 ;;;; see: http://stackoverflow.com/questions/3158484/emacs-copying-text-without-killing-it and http://www.emacswiki.org/emacs/KeyboardMacros
