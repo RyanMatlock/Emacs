@@ -16,6 +16,8 @@ the target files will be overwritten.
   environment and stuff like that (see
   http://capitaomorte.github.io/yasnippet/snippet-development.html#sec-2-5)
   (in order to do this, you'll want to check the length of your split string)
+- [ ] option to clear target folder contents
+- [ ] option to process/not process escape characters in source file
 """
 
 import re
@@ -30,6 +32,31 @@ KEY_PREFIX = "# key: "
 CONTRIBUTOR_PREFIX = "# contributor: "
 contributor = "Ryan Matlock <ryan.matlock@gmail.com>"
 SEPARATOR = "# --"
+
+# make this an option eventually
+# the idea is that you can put the string "\n" in your snippet definition file
+# and get a newline out of it
+parse_escapes = True
+# make tab-related stuff parameters you can pass, too
+TAB_WIDTH = 4
+TAB = " " * TAB_WIDTH
+
+# see http://stackoverflow.com/questions/24917942/python-unexpected-behavior-with-printing-writing-escape-characters
+# for advice on how to proceed
+def escape_parser(snippet):
+    # the only ones you need to escape are backslash, tab, and newline
+    # i.e. \\, \t, and \n
+    # this is probably not what actually happens now, though
+    # print("pre-escaping: '{}'".format(snippet))
+
+    # snippet = re.sub(r"\\", r"\\", snippet)
+    # snippet = re.sub(r"\t", "\t", snippet)
+    # snippet = re.sub(r"\n", "\n", snippet)
+    snippet = bytes(snippet, "utf-8").decode("unicode_escape")
+
+    # print("post-escaping: '{}'".format(snippet))
+
+    return snippet
 
 snippet_defs = []
 while True:
@@ -80,13 +107,17 @@ except OSError as e:
 for snippet_def in snippet_defs:
     try:
         name, key, snippet = snippet_def.split(SPLIT_STR)
+
+        if parse_escapes:
+            snippet = escape_parser(snippet)
+            
         try:
             with open(os.path.join(target_path, name), "w") as out:
                 out.write(NAME_PREFIX + name + "\n")
                 out.write(KEY_PREFIX + key + "\n")
                 out.write(CONTRIBUTOR_PREFIX + contributor + "\n")
                 out.write(SEPARATOR + "\n")
-                out.write(snippet + "\n")
+                out.write(snippet)
         except OSError as e:
             print("{}".format(e))
             print("Writing snippet '{}' failed; skipping".format(name))
@@ -95,4 +126,3 @@ for snippet_def in snippet_defs:
         print("Line '{}' incorrectly formatted; skipping.".format(snippet_def))
 
 print("Snippet writing finished!")
-
