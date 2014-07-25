@@ -482,24 +482,30 @@
 ;;              (setq indent-tabs-mode nil)))
 
 
+;;;; Makefiles ;;;;
+(add-hook 'makefile-mode-hook '(lambda () (auto-complete-mode)))
+
 ;;;; Clojure ;;;;
 ;; source: http://clojure-doc.org/articles/tutorials/emacs.html
-;; (defvar my:clojure-packages '(better-defaults
-;;                       clojure-mode
-;;                       clojure-test-mode
-;;                       cider))
+(defvar my:clojure-packages '(better-defaults
+                      clojure-mode
+                      clojure-test-mode
+                      cider))
 
-;; (dolist (p my:clojure-packages)
-;;   (when (not (package-installed-p p))
-;;     (package-install p)))
+(dolist (p my:clojure-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
+
+;; never mind, everything was fine; I just forgot to run 
+;; M-x package-refresh-contents after adding this clojure stuff
 
 ;; trying it some alternate horrible way (downloaded files from marmalade-repo
 ;; manually, file names were <something-something>-<version>.el; symlinked them
 ;; in ~/emacs/clojure to <something-something>.el, but cider seems a little too
 ;; complicated
 ;; still, cider-<version> was symlinked to cider
-(add-to-list 'load-path "~/emacs/clojure/cider/")
-(add-to-list 'load-path "~/emacs/clojure/")
+;; (add-to-list 'load-path "~/emacs/clojure/cider/")
+;; (add-to-list 'load-path "~/emacs/clojure/")
 ;; (load "~/emacs/clojure/clojure-mode.el")
 ;; (load "~/emacs/clojure/clojure-test-mode.el")
 ;; (load "~/emacs/clojure/better-defaults.el")
@@ -534,3 +540,15 @@
 (add-hook 'latex-mode-hook '(lambda () (bracket-mode)))
 (add-hook 'python-mode-hook '(lambda () (bracket-mode)))
 (add-hook 'makefile-mode-hook '(lambda() (bracket-mode)))
+
+
+;; allman-c-mode minor mode
+(define-minor-mode allman-c-mode
+  "allman-c-mode allows the use of Allman-
+   style friendly snippets."
+  :init-value nil
+  :lighter " AlmnC")
+(add-hook 'allman-c-mode-hook
+          '(lambda ()
+             (yas-activate-extra-mode 'allman-c-mode)))
+(add-hook 'c-mode-common-hook '(lambda () (allman-c-mode)))
