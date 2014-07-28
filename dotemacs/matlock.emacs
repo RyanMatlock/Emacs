@@ -61,6 +61,10 @@
 ;;;; see: http://stackoverflow.com/questions/3158484/emacs-copying-text-without-killing-it and http://www.emacswiki.org/emacs/KeyboardMacros
 (global-set-key (kbd "M-w") 'kill-ring-save)
 
+;; see: http://stackoverflow.com/questions/143072/in-emacs-what-is-the-opposite-function-of-other-window-c-x-o
+;; I originally thought it would be 'previous-window
+(global-set-key (kbd "C-x O") 'previous-multiframe-window)
+
 ;; set columns to 80 characters long (as per PEP 8/good programming practice)
 ;; !! maybe you need to do this for Fundamental as well ???
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
