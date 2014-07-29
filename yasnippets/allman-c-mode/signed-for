@@ -1,0 +1,8 @@
+# name: signed-for
+# key: asfor
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+for (int ${1:i} = ${2:0}; $1 < ${3:STOP}; ++$1)
+{
+$0
+}
