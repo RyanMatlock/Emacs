@@ -253,8 +253,9 @@
 (setq tex-alt-dvi-print-command "dvips")
 
 ;;;; yet another folding mode
+;; ok, ignore yafolding -- see alternative below
 ;;;; source: http://www.emacswiki.org/emacs/FoldingMode
-(load "~/elisp/yafolding.el")
+;; (load "~/elisp/yafolding.el")
 
 ;;;; yafolding example config
 ;; these key bindings didn't work
@@ -281,6 +282,17 @@
 ;;           (lambda ()
 ;;             (local-set-key (kbd "C-c <C-return>") 'yafolding-toggle-element)))
 ;; that didn't work either.  Hmm!
+
+;;;; HideShow
+;; source: http://www.emacswiki.org/emacs/HideShow
+(add-hook 'c-mode-common-hook '(lambda () (hs-minor-mode)))
+(add-hook 'clojure-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'latex-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'python-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'org-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'css-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'html-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'emacs-lisp-mode-hook '(lambda () (hs-minor-mode)))
 
 ;;;; LaTeX/Cocktails ;;;;
 
