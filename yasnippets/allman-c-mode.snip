@@ -15,5 +15,6 @@ else;;aelse;;else\n{\n$0\n}
 switch;;aswitch;;switch (${1:<expression>})\n{\ncase ${2:<constant1>}:\n$0\nbreak;\n}
 case;;acase;;case ${1:<constantN>}:\n$0\nbreak;
 try;;atry;;try\n{\n$0\n}
-catch;;acatch;;catch\n{\n$0\n}
-try-catch;;atc;;try\n{\n$0\n}\ncatch\n{\n\n}
+catch;;acatch;;catch (${1:<exception>})\n{\n$0\n}
+# kind of messy, so just do try and catch separately
+#try-catch;;atc;;try\n{\n$0\n}\ncatch\n{\n\n}
