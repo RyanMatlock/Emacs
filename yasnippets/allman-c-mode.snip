@@ -14,3 +14,6 @@ else-if;;aelif;;else if (${1:<condition>})\n{\n$0\n}
 else;;aelse;;else\n{\n$0\n}
 switch;;aswitch;;switch (${1:<expression>})\n{\ncase ${2:<constant1>}:\n$0\nbreak;\n}
 case;;acase;;case ${1:<constantN>}:\n$0\nbreak;
+try;;atry;;try\n{$0\n}
+catch;;acatch;;catch\n{$0\n}
+try-catch;;atc;;try\n{$0\n}\ncatch\n{\n}

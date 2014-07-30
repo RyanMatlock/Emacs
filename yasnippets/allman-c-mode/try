@@ -1,0 +1,7 @@
+# name: try
+# key: atry
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+try
+{$0
+}
