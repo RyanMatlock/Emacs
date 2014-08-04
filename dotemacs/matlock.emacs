@@ -209,10 +209,11 @@
 ;;;; end of borrowed-from-MIT configuration code
 (put 'upcase-region 'disabled nil)
 
+;; ignore this; use flycheck with flake8 instead
 ;;;; python-pep8 minor mode
 ;; checks that syntax follows http://legacy.python.org/dev/peps/pep-0008/
-(load "~/emacs/python-pep8/python-pep8.el")
-(autoload 'python-pep8 "python-pep8")
+;; (load "~/emacs/python-pep8/python-pep8.el")
+;; (autoload 'python-pep8 "python-pep8")
 ;; (autoload 'pep8 "python-pep8"
 ;; this doesn't seem to be working well yet
 
@@ -598,3 +599,10 @@
           '(lambda ()
              (yas-activate-extra-mode 'allman-c-mode)))
 (add-hook 'c-mode-common-hook '(lambda () (allman-c-mode)))
+
+;;;; Flycheck ;;;;
+;; cool syntax checker for many languages (relies on third party syntax
+;; checkers, e.g. flake8 for Python)
+;; installed flycheck using M-x package-install <RET> flycheck <RET>
+;; configure it to open up with python-mode
+(add-hook 'python-mode-hook 'flycheck-mode)
