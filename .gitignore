@@ -34,4 +34,9 @@ gitHeadInfo.gin
 clojure/
 
 # ignore python-pep8 because it's already a git repo
+# it's probably going to end up deleted at some point anyway because I'm
+# probably moving over to flycheck/flake8
 python-pep8/
+
+# flycheck is already a git repo
+flycheck/
