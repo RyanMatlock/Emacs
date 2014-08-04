@@ -32,3 +32,6 @@ gitHeadInfo.gin
 
 # ignore clojure folder because it's stuff you've downloaded elsewhere
 clojure/
+
+# ignore python-pep8 because it's already a git repo
+python-pep8/
