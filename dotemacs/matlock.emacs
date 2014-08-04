@@ -1,5 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Matlock's .emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq debug-on-error t)
+
 ;; reload .emacs when C-c <f12> is pressed
 ;; source: http://stackoverflow.com/questions/24810079/key-binding-to-reload-emacs-after-changing-it
 (defun reload-dotemacs ()
@@ -373,6 +375,27 @@
 (defun my:org-time-stamp-key ()
   (local-set-key (kbd "C-c q") 'org-time-stamp))
 (add-hook 'org-mode-hook 'my:org-time-stamp-key)
+
+
+;; let C-c S insert a symbol sign (easier than typing "C-x 8 <RET> section 
+;; sign")
+;; never mind, you're dumb
+;; (defun my:section-sign ()
+;;   "easier than M-x insert char <RET> section sign"
+;;   (interactive)
+;;   (insert-char "SECTION SIGN"))
+;; (defun my:insert-section-sign ()
+;;   "bind my:section-sign to C-c S"
+;;   (local-set-key (kbd "C-c s") 'my:section-sign))
+;; (add-hook 'org-mode-hook 'my:insert-section-sign)
+;; how to really do it:  http://ergoemacs.org/emacs/emacs_n_unicode.html
+(defun my:insert-section-sign ()
+  "easier than M-x insert char <RET> section sign"
+  (local-set-key (kbd "C-c S")
+                 (lambda ()
+                   (interactive)
+                   (insert "§"))))
+(add-hook 'org-mode-hook 'my:insert-section-sign)
 
 ;; set org-mode keybinding C-c C-v C-b to the string "- [ ] " and
 ;; C-c C-v C-v to "[ ] " and
