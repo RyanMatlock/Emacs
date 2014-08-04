@@ -209,6 +209,13 @@
 ;;;; end of borrowed-from-MIT configuration code
 (put 'upcase-region 'disabled nil)
 
+;;;; python-pep8 minor mode
+;; checks that syntax follows http://legacy.python.org/dev/peps/pep-0008/
+(load "~/emacs/python-pep8/python-pep8.el")
+(autoload 'python-pep8 "python-pep8")
+;; (autoload 'pep8 "python-pep8"
+;; this doesn't seem to be working well yet
+
 ;;;; LaTeX ;;;;
 
 ;;;; get Emacs to read the PATH variable
