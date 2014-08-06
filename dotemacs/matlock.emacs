@@ -137,7 +137,7 @@
 ;; probably)
 (add-to-list  'package-archives 
               '("marmalade" . "http://marmalade-repo.org/packages/")
-              '("melpa" ."http://melpa.milkbox.net/packages/"))
+              '("melpa" . "http://melpa.milkbox.net/packages/"))
               ;; '("gnu" . "http://elpa.gnu.org/packages/"))
 ;; initialize package.el
 (package-initialize)
@@ -542,6 +542,8 @@
   (setq font-lock-defaults
         `(makefile-nmake-font-lock-keywords ,@(cdr font-lock-defaults))))
 
+(add-hook 'makefile-mode-hook '(lambda () (auto-complete-mode)))
+
 ;;;; CSS ;;;;
 ;; get indentation working nicely
 ;; source: http://superuser.com/questions/381801/emacs-css-modes-most-feature-complete-and-maintained
@@ -552,10 +554,6 @@
 ;; (add-hook 'css-mode-hook
 ;;           '(lambda ()
 ;;              (setq indent-tabs-mode nil)))
-
-
-;;;; Makefiles ;;;;
-(add-hook 'makefile-mode-hook '(lambda () (auto-complete-mode)))
 
 ;;;; Clojure ;;;;
 ;; source: http://clojure-doc.org/articles/tutorials/emacs.html
