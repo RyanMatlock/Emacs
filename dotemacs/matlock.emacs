@@ -1,6 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Matlock's .emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq debug-on-error t)
+;; good for when you've added something new, but doesn't need to be perpetually
+;; enabled
+;; (setq debug-on-error t)
 
 ;; reload .emacs when C-c <f12> is pressed
 ;; source: http://stackoverflow.com/questions/24810079/key-binding-to-reload-emacs-after-changing-it
@@ -11,6 +13,23 @@
 
 ;;;; load .el files
 (add-to-list 'load-path "~/elisp/")
+
+;;;; OS X ;;;;
+
+;; copy & paste to/from clipboard
+;; source: https://web.archive.org/web/20110504210857/http://blog.lathi.net/articles/2007/11/07/sharing-the-mac-clipboard-with-emacs
+;; (linked from http://stackoverflow.com/questions/9985316/how-to-paste-to-emacs-from-clipboard)
+(defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil)) 
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc))))
+
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
 
 ;;;; General editing ;;;;
 ;; get block indentation/unindentation working nicely at some point
