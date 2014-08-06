@@ -405,6 +405,12 @@
                    (insert "§"))))
 (add-hook 'org-mode-hook 'my:insert-section-sign)
 
+;; TODO list intermediate state colors
+;; source: http://cjohansen.no/en/emacs/emacs_org_mode_todo_colors
+(setq org-todo-keyword-faces
+      '(("IN-PROGRESS" . (:foreground "yellow" :weight bold))
+        ("ON-HOLD" . (:foreground "yellow" :weight bold))))
+
 ;; set org-mode keybinding C-c C-v C-b to the string "- [ ] " and
 ;; C-c C-v C-v to "[ ] " and
 ;; C-c C-b C-b to "\n- [ ] "
