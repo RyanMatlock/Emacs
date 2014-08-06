@@ -1,0 +1,6 @@
+# name: section
+# key: sect
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+/**** ${1:<section>} ****/
+$0

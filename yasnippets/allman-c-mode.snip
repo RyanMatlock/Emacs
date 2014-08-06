@@ -20,3 +20,19 @@ try;;atry;;try\n{\n$0\n}
 catch;;acatch;;catch (${1:<exception>})\n{\n$0\n}
 # kind of messy, so just do try and catch separately
 #try-catch;;atc;;try\n{\n$0\n}\ncatch\n{\n\n}
+# not really specific to the Allman style, but it's nice to have sections
+section;;sect;;/**** ${1:<section>} ****/\n$0
+# you know what would be really cool?  defining that single line thing as a
+# subsection and having a section be three lines, with the top and bottom
+# asterisk lines shrinking and expanding as you type in more characters
+# what I think you'd do is have
+# /*****(some-func $1)*****
+# ***** ${1:<section>} ****
+# ******(some-func $1)****/
+# so that some-func just replaces any character with an asterisk
+# there's probably an easy way to do that with regexp, but I don't know how
+# you'd dynamically evaluate it
+# it's obviously possible, though; I recommend looking into the yasnippet code
+# to figure out how it's done with the numbered arguments (notice how
+# $1 (some string) $2 $1
+# will change the 1's
