@@ -16,20 +16,23 @@
 
 ;;;; OS X ;;;;
 
+;; There's actually a bit of a problem when using this through Tramp -- it
+;; expects the local device to have pbcopy and pbpaste, which I can't
+;; guarantee.  So that makes this more trouble than it's worth.  Oh well.
 ;; copy & paste to/from clipboard
 ;; source: https://web.archive.org/web/20110504210857/http://blog.lathi.net/articles/2007/11/07/sharing-the-mac-clipboard-with-emacs
 ;; (linked from http://stackoverflow.com/questions/9985316/how-to-paste-to-emacs-from-clipboard)
-(defun copy-from-osx ()
-  (shell-command-to-string "pbpaste"))
+;; (defun copy-from-osx ()
+;;   (shell-command-to-string "pbpaste"))
 
-(defun paste-to-osx (text &optional push)
-  (let ((process-connection-type nil)) 
-    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-      (process-send-string proc text)
-      (process-send-eof proc))))
+;; (defun paste-to-osx (text &optional push)
+;;   (let ((process-connection-type nil)) 
+;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+;;       (process-send-string proc text)
+;;       (process-send-eof proc))))
 
-(setq interprogram-cut-function 'paste-to-osx)
-(setq interprogram-paste-function 'copy-from-osx)
+;; (setq interprogram-cut-function 'paste-to-osx)
+;; (setq interprogram-paste-function 'copy-from-osx)
 
 ;;;; General editing ;;;;
 ;; get block indentation/unindentation working nicely at some point
@@ -629,3 +632,7 @@
 ;; installed flycheck using M-x package-install <RET> flycheck <RET>
 ;; configure it to open up with python-mode
 (add-hook 'python-mode-hook 'flycheck-mode)
+
+;;;; Tramp Mode ;;;;
+;; problem with hanging; trying this:
+(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
