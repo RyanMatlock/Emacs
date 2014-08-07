@@ -34,6 +34,7 @@
 ;; (setq interprogram-cut-function 'paste-to-osx)
 ;; (setq interprogram-paste-function 'copy-from-osx)
 
+
 ;;;; General editing ;;;;
 ;; get block indentation/unindentation working nicely at some point
 ;; remember how great Command+[ used to be? Try to get C-[ and C-] working, or
@@ -96,10 +97,10 @@
 
 ;; text mode 4 spaces instead of indent
 ;; source: http://stackoverflow.com/questions/69934/set-4-space-indent-in-emacs-in-text-mode
-(add-hook 'text-mode-hook (lambda ()
-                            (setq indent-tabs-mode t)
-                            (setq tab-stop-list (number-sequence 4 200 4))
-                            (setq tab-width 4)))
+;; (add-hook 'text-mode-hook (lambda ()
+;;                             ;; (setq tab-stop-list (number-sequence 4 200 4))
+;;                             (setq tab-width 4)
+;;                             (setq indent-tabs-mode nil)))
 
 ;; set README, LICENSE.md files to open in text-mode
 ;; let's set README, LICENSE.md file to text-mode like this:
