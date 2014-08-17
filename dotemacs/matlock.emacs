@@ -503,7 +503,8 @@
                          "~/org-mode/personal-projects.org"
                          "~/org-mode/things-to-learn.org"
                          "~/org-mode/things-ive-learned.org"
-                         "~/org-mode/movies.org"))
+                         "~/org-mode/movies.org"
+                         "~/org-mode/places-to-go.org"))
 (setq org-mobile-inbox-for-pull "~/org-mode/from-mobile.org")
 
 ;;;; Sunrise Commander ;;;;
@@ -637,3 +638,27 @@
 ;;;; Tramp Mode ;;;;
 ;; problem with hanging; trying this:
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+
+;; sudo through Tramp
+
+;; not working exactly right
+;; source: http://stackoverflow.com/questions/3465567/how-to-use-ssh-and-sudo-together-with-tramp-in-emacs
+;; usage: C-x C-f /sudo:root@host[#port]:/path/to/file
+;; It will ask you for your password to access remote shell and then your 
+;; password again for sudo access.
+;; (set-default 'tramp-default-proxies-alist 
+;;              (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
+
+;; this doesn't seem right either
+;; trying this instead: http://irreal.org/blog/?p=895
+;; (add-to-list 'tramp-default-proxies-alist
+;;              '(nil "\\`root\\'" "/ssh:%h:"))
+;; (add-to-list 'tramp-default-proxies-alist
+;;              '((regexp-quote (system-name)) nil nil))
+;; usage: C-x C-f /sudo:root@<remote_host>:/path/to/file
+
+
+;;;; Color themes for GUI Emacs ;;;;
+;; this looks really bizarre when Terminal is already Solarized, although it
+;; works well in the GUI Emacs
+;; (load-theme 'solarized-dark t)
