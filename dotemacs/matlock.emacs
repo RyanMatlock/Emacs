@@ -480,6 +480,40 @@
 ;; turn off Org Mode babel evaluation on C-c C-c
 (setq org-babel-no-eval-on-ctrl-c-ctrl-c t)
 
+;; scale inline images
+;; source: http://lists.gnu.org/archive/html/emacs-orgmode/2012-08/msg01388.html
+(setq org-image-actual-width '(400))
+;; doesn't really seem to work, but ok
+
+;; I guess a lot of stuff is going to come from my cell phone, and in any case,
+;; 600px is a reasonable width, so having a macro for setting the width would
+;; be cool
+;; (defun my:org-html-image-width ()
+;;   (local-set-key (kbd "C-c C-w w") "#+ATTR_HTML: width=\"600px\""))
+;; (add-hook 'org-mode-hook 'my:org-html-image-width)
+;; this works as you would expect it to (!!):
+;; (defun qux (r-arg)
+;;   "Print the raw prefix value (note capital P vs lowercase p)"
+;;   (interactive "P")
+;;   (if r-arg
+;;       (message "raw prefix arg is '%S'" r-arg)
+;;       (message "it was nil!")))
+;; take advantage of that!!
+;; Oh my god, this actually works!!!
+(defun my:insert-attr-html-width (arg)
+  (insert (format"#+ATTR_HTML: width=\"%Spx\"\n" arg)))
+(setq my:default-attr-html-width 600)
+(defun my:org-html-image-width (arg)
+  "set the ATTR_HTML width of an image to arg or default"
+  (interactive "P")
+   (if arg
+       (my:insert-attr-html-width arg)
+     (my:insert-attr-html-width my:default-attr-html-width)))
+(defun hookify:my:org-html-image-width ()
+  (local-set-key (kbd "C-c w") 'my:org-html-image-width))
+(add-hook 'org-mode-hook 'hookify:my:org-html-image-width)
+
+
 ;; org-extra-yas-mode
 (define-minor-mode org-extra-yas-mode
   "org-extra-yas-mode adds snippets in
