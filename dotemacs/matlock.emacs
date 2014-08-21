@@ -501,7 +501,7 @@
 ;; take advantage of that!!
 ;; Oh my god, this actually works!!!
 (defun my:insert-attr-html-width (arg)
-  (insert (format"#+ATTR_HTML: width=\"%Spx\"\n" arg)))
+  (insert (format"#+ATTR_HTML: width=\"%Spx\"" arg)))
 (setq my:default-attr-html-width 600)
 (defun my:org-html-image-width (arg)
   "set the ATTR_HTML width of an image to arg or default"
