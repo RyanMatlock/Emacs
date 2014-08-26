@@ -386,6 +386,12 @@
             auto-mode-alist))
 (autoload 'arduino-mode "arduino-mode" "Arduino editing mode" t)
 
+;; load auto-complete with arduino-mode
+;; (add-hook 'arduino-mode-hook '(lambda () (auto-complete-mode 1)))
+;; that's now how you do it
+;; source: http://stackoverflow.com/questions/8095715/emacs-auto-complete-mode-at-startup
+(add-to-list 'ac-modes 'arduino-mode)
+
 ;;;; JavaScript ;;;;
 
 ;; followed instructions at
