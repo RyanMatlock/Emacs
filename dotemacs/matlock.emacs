@@ -413,6 +413,16 @@
   (local-set-key (kbd "C-c q") 'org-time-stamp))
 (add-hook 'org-mode-hook 'my:org-time-stamp-key)
 
+;; ok, I'm just going to try overriding whatever is shadowing these key
+;; bindings just to see what happens (also encountered this issue with the org
+;; mode priority key)
+;; that didn't actually work, so try postfixing it with <RET>
+;; ok, it looks like C-c , is a prefix command, and C-c . seems to bind to
+;; C-c C-<stuff>, so I guess I'll go with my original C-c q for time stamp and
+;; C-c p for priority
+(defun my:org-priority-key ()
+  (local-set-key (kbd "C-c p") 'org-priority))
+(add-hook 'org-mode-hook 'my:org-priority-key)
 
 ;; let C-c S insert a symbol sign (easier than typing "C-x 8 <RET> section 
 ;; sign")
