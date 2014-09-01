@@ -554,7 +554,8 @@
                          "~/org-mode/things-to-learn.org"
                          "~/org-mode/things-ive-learned.org"
                          "~/org-mode/movies.org"
-                         "~/org-mode/places-to-go.org"))
+                         "~/org-mode/places-to-go.org"
+                         "~/org-mode/books-to-read.org"))
 (setq org-mobile-inbox-for-pull "~/org-mode/from-mobile.org")
 
 ;;;; Sunrise Commander ;;;;
