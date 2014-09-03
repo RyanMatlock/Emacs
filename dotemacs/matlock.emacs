@@ -713,3 +713,7 @@
 ;; this looks really bizarre when Terminal is already Solarized, although it
 ;; works well in the GUI Emacs
 ;; (load-theme 'solarized-dark t)
+
+
+;;;; Dot Mode (graphviz)
+(load "~/.emacs.d/plugins/dot-mode/dot-mode.el")
