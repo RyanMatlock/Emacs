@@ -392,6 +392,26 @@
 ;; source: http://stackoverflow.com/questions/8095715/emacs-auto-complete-mode-at-startup
 (add-to-list 'ac-modes 'arduino-mode)
 
+;; set comment character to "//" instead of "/* ... */"
+;; source: http://ergoemacs.org/emacs/elisp_comment_handling.html
+;; command to comment/uncomment text
+;; (defun my:arduino-mode-comment-dwim (arg)
+;;   "Comment or uncomment current line or region in a smart way.
+;;    For detail, see `comment-dwim'."
+;;   (interactive "*P")
+;;   (require 'newcomment)
+;;   (let ((comment-start "//") (comment-end ""))
+;;     (comment-dwim arg)))
+;; (add-hook 'arduino-mode-hook 'my:arduino-mode-comment-dwim)
+;; or try it like this
+;; source: http://stackoverflow.com/questions/15120346/emacs-setting-comment-character-by-file-extension
+;; (this works!)
+(defun my:arduino-mode-comment-delimiters ()
+  "Redefines comment-start and comment-end for Arduino mode"
+  (set (make-local-variable 'comment-start) "//")
+  (set (make-local-variable 'comment-end) ""))
+(add-hook 'arduino-mode-hook 'my:arduino-mode-comment-delimiters)
+
 ;;;; JavaScript ;;;;
 
 ;; followed instructions at
@@ -483,6 +503,7 @@
                                (gnuplot . t)
                                (haskell . t)
                                (ditaa . t)
+                               (dot . t)
                                (org . t)))
 ;; not sure why C++ isn't working
 ;; see http://orgmode.org/manual/Languages.html#Languages
