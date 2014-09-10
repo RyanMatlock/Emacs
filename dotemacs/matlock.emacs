@@ -463,6 +463,13 @@
                    (interactive)
                    (insert "§"))))
 (add-hook 'org-mode-hook 'my:insert-section-sign)
+(defun my:insert-micro-sign ()
+  "easier than C-x 8 <RET> micro sign"
+  (local-set-key (kbd "C-c u")
+                 (lambda ()
+                   (interactive)
+                   (insert "µ"))))
+(add-hook 'org-mode-hook 'my:insert-micro-sign)
 
 ;; TODO list intermediate state colors
 ;; source: http://cjohansen.no/en/emacs/emacs_org_mode_todo_colors
