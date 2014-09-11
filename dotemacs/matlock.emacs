@@ -745,3 +745,8 @@
 
 ;;;; Dot Mode (graphviz)
 (load "~/.emacs.d/plugins/dot-mode/dot-mode.el")
+
+;;;; align.el
+;; http://www.emacswiki.org/emacs/AlignColumn
+(add-to-list 'load-path "~/.emacs.d/plugins/align")
+(autoload 'align-cols "align" "Align text in the region." t)
