@@ -478,7 +478,7 @@
                    (insert "「"))))
 (defun my:insert-right-corner-bracket ()
   "easier than C-x 8 <RET> right corner bracket"
-  (local-set-key (kbd "C-c l")
+  (local-set-key (kbd "C-c r")
                  (lambda ()
                    (interactive)
                    (insert "」"))))
