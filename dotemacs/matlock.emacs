@@ -482,8 +482,8 @@
                  (lambda ()
                    (interactive)
                    (insert "」"))))
-(add-hook 'org-mode-hook my:insert-left-corner-bracket)
-(add-hook 'org-mode-hook my:insert-right-corner-bracket)
+(add-hook 'org-mode-hook 'my:insert-left-corner-bracket)
+(add-hook 'org-mode-hook 'my:insert-right-corner-bracket)
 
 
 ;; TODO list intermediate state colors
