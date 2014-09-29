@@ -585,6 +585,16 @@
           '(lambda ()
              (yas-activate-extra-mode 'org-extra-yas-mode)))
 
+;; subscript and superscript behavior -- turn it off without curly braces
+;; source: http://orgmode.org/manual/Subscripts-and-superscripts.html
+;; (setq 'org-use-sub-superscripts '{})
+;; I'm not really sure what I'm supposed to set that to, but I guess on a
+;; per-file basis I can add
+;; #+OPTIONS: ^:{}
+;; source: 
+;; http://stackoverflow.com/questions/698562/disabling-underscore-to-subscript-in-emacs-org-mode-export
+;; not ideal, but better than nothing
+
 ;;;; MobileOrg ;;;;
 ;; source: http://orgmode.org/manual/MobileOrg.html#MobileOrg
 ;; additional source: http://stackoverflow.com/questions/11822353/how-to-make-org-mobile-work-in-android
