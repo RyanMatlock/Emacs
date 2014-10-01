@@ -484,7 +484,9 @@
                    (insert "」"))))
 (add-hook 'org-mode-hook 'my:insert-left-corner-bracket)
 (add-hook 'org-mode-hook 'my:insert-right-corner-bracket)
-
+;; also add these two to Emacs Lisp mode
+(add-hook 'emacs-lisp--mode-hook 'my:insert-left-corner-bracket)
+(add-hook 'emacs-lisp-mode-hook 'my:insert-right-corner-bracket)
 
 ;; TODO list intermediate state colors
 ;; source: http://cjohansen.no/en/emacs/emacs_org_mode_todo_colors
@@ -498,15 +500,15 @@
 ;; source: http://stackoverflow.com/questions/5500035/set-custom-keybinding-for-specific-emacs-mode
 (add-hook 'org-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c C-v C-b") "- [ ] ")))
+            (local-set-key (kbd "C-c C-v C-b") (insert "\n- [ ] "))))
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (kbd "M-)")
-                           "[ ] ")))
+                           (insert "[ ] "))))
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (kbd "M-|")
-                           "\n- [ ] ")))
+                           (insert "\n- [ ] "))))
 
 ;; syntax highlighting in BEGIN_SRC ... END_SRC blocks
 ;; source: http://stackoverflow.com/questions/10642888/syntax-highlighting-within-begin-src-block-in-emacs-orgmode-not-working
@@ -572,7 +574,6 @@
   (local-set-key (kbd "C-c w") 'my:org-html-image-width))
 (add-hook 'org-mode-hook 'hookify:my:org-html-image-width)
 
-
 ;; org-extra-yas-mode
 (define-minor-mode org-extra-yas-mode
   "org-extra-yas-mode adds snippets in
@@ -594,6 +595,19 @@
 ;; source: 
 ;; http://stackoverflow.com/questions/698562/disabling-underscore-to-subscript-in-emacs-org-mode-export
 ;; not ideal, but better than nothing
+
+;; org-mode:  make 「C-c t」 prompt for text and insert "\n- <text>:" (good for
+;; taking notes)
+;; source: http://ergoemacs.org/emacs/elisp_idioms_prompting_input.html
+(defun my:org-list-note-prompt(note-prefix)
+  "prompts user for text, inserts '\n- <text>:'"
+  ;; the 's' means the input will be processed as a string"
+  (interactive 
+   "sEnter a list heading (e.g. time if you're watching a video): ")
+  (insert (format "\n- %s: " note-prefix)))
+(defun hookify:my:org-list-note-prompt ()
+  (local-set-key (kbd "C-c t") 'my:org-list-note-prompt))
+(add-hook 'org-mode-hook 'hookify:my:org-list-note-prompt)
 
 ;;;; MobileOrg ;;;;
 ;; source: http://orgmode.org/manual/MobileOrg.html#MobileOrg
