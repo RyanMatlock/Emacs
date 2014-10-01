@@ -485,7 +485,7 @@
 (add-hook 'org-mode-hook 'my:insert-left-corner-bracket)
 (add-hook 'org-mode-hook 'my:insert-right-corner-bracket)
 ;; also add these two to Emacs Lisp mode
-(add-hook 'emacs-lisp--mode-hook 'my:insert-left-corner-bracket)
+(add-hook 'emacs-lisp-mode-hook 'my:insert-left-corner-bracket)
 (add-hook 'emacs-lisp-mode-hook 'my:insert-right-corner-bracket)
 
 ;; TODO list intermediate state colors
@@ -498,17 +498,34 @@
 ;; C-c C-v C-v to "[ ] " and
 ;; C-c C-b C-b to "\n- [ ] "
 ;; source: http://stackoverflow.com/questions/5500035/set-custom-keybinding-for-specific-emacs-mode
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c C-v C-b") (insert "\n- [ ] "))))
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (kbd "M-)")
-                           (insert "[ ] "))))
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (kbd "M-|")
-                           (insert "\n- [ ] "))))
+;; (add-hook 'org-mode-hook
+;;           (lambda ()
+;;             (local-set-key (kbd "C-c C-v C-b") (insert "\n- [ ] "))))
+;; (add-hook 'org-mode-hook
+;;           (lambda ()
+;;             (local-set-key (kbd "M-)")
+;;                            (insert "[ ] "))))
+;; (add-hook 'org-mode-hook
+;;           (lambda ()
+;;             (local-set-key (kbd "M-|")
+;;                            (insert "\n- [ ] "))))
+;; ignore the above key bindings and look at the docstrings/code below
+;; I think (insert <string>) was the key here
+(defun my:org-insert-checkbox-item ()
+  "「C-c i」 inserts '\n- [ ] '"
+  (interactive)
+  (insert "\n- [ ] "))
+(defun hookify:my:org-insert-checkbox-item ()
+  (local-set-key (kbd "C-c i") 'my:org-insert-checkbox-item))
+(add-hook 'org-mode-hook 'hookify:my:org-insert-checkbox-item)
+
+(defun my:org-insert-just-checkbox ()
+  "「M-)」 inserts '[ ] '"
+  (interactive)
+  (insert "[ ] "))
+(defun hookify:my:org-insert-just-checkbox ()
+  (local-set-key (kbd "M-)") (insert "[ ] ")))
+(add-hook 'org-mode-hook 'hookify:my:org-insert-just-checkbox)
 
 ;; syntax highlighting in BEGIN_SRC ... END_SRC blocks
 ;; source: http://stackoverflow.com/questions/10642888/syntax-highlighting-within-begin-src-block-in-emacs-orgmode-not-working
