@@ -3,5 +3,6 @@
 # contributor: Ryan Matlock <ryan.matlock@gmail.com>
 # --
 do
-{$0
-} while (${1:<condition>})
+{
+$0
+} while (${1:<condition>});
