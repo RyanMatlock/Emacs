@@ -519,13 +519,15 @@
   (local-set-key (kbd "C-c i") 'my:org-insert-checkbox-item))
 (add-hook 'org-mode-hook 'hookify:my:org-insert-checkbox-item)
 
-(defun my:org-insert-just-checkbox ()
-  "「M-)」 inserts '[ ] '"
-  (interactive)
-  (insert "[ ] "))
-(defun hookify:my:org-insert-just-checkbox ()
-  (local-set-key (kbd "M-)") (insert "[ ] ")))
-(add-hook 'org-mode-hook 'hookify:my:org-insert-just-checkbox)
+;; (defun my:org-insert-just-checkbox ()
+;;   "「M-)」 inserts '[ ] '"
+;;   (interactive)
+;;   (insert "[ ] "))
+;; (defun hookify:my:org-insert-just-checkbox ()
+;;   (local-set-key (kbd "M-)") (insert "[ ] ")))
+;; (add-hook 'org-mode-hook 'hookify:my:org-insert-just-checkbox)
+;; I seem to be getting a lot of weird "[ ] " floating around in my documents
+;; these days, and I think this might be to blame
 
 ;; syntax highlighting in BEGIN_SRC ... END_SRC blocks
 ;; source: http://stackoverflow.com/questions/10642888/syntax-highlighting-within-begin-src-block-in-emacs-orgmode-not-working
