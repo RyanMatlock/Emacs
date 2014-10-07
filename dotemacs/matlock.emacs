@@ -519,6 +519,14 @@
   (local-set-key (kbd "C-c i") 'my:org-insert-checkbox-item))
 (add-hook 'org-mode-hook 'hookify:my:org-insert-checkbox-item)
 
+(defun my:org-insert-visible-space-char ()
+  "「C-c <SPC>」 inserts \"␣\" (unicode open box/visible space char)"
+  (interactive)
+  (insert "␣"))
+(defun hookify:my:org-insert-visible-space-char ()
+  (local-set-key (kbd ("C-c <SPC>")) 'my:org-insert-visible-space-char))
+(add-hook 'org-mode-hook 'hookify:my:org-insert-visible-space-char)
+
 ;; (defun my:org-insert-just-checkbox ()
 ;;   "「M-)」 inserts '[ ] '"
 ;;   (interactive)
