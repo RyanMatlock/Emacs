@@ -817,3 +817,43 @@
 ;; http://www.emacswiki.org/emacs/AlignColumn
 (add-to-list 'load-path "~/.emacs.d/plugins/align")
 (autoload 'align-cols "align" "Align text in the region." t)
+
+;;;; Scheme, Common Lisp, Racket, etc. ;;;;
+;; installed geiser with 「M-x package install <RET> geiser <RET>」
+;; see: http://nongnu.org/geiser/geiser_2.html#Installation
+;; to install guile and racket, I've just done a simple
+;; $ brew install guile
+;; $ guile --version
+;; guile (GNU Guile) 2.0.11
+;; $ brew install plt-racket
+;; $ racket --version
+;; Welcome to Racket v6.1.
+;; (current as of 2014-10-08)
+;; as per http://www.nongnu.org/geiser/geiser_2.html#Friends, I'll also install
+;; Paredit and ac-geiser
+
+;; pretty sure
+;; (require 'geiser)
+;; is *not* necessary
+
+;; Paredit
+;; source: http://www.emacswiki.org/emacs/ParEdit
+(autoload 'enable-paredit-mode 
+  "paredit" 
+  "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook #'enable-paredit-mode)
+;; after 30s of use: this is the greatest thing
+
+;; ac-geiser
+;; source: https://github.com/xiaohanyu/ac-geiser/
+;; 「M-x package install <RET> ac-geiser <RET>」
+(require 'ac-geiser)
+(add-hook 'geiser-mode-hook 'ac-geiser-setup)
+(add-hook 'geiser-repl-mode-hook 'ac-geiser-setup)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'geiser-repl-mode))
