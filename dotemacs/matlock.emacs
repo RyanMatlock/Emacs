@@ -519,13 +519,14 @@
   (local-set-key (kbd "C-c i") 'my:org-insert-checkbox-item))
 (add-hook 'org-mode-hook 'hookify:my:org-insert-checkbox-item)
 
-;; 「C-c <SPC>」 inserts \"␣\" (unicode open box/visible space char)"
+;; I forgot that originally, 「C-c <SPC>」 is used to clear a table entry
+;; 「C-c S-<SPC>」 inserts \"␣\" (unicode open box/visible space char)"
 (defun my:org-insert-visible-space-char ()
   "insert a visible space character (unicode u2423/open box '␣')"
   (interactive)
   (insert "␣"))
 (defun hookify:my:org-insert-visible-space-char ()
-  (local-set-key (kbd "C-c <SPC>") 'my:org-insert-visible-space-char))
+  (local-set-key (kbd "C-c S-<SPC>") 'my:org-insert-visible-space-char))
 (add-hook 'org-mode-hook 'hookify:my:org-insert-visible-space-char)
 
 ;; (defun my:org-insert-just-checkbox ()
@@ -847,6 +848,7 @@
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook #'enable-paredit-mode)
+(add-hook 'geiser-repl-mode-hook #'enable-paredit-mode) ;; my addition
 ;; after 30s of use: this is the greatest thing
 
 ;; ac-geiser
