@@ -520,13 +520,13 @@
 (add-hook 'org-mode-hook 'hookify:my:org-insert-checkbox-item)
 
 ;; I forgot that originally, 「C-c <SPC>」 is used to clear a table entry
-;; 「C-c S-<SPC>」 inserts \"␣\" (unicode open box/visible space char)"
+;; 「C-c M-<SPC>」 inserts \"␣\" (unicode open box/visible space char)"
 (defun my:org-insert-visible-space-char ()
   "insert a visible space character (unicode u2423/open box '␣')"
   (interactive)
   (insert "␣"))
 (defun hookify:my:org-insert-visible-space-char ()
-  (local-set-key (kbd "C-c S-<SPC>") 'my:org-insert-visible-space-char))
+  (local-set-key (kbd "C-c M-<SPC>") 'my:org-insert-visible-space-char))
 (add-hook 'org-mode-hook 'hookify:my:org-insert-visible-space-char)
 
 ;; (defun my:org-insert-just-checkbox ()
