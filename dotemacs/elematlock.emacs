@@ -257,11 +257,17 @@
 ;;;; taken from https://courses.csail.mit.edu/6.01/spring08/software/installing-software-emacs.html
 ;;;;;(load "~/python-mode.el") ;; this line didn't work-- python-mode.el is
 ;;;;; elsewhere
-(load "~/.emacs.d/plugins/python-mode.el")
+;; (load "~/.emacs.d/plugins/python-mode.el")
 ;;;; python
-(setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
-(setq interpreter-mode-alist (cons '("python" . python-mode)
-                                      interpreter-mode-alist))
+;; let's do it with 「M-x package-list-packages <RET>」 and search for
+;; python-mode and iPython (and then 「i」 in LH column to select for
+;; installation and 「x」 to install)
+;; (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+;; (setq interpreter-mode-alist (cons '("python" . python-mode)
+;;                                       interpreter-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+
 (autoload 'python-mode "python-mode" "Python editing mode." t)
 (global-font-lock-mode t)
 (font-lock-mode +1)
@@ -356,6 +362,10 @@
 ;; that didn't work either.  Hmm!
 
 ;;;; HideShow
+;; (never mind -- HideShow comes with Emacs 20+) 「M-x package-list-packages
+;; <RET>」and search for HideShow
+;; HOWEVER, that did show me that hideshow-org exists, which I installed
+;; (it provides Org-like visibility handling) -- doesn't do anything?
 ;; source: http://www.emacswiki.org/emacs/HideShow
 (add-hook 'c-mode-common-hook '(lambda () (hs-minor-mode)))
 (add-hook 'clojure-mode-hook '(lambda () (hs-minor-mode)))
