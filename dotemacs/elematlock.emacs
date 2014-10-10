@@ -23,8 +23,14 @@
 
 ;; set default frame size to 80w x 40h
 ;; source: http://www.emacswiki.org/FrameSize
+;; ...and do other things
 (when window-system
-  (set-frame-size (selected-frame) 80 40))
+  (set-frame-size (selected-frame) 80 40)
+  (set-default-font "Inconsolata-13")
+  ;; already did 「M-x package-install <RET> solarized-theme <RET>」
+  ;; installation documented here:
+  ;; https://github.com/sellout/emacs-color-theme-solarized
+  (load-theme 'solarized-dark t))
 
 ;;;; OS X ;;;;
 
@@ -259,7 +265,7 @@
 (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
 
 ;;;;;; source: http://www.stefanom.org/setting-up-a-nice-auctex-environment-on-mac-os-x/
-;;;; AucTeX
+;;;; AUCTeX
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
@@ -285,8 +291,11 @@
 ;; Skim's displayline is used for forward search (from .tex to .pdf)
 ;; option -b highlights the current line; option -g opens Skim in the background  
 (setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
-(setq TeX-view-program-list
-     '(("PDF Viewer" "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b")))
+;; GUI Emacs can take care of displaying PDFs, I think
+(unless window-system
+  (setq TeX-view-program-list
+        '(("PDF Viewer"
+           "/Applications/Skim.app/Contents/SharedSupport/displayline -b -g %n %o %b"))))
 
 ;; hopefully getting the default view to work well
 ;; source: http://alexkrispin.wordpress.com/2010/10/25/writing-with-emacs-and-auctex-part-1/
