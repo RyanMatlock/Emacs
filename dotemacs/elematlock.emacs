@@ -13,6 +13,25 @@
   (load-file "~/.emacs"))
 (global-set-key (kbd "C-c <f12>") 'reload-dotemacs)
 
+;; start package.el with Emacs
+(require 'package)
+;; add MELPA to repository list
+;; also need to add marmalade for Clojure packages (and other stuff eventually,
+;; probably)
+;; (add-to-list  'package-archives 
+;;               '("marmalade" . "http://marmalade-repo.org/packages/")
+;;               '("melpa" . "http://melpa.milkbox.net/packages/"))
+;;               ;; '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives
+             '("gnu" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+;; initialize package.el
+(package-initialize)
+
 ;;;; load .el files
 (add-to-list 'load-path "~/elisp/")
 
@@ -21,11 +40,12 @@
 
 ;;;; Windowed Emacs ;;;;
 
-;; set default frame size to 80w x 40h
+;; set default frame size to 80w x 45h
 ;; source: http://www.emacswiki.org/FrameSize
 ;; ...and do other things
 (when window-system
-  (set-frame-size (selected-frame) 80 40)
+  (set-frame-size (selected-frame) 80 45)
+  ;; just like gnome terminal
   (set-default-font "Inconsolata-13")
   ;; already did 「M-x package-install <RET> solarized-theme <RET>」
   ;; installation documented here:
@@ -146,31 +166,25 @@
 
 ;;;; Allman-style indentation + indentation amount
 (setq c-default-style "bsd"
-    c-basic-offset 4)
+      c-basic-offset 4)
 
 ;;;; Emacs as a C/C++ IDE: auto-complete, yasnippet, auto-complete c/c++
 ;;;; headers
-;;;; source: https://www.youtube.com/watch?v=HTUE03LnaXA
+;;;; source: https: //www.youtube.com/watch?v=HTUE03LnaXA
 
-;; start package.el with Emacs
-(require 'package)
-;; add MELPA to repository list
-;; also need to add marmalade for Clojure packages (and other stuff eventually,
-;; probably)
-(add-to-list  'package-archives 
-              '("marmalade" . "http://marmalade-repo.org/packages/")
-              '("melpa" . "http://melpa.milkbox.net/packages/"))
-              ;; '("gnu" . "http://elpa.gnu.org/packages/"))
-;; initialize package.el
-(package-initialize)
-
+;; (moved package-initialize stuff to the top so it works -- I was having an
+;; issue where the solarized-dark theme wouldn't load on initialization, and
+;; package-initialize placement was to blame
+;; source: http://stackoverflow.com/questions/15555309/emacs-for-windows-error-loading-color-theme )
 ;; start auto-complete with Emacs
+;; 「M-x package install <RET> auto-complete <RET>」
 (require 'auto-complete)
 ;; default config for auto-complete
 (require 'auto-complete-config)
 (ac-config-default)
 
 ;; start yasnippet with Emacs
+;; 「M-x package install <RET> yasnippet <RET>」
 (require 'yasnippet)
 (yas-global-mode 1)
 
@@ -180,6 +194,7 @@
 (yas-global-mode 1)
 
 ;; initialize auto-complete-c-headers and gets called for C/C++ hooks
+;; 「M-x package-install <RET> auto-complete-c-headers <RET>」
 (defun my:ac-c-header-init ()
   (require 'auto-complete-c-headers)
   (add-to-list 'ac-sources 'ac-source-c-headers)
