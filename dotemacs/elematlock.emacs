@@ -199,7 +199,9 @@
   (require 'auto-complete-c-headers)
   (add-to-list 'ac-sources 'ac-source-c-headers)
   (add-to-list 'achead:include-directories
-               '"/usr/local/Cellar/gcc/4.8.2_1/lib/gcc/x86_64-apple-darwin13.2.0/4.8.2/include/c++"))
+               '"/usr/include/c++/4.8")
+    (add-to-list 'achead:include-directories
+               '"/usr/include/x86_64-linux-gnu/c++/4.8/bits"))
 ;; call this from C/C++ hooks
 (add-hook 'c++-mode-hook 'my:ac-c-header-init)
 (add-hook 'c-mode-hook 'my:ac-c-header-init)
@@ -207,6 +209,7 @@
 ;; iedit
 ;; (part 2 of making Emacs a good C/C++ editor/IDE,
 ;; source: https://www.youtube.com/watch?v=r_HW0EB67eY)
+;; 「M-x package-install <RET> iedit <RET>」
 
 ;; fix iedit keybinding bug for Macs
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
