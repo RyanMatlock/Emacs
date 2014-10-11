@@ -470,8 +470,8 @@
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;;;; EAGLE UL mode ;;;;
-(add-to-list 'load-path "~/.emacs.d/plugins/eagle-ul-mode")
-(require 'eagle-ul-mode)
+;; (add-to-list 'load-path "~/.emacs.d/plugins/eagle-ul-mode")
+;; (require 'eagle-ul-mode)
 
 ;;;; Org Mode ;;;;
 
@@ -861,7 +861,7 @@
 
 
 ;;;; Dot Mode (graphviz)
-(load "~/.emacs.d/plugins/dot-mode/dot-mode.el")
+;; (load "~/.emacs.d/plugins/dot-mode/dot-mode.el")
 
 ;;;; align.el
 ;; http://www.emacswiki.org/emacs/AlignColumn
@@ -869,7 +869,7 @@
 (autoload 'align-cols "align" "Align text in the region." t)
 
 ;;;; Scheme, Common Lisp, Racket, etc. ;;;;
-;; installed geiser with 「M-x package install <RET> geiser <RET>」
+;; installed geiser with 「M-x package-install <RET> geiser <RET>」
 ;; see: http://nongnu.org/geiser/geiser_2.html#Installation
 ;; to install guile and racket, I've just done a simple
 ;; $ brew install guile
@@ -887,6 +887,8 @@
 ;; is *not* necessary
 
 ;; Paredit
+;; having an issue with this now -- with stuff like 「M-x package-install <RET> 
+;; ac-geiser <RET>」, I get the error message "Cannot open load file: paredit"
 ;; source: http://www.emacswiki.org/emacs/ParEdit
 (autoload 'enable-paredit-mode 
   "paredit" 
@@ -902,7 +904,7 @@
 
 ;; ac-geiser
 ;; source: https://github.com/xiaohanyu/ac-geiser/
-;; 「M-x package install <RET> ac-geiser <RET>」
+;; 「M-x package-install <RET> ac-geiser <RET>」
 (require 'ac-geiser)
 (add-hook 'geiser-mode-hook 'ac-geiser-setup)
 (add-hook 'geiser-repl-mode-hook 'ac-geiser-setup)
