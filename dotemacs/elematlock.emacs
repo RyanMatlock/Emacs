@@ -433,13 +433,18 @@
 ;; (global-ede-mode 1)
 
 ;; Configure arduino OS X dirs.
-(setq ede-arduino-appdir "/Applications/Arduino.app/Contents/Resources/Java")
+;; (setq ede-arduino-appdir "/Applications/Arduino.app/Contents/Resources/Java")
+;; this stuff is if Arduino mode is going to be your one-stop Arduino IDE; for
+;; now, it's just going to be an editor
 
 ;; configure Emacs to use arduino-mode
-(add-to-list 'load-path "~/.emacs.d/plugins/arduino-mode")
-(setq auto-mode-alist
-      (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode)
-            auto-mode-alist))
+;; (add-to-list 'load-path "~/.emacs.d/plugins/arduino-mode")
+;; 「M-x package-install <RET> arduino-mode <RET>」 is easier
+;; (setq auto-mode-alist
+;;       (cons '("\\.\\(pde\\|ino\\)$" . arduino-mode)
+;;             auto-mode-alist))
+;; I prefer this syntactically sugarific way of adding to a list
+(add-to-list 'auto-mode-alist '("\\.\\(pde\\|ino\\)$" . arduino-mode))
 (autoload 'arduino-mode "arduino-mode" "Arduino editing mode" t)
 
 ;; load auto-complete with arduino-mode
