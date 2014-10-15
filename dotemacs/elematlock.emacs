@@ -889,6 +889,8 @@
 ;; Paredit
 ;; having an issue with this now -- with stuff like 「M-x package-install <RET> 
 ;; ac-geiser <RET>」, I get the error message "Cannot open load file: paredit"
+;; As of 2014-10-15, Paredit seems to be working, and I was able to install
+;; geiser without issue
 ;; source: http://www.emacswiki.org/emacs/ParEdit
 (autoload 'enable-paredit-mode 
   "paredit" 
@@ -905,6 +907,7 @@
 ;; ac-geiser
 ;; source: https://github.com/xiaohanyu/ac-geiser/
 ;; 「M-x package-install <RET> ac-geiser <RET>」
+;; this was also installed without issue now
 (require 'ac-geiser)
 (add-hook 'geiser-mode-hook 'ac-geiser-setup)
 (add-hook 'geiser-repl-mode-hook 'ac-geiser-setup)
