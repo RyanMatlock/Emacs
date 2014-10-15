@@ -829,6 +829,7 @@
 ;; checkers, e.g. flake8 for Python)
 ;; installed flycheck using M-x package-install <RET> flycheck <RET>
 ;; configure it to open up with python-mode
+;; (installed for elematlock on 2014-10-15)
 (add-hook 'python-mode-hook 'flycheck-mode)
 
 ;;;; Tramp Mode ;;;;
