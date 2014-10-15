@@ -50,7 +50,14 @@
   ;; already did 「M-x package-install <RET> solarized-theme <RET>」
   ;; installation documented here:
   ;; https://github.com/sellout/emacs-color-theme-solarized
-  (load-theme 'solarized-dark t))
+  (load-theme 'solarized-dark t)
+  ;; turn on mouse avoidance mode (you can toggle this off with
+  ;; 「M-x mouse-avoidance-mode」
+  ;; references: http://ergoemacs.org/emacs/emacs-tip_mode_on_off_toggle.html
+  ;; and https://www.gnu.org/software/emacs/manual/html_node/emacs/Mouse-Avoidance.html
+  ;; (mouse-avoidance-mode t)
+  ;; ok, that's not working -- guess you'll have to figure out something else
+  )
 
 ;;;; OS X ;;;;
 
