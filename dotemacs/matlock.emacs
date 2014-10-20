@@ -11,6 +11,56 @@
   (load-file "~/.emacs"))
 (global-set-key (kbd "C-c <f12>") 'reload-dotemacs)
 
+;; open .emacs files in Emacs Lisp mode
+;; (helpful since you store your different .emacs files as <hostname>.emacs)
+;; (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+;; also, do it with add-to-list instead
+(add-to-list 'auto-mode-alist '("\\.emacs$" . emacs-lisp-mode))
+
+;; start package.el with Emacs
+(require 'package)
+;; add MELPA to repository list
+;; also need to add marmalade for Clojure packages (and other stuff eventually,
+;; probably)
+;; this is the old, bad way:
+;; (add-to-list  'package-archives 
+;;               '("marmalade" . "http://marmalade-repo.org/packages/")
+;;               '("melpa" . "http://melpa.milkbox.net/packages/"))
+;;               ;; '("gnu" . "http://elpa.gnu.org/packages/"))
+;; this is the new, right way from elematlock:
+(add-to-list 'package-archives
+             '("gnu" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
+;; initialize package.el
+(package-initialize)
+
+;;;; Windowed Emacs ;;;;
+;; adding Windowed Emacs stuff from elematlock
+
+;; set default frame size to 80w x 45h
+;; source: http://www.emacswiki.org/FrameSize
+;; ...and do other things
+(when window-system
+  (set-frame-size (selected-frame) 80 45)
+  ;; just like gnome terminal
+  (set-default-font "Inconsolata-13")
+  ;; already did 「M-x package-install <RET> solarized-theme <RET>」
+  ;; installation documented here:
+  ;; https://github.com/sellout/emacs-color-theme-solarized
+  (load-theme 'solarized-dark t)
+  ;; turn on mouse avoidance mode (you can toggle this off with
+  ;; 「M-x mouse-avoidance-mode」
+  ;; references: http://ergoemacs.org/emacs/emacs-tip_mode_on_off_toggle.html
+  ;; and https://www.gnu.org/software/emacs/manual/html_node/emacs/Mouse-Avoidance.html
+  ;; (mouse-avoidance-mode t)
+  ;; ok, that's not working -- guess you'll have to figure out something else
+  )
+
+
 ;;;; load .el files
 (add-to-list 'load-path "~/elisp/")
 
@@ -134,17 +184,8 @@
 ;;;; headers
 ;;;; source: https://www.youtube.com/watch?v=HTUE03LnaXA
 
-;; start package.el with Emacs
-(require 'package)
-;; add MELPA to repository list
-;; also need to add marmalade for Clojure packages (and other stuff eventually,
-;; probably)
-(add-to-list  'package-archives 
-              '("marmalade" . "http://marmalade-repo.org/packages/")
-              '("melpa" . "http://melpa.milkbox.net/packages/"))
-              ;; '("gnu" . "http://elpa.gnu.org/packages/"))
-;; initialize package.el
-(package-initialize)
+;; package-initialize/ELPA/MELPA/Marmalade stuff moved to the top as per
+;; http://stackoverflow.com/questions/15555309/emacs-for-windows-error-loading-color-theme
 
 ;; start auto-complete with Emacs
 (require 'auto-complete)
