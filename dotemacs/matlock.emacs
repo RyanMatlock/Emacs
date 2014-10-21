@@ -582,7 +582,6 @@
 
 ;; syntax highlighting in BEGIN_SRC ... END_SRC blocks
 ;; source: http://stackoverflow.com/questions/10642888/syntax-highlighting-within-begin-src-block-in-emacs-orgmode-not-working
-(setq org-src-fontify-natively t)
 ;; have to load org babel languages
 ;; source: http://superuser.com/questions/429981/org-mode-is-there-a-way-i-can-make-emacs-treat-a-region-to-be-of-a-given-mode
 (org-babel-do-load-languages 'org-babel-load-languages
@@ -601,6 +600,7 @@
                                (org . t)))
 ;; not sure why C++ isn't working
 ;; see http://orgmode.org/manual/Languages.html#Languages
+(setq org-src-fontify-natively t)
 
 ;; org-mode fancy HTML5 export
 ;; source: http://orgmode.org/manual/HTML-doctypes.html
@@ -643,6 +643,12 @@
 (defun hookify:my:org-html-image-width ()
   (local-set-key (kbd "C-c w") 'my:org-html-image-width))
 (add-hook 'org-mode-hook 'hookify:my:org-html-image-width)
+
+;; allow alphabetical lists
+;; no idea why this isn't working
+;; source: http://comments.gmane.org/gmane.emacs.orgmode/72865 and
+;; http://orgmode.org/manual/Plain-lists.html
+(setq org-list-allow-alphabetical t)
 
 ;; org-extra-yas-mode
 (define-minor-mode org-extra-yas-mode
