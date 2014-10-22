@@ -655,6 +655,7 @@
 ;; no idea why this isn't working
 ;; source: http://comments.gmane.org/gmane.emacs.orgmode/72865 and
 ;; http://orgmode.org/manual/Plain-lists.html
+;; actually, since upgrading org mode from 7.9.something to 8.2.10, this works!
 (setq org-list-allow-alphabetical t)
 
 ;; org-extra-yas-mode
