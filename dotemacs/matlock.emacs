@@ -532,7 +532,9 @@
 ;; TODO list intermediate state colors
 ;; source: http://cjohansen.no/en/emacs/emacs_org_mode_todo_colors
 (setq org-todo-keyword-faces
-      '(("IN-PROGRESS" . (:foreground "yellow" :weight bold))
+      '(("TODO" . (:foreground "red" :weight bold))
+        ("DONE" . (:foreground "green" :weight bold))
+        ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
         ("ON-HOLD" . (:foreground "yellow" :weight bold))))
 
 ;; set org-mode keybinding C-c C-v C-b to the string "- [ ] " and
