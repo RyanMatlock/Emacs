@@ -609,11 +609,32 @@
 ;; maybe C++ will work now that I've upgrade Org mode to v8.2.10 -- eh
 (setq org-src-fontify-natively t)
 
+;; to get syntax highlighting working with HTML output, htmlize may need to be
+;; installed separately
+;; see http://stackoverflow.com/questions/24082430/org-mode-no-syntax-highlighting-in-exported-html-page
+;; 「M-x package-install <RET> htmlize <RET>」
+
+;; Org 8.2.10 no longer supports $\implies$, it seems I need to include the 
+;; amsmath and amssymb packages
+;; see http://orgmode.org/worg/org-contrib/babel/examples/article-class.html#latex-proglang
+;; (require 'org-latex)
+;; (setq org-export-latex-listings t)
+;; (add-to-list 'org-export-latex-packages-alist
+;;              '(("AUTO" "amsmath" t)))
+;; (add-to-list 'org-export-latex-packages-alist
+;;              '(("AUTO" "amssymb" t)))
+;; (add-to-list 'org-export-latex-packages-alist
+;;              '(("AUTO" "inputenc" t)))
+;; hmm, that's not working right
+;; maybe stackoverflow will find the solution:
+;; http://stackoverflow.com/questions/26517510/org-mode-8-2-10-no-longer-supporting-certain-special-characters
+
 ;; org-mode fancy HTML5 export
 ;; source: http://orgmode.org/manual/HTML-doctypes.html
 (setq org-html-doctype "html5")
 (setq org-html-html5-fancy t)
 ;; this HTML5 thing isn't working nicely yet
+;; with org upgrade (7.9 -> 8.2.10), this works!
 
 ;; turn off Org Mode babel evaluation on C-c C-c
 (setq org-babel-no-eval-on-ctrl-c-ctrl-c t)
@@ -679,6 +700,12 @@
 ;; source: 
 ;; http://stackoverflow.com/questions/698562/disabling-underscore-to-subscript-in-emacs-org-mode-export
 ;; not ideal, but better than nothing
+;; now that I'm using a newer Org (8.2.10 instead of 7.9.x), let's try this
+;; again
+(setq org-use-sub-superscripts "{}")
+;; hmm, maybe the export is different, so let's try that
+;; see http://lists.gnu.org/archive/html/emacs-orgmode/2013-11/msg00624.html
+(setq org-export-with-sub-superscripts "{}")
 
 ;; org-mode:  make 「C-c t」 prompt for text and insert "\n- <text>:" (good for
 ;; taking notes)
