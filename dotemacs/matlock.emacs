@@ -588,8 +588,14 @@
                              '((sh . t)
                                (python . t)
                                (clojure . t)
-                               (C . t)
-                               ;; (C++ . t)
+                               (C . t) ;; note that C is capitalized
+                               ;; (c++ . t) ;; but c++ is lowercase
+                               ;; see http://emacs-fu.blogspot.com/2011/02/executable-source-code-blocks-with-org.html
+                               ;; hmm, that didn't work; try cpp?
+                               ;; source: http://orgmode.org/worg/org-contrib/babel/languages.html
+                               ;; (cpp . t)
+                               ;; maybe C is sufficient
+                               ;; see http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-C.html
                                (emacs-lisp . t)
                                (js . t)
                                (latex . t)
@@ -600,6 +606,7 @@
                                (org . t)))
 ;; not sure why C++ isn't working
 ;; see http://orgmode.org/manual/Languages.html#Languages
+;; maybe C++ will work now that I've upgrade Org mode to v8.2.10 -- eh
 (setq org-src-fontify-natively t)
 
 ;; org-mode fancy HTML5 export
