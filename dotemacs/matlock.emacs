@@ -72,18 +72,46 @@
 ;; copy & paste to/from clipboard
 ;; source: https://web.archive.org/web/20110504210857/http://blog.lathi.net/articles/2007/11/07/sharing-the-mac-clipboard-with-emacs
 ;; (linked from http://stackoverflow.com/questions/9985316/how-to-paste-to-emacs-from-clipboard)
-;; (defun copy-from-osx ()
-;;   (shell-command-to-string "pbpaste"))
+;; it looks like I can check what my operating system is
+;; source: http://stackoverflow.com/questions/1817257/how-to-determine-operating-system-in-elisp and
+;; http://stackoverflow.com/questions/10088168/how-to-check-whether-a-minor-mode-e-g-flymake-mode-is-on
+;; so I think if I just do a
+;; (when (string-equal system-type "darwin")
+;;   (unless (bound-and-true-p tramp-mode)
+;;     ;; os x stuff
+;;     ))
+;; will work
+;; (when (string-equal system-type "darwin")
+;;   (unless (bound-and-true-p tramp-mode)
+;;     (message "os x sans tramp")))
+;; hmm
+;; (if (bound-and-true-p tramp-mode)
+;;     (message "tramp-mode is defined and active")
+;;   (message "tramp-mode is undefined and/or disabled"))
+;; see http://stackoverflow.com/questions/26579205/emacs-check-if-buffer-is-being-edited-through-tramp
+;; which was answered in
+;; http://stackoverflow.com/questions/3415830/does-tramp-offer-any-api-for-interrogating-information-from-the-buffer-file-name
+;; you can check if buffer is being managed by Tramp by checking truth value of
+;; variable 「tramp-tramp-file-p」, e.g.:
+;; (if (bound-and-true-p tramp-tramp-file-p)
+;;     (message "I'm a tramp")
+;;   (message "I ain't no tramp"))
+;; which, when I'm editing .emacs on my local machine, produces the output:
+;; "I ain't no tramp"
+(defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
 
-;; (defun paste-to-osx (text &optional push)
-;;   (let ((process-connection-type nil)) 
-;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-;;       (process-send-string proc text)
-;;       (process-send-eof proc))))
+(defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil)) 
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc))))
 
-;; (setq interprogram-cut-function 'paste-to-osx)
-;; (setq interprogram-paste-function 'copy-from-osx)
-
+(when (string-equal system-type "darwin")
+  (unless (bound-and-true-p tramp-tramp-file-p)
+    (setq interprogram-cut-function 'paste-to-osx)
+    (setq interprogram-paste-function 'copy-from-osx)))
+;; cool, it seems to work!
 
 ;;;; General editing ;;;;
 ;; get block indentation/unindentation working nicely at some point
