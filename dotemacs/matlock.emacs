@@ -732,10 +732,10 @@
 ;; not ideal, but better than nothing
 ;; now that I'm using a newer Org (8.2.10 instead of 7.9.x), let's try this
 ;; again
-(setq org-use-sub-superscripts "{}")
+;; (setq org-use-sub-superscripts "{}")
 ;; hmm, maybe the export is different, so let's try that
 ;; see http://lists.gnu.org/archive/html/emacs-orgmode/2013-11/msg00624.html
-(setq org-export-with-sub-superscripts "{}")
+(setq org-export-with-sub-superscripts "^:{}")
 
 ;; org-mode:  make 「C-c t」 prompt for text and insert "\n- <text>:" (good for
 ;; taking notes)
@@ -765,6 +765,9 @@
                          "~/org-mode/places-to-go.org"
                          "~/org-mode/books-to-read.org"))
 (setq org-mobile-inbox-for-pull "~/org-mode/from-mobile.org")
+
+(setq org-html-head-extra
+      "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://RyanMatlock.github.io/org-style/org-style.css\" />")
 
 ;;;; Sunrise Commander ;;;;
 ;; repo source: https://github.com/escherdragon/sunrise-commander
