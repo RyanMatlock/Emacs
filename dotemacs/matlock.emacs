@@ -715,11 +715,42 @@
    such a way that it's unlikely to
    conflict with other modes"
   :init-value nil
-  :lighter " org-xtra-yas")
+  :lighter " OXY")
 
+;; wait, this doesn't make sense
+;; wait, actually it does -- it means that yasnippet activates this mode when
+;; it's activated (but you probably only want it active when Org mode is
+;; active
 (add-hook 'org-extra-yas-mode-hook
           '(lambda ()
              (yas-activate-extra-mode 'org-extra-yas-mode)))
+;; see http://stackoverflow.com/questions/7421445/emacs-entering-minor-mode-with-major-mode
+;; for how you should do this
+;; (defun org-extra-yas-mode-hook ()
+;;   (lambda ()
+;;     (require 'yasnippet)
+;;     (yas-activate-extra-mode 'org-extra-yas-mode)))
+;; or just do it the way suggested in the link
+;; (defun org-extra-yas-mode-hook ()
+;;   (org-extra-yas-mode 1))
+;; (add-hook 'org-mode-hook 'org-extra-yas-mode-hook)
+;; maybe try it in interactive mode because the documentation in yasnippet.el
+;; says the following:
+;;
+;;   M-x yas-activate-extra-mode
+;;
+;;     Prompts you for an extra mode to add snippets for in the
+;;     current buffer.
+;; hmm, this isn't working
+;; (defun org-extra-yas-mode-hook ()
+;;   (lambda ()
+;;     (require 'yasnippet)
+;;     (interactive)
+;;     (yas-activate-extra-mode 'org-extra-yas-mode)))
+(defun org-extra-yas-mode-activation-kludge ()
+  (org-extra-yas-mode 1))
+(add-hook 'org-mode-hook 'org-extra-yas-mode-activation-kludge)
+;; ok, that works, as long as you have the hook thing above working
 
 ;; subscript and superscript behavior -- turn it off without curly braces
 ;; source: http://orgmode.org/manual/Subscripts-and-superscripts.html
@@ -735,7 +766,8 @@
 ;; (setq org-use-sub-superscripts "{}")
 ;; hmm, maybe the export is different, so let's try that
 ;; see http://lists.gnu.org/archive/html/emacs-orgmode/2013-11/msg00624.html
-(setq org-export-with-sub-superscripts "^:{}")
+(setq org-export-with-sub-superscripts "{}")
+(setq org-use-sub-superscripts "{}")
 
 ;; org-mode:  make 「C-c t」 prompt for text and insert "\n- <text>:" (good for
 ;; taking notes)
@@ -854,29 +886,30 @@
       (cons '("\\.snip$" . snippet-mode)
             auto-mode-alist))
 
-;; bracket-mode minor mode
-(define-minor-mode bracket-mode
-  "bracket-mode allows slightly more ergonomic
-   entry of brackets and parentheses -- useful
-   for a number of major modes"
-  :init-value nil
-  :lighter " brkt")
+;; this never ended up being useful
+;; ;; bracket-mode minor mode
+;; (define-minor-mode bracket-mode
+;;   "bracket-mode allows slightly more ergonomic
+;;    entry of brackets and parentheses -- useful
+;;    for a number of major modes"
+;;   :init-value nil
+;;   :lighter " brkt")
 
-;; entering minor mode with major mode
-;; source: http://stackoverflow.com/questions/7421445/emacs-entering-minor-mode-with-major-mode
-(add-hook 'bracket-mode-hook
-          '(lambda ()
-             (yas-activate-extra-mode 'bracket-mode)))
-;; (defun c-commmon-bracket-hook ()
-;;    (bracket-mode 1) nil)
-;; (add-hook 'c-mode-common-hook 'c-common-bracket-hook)
-;; see also http://stackoverflow.com/questions/4253473/emacs-how-do-i-automatically-enter-minor-modes-when-i-enter-a-major-mode
-(add-hook 'c-mode-common-hook '(lambda () (bracket-mode)))
-(add-hook 'org-mode-hook '(lambda () (bracket-mode)))
-(add-hook 'text-mode-hook '(lambda () (bracket-mode)))
-(add-hook 'latex-mode-hook '(lambda () (bracket-mode)))
-(add-hook 'python-mode-hook '(lambda () (bracket-mode)))
-(add-hook 'makefile-mode-hook '(lambda() (bracket-mode)))
+;; ;; entering minor mode with major mode
+;; ;; source: http://stackoverflow.com/questions/7421445/emacs-entering-minor-mode-with-major-mode
+;; (add-hook 'bracket-mode-hook
+;;           '(lambda ()
+;;              (yas-activate-extra-mode 'bracket-mode)))
+;; ;; (defun c-commmon-bracket-hook ()
+;; ;;    (bracket-mode 1) nil)
+;; ;; (add-hook 'c-mode-common-hook 'c-common-bracket-hook)
+;; ;; see also http://stackoverflow.com/questions/4253473/emacs-how-do-i-automatically-enter-minor-modes-when-i-enter-a-major-mode
+;; (add-hook 'c-mode-common-hook '(lambda () (bracket-mode)))
+;; (add-hook 'org-mode-hook '(lambda () (bracket-mode)))
+;; (add-hook 'text-mode-hook '(lambda () (bracket-mode)))
+;; (add-hook 'latex-mode-hook '(lambda () (bracket-mode)))
+;; (add-hook 'python-mode-hook '(lambda () (bracket-mode)))
+;; (add-hook 'makefile-mode-hook '(lambda() (bracket-mode)))
 
 
 ;; allman-c-mode minor mode
