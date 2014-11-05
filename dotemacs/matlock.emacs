@@ -766,8 +766,15 @@
 ;; (setq org-use-sub-superscripts "{}")
 ;; hmm, maybe the export is different, so let's try that
 ;; see http://lists.gnu.org/archive/html/emacs-orgmode/2013-11/msg00624.html
-(setq org-export-with-sub-superscripts "{}")
-(setq org-use-sub-superscripts "{}")
+;; (setq org-export-with-sub-superscripts "{}")
+;; (setq org-use-sub-superscripts "{}")
+;; answer from stackoverflow:
+;; You must write instead:
+;;     (setq org-use-sub-superscripts '{})
+(setq org-use-sub-superscripts '{})
+;; you actually need the following for the HTML (and LaTeX?) exporting to work
+;; as you'd like, too
+(setq org-export-with-sub-superscripts '{})
 
 ;; org-mode:  make 「C-c t」 prompt for text and insert "\n- <text>:" (good for
 ;; taking notes)
