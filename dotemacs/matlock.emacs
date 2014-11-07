@@ -38,6 +38,56 @@
 ;; initialize package.el
 (package-initialize)
 
+;; get rid of that annoying 「」 (which you can make with 「C-q C-m」) at the
+;; end of lines created on some Windows machines
+;; this code worked in *scratch*:
+;;     (defun my:rep-str (target replacement)
+;;       "I want to see if I can define a command for common find/replace operations"
+;;       (interactive)
+;;       (replace-string target replacement))
+;;     (defun my:foo-bar ()
+;;       (interactive)
+;;       (my:rep-str "foo" "bar"))
+;; but if I wanted to be really cool, I'd have it only do the replacement from
+;; current cursor position, but if it were called with the C-u prefix, it would
+;; start from the beginning of the document (and we'd also save the previous
+;; cursor position)
+;; see http://ergoemacs.org/emacs/elisp_universal_argument.html
+;; and http://www.delorie.com/gnu/docs/emacs/emacs_28.html
+;; and https://www.gnu.org/software/emacs/manual/html_node/eintr/save_002dexcursion.html#save_002dexcursion
+;; and http://www.chemie.fu-berlin.de/chemnet/use/info/elisp/elisp_28.html
+;; this works
+;;     (defun my:replace-foo-with-bar (&optional whole-document-p)
+;;       (interactive "P")
+;;       (if (equal whole-document-p nil)
+;;           (replace-string "foo" "bar")
+;;         (message "Soon...")))
+;; this totally works
+;;     (defun my:replace-foo-with-bar-helper ()
+;;       (replace-string "foo" "bar"))
+;;     (defun my:replace-foo-with-bar (&optional whole-document-p)
+;;       (interactive "P")
+;;       (if (equal whole-document-p nil)
+;;           (my:replace-foo-with-bar-helper)
+;;         (save-excursion
+;;           (goto-char (point-min))
+;;           (my:replace-foo-with-bar-helper))
+;;         (message "%s" (point))))
+(defun my:delete-carriage-returns-helper ()
+  (replace-string "" ""))
+(defun delete-carriage-returns (&optional whole-document-p)
+  "If called with C-u, it gets rid of all carriage returns in the document;
+   otherwise, it gets rid of all carriage returns following the cursor
+   position"
+  (interactive "P")
+  (if (equal whole-document-p nil)
+      (my:delete-carriage-returns-helper)
+    (save-excursion
+      (goto-char (point-min))
+      (my:delete-carriage-returns-helper))))
+;; enable this globally for C-c R
+(global-set-key (kbd "C-c R") 'delete-carriage-returns)
+
 ;;;; Windowed Emacs ;;;;
 ;; adding Windowed Emacs stuff from elematlock
 
