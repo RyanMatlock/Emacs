@@ -148,20 +148,25 @@
 ;;   (message "I ain't no tramp"))
 ;; which, when I'm editing .emacs on my local machine, produces the output:
 ;; "I ain't no tramp"
-(defun copy-from-osx ()
-  (shell-command-to-string "pbpaste"))
 
-(defun paste-to-osx (text &optional push)
-  (let ((process-connection-type nil)) 
-    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-      (process-send-string proc text)
-      (process-send-eof proc))))
+;; (defun copy-from-osx ()
+;;   (shell-command-to-string "pbpaste"))
 
-(when (string-equal system-type "darwin")
-  (unless (bound-and-true-p tramp-tramp-file-p)
-    (setq interprogram-cut-function 'paste-to-osx)
-    (setq interprogram-paste-function 'copy-from-osx)))
+;; (defun paste-to-osx (text &optional push)
+;;   (let ((process-connection-type nil)) 
+;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+;;       (process-send-string proc text)
+;;       (process-send-eof proc))))
+
+;; (when (string-equal system-type "darwin")
+;;   (unless (bound-and-true-p tramp-tramp-file-p)
+;;     (setq interprogram-cut-function 'paste-to-osx)
+;;     (setq interprogram-paste-function 'copy-from-osx)))
+
 ;; cool, it seems to work!
+;; actually, I didn't test it out with Tramp, and all I'm getting is 
+;; /bin/bash: pbpaste: command not found
+;; when editing a file through Tramp
 
 ;;;; General editing ;;;;
 ;; get block indentation/unindentation working nicely at some point
