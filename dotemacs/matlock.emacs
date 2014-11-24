@@ -226,7 +226,8 @@
 ;; set columns to 80 characters long (as per PEP 8/good programming practice)
 ;; !! maybe you need to do this for Fundamental as well ???
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
-(setq-default fill-column 80)
+(setq-default fill-column 79)
+;; actually, it needs to be set at 79 as per pyflakes (just trust me on this)
 
 ;; text mode 4 spaces instead of indent
 ;; source: http://stackoverflow.com/questions/69934/set-4-space-indent-in-emacs-in-text-mode
