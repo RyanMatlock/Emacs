@@ -997,6 +997,11 @@
 ;; problem with hanging; trying this:
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 
+;; use ssh as default for Tramp
+;; see
+;; https://www.gnu.org/software/emacs/manual/html_node/tramp/Default-Method.html
+(setq tramp-default-method "ssh")
+
 ;; sudo through Tramp
 
 ;; not working exactly right
