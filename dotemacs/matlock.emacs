@@ -534,7 +534,13 @@
 (defun my:arduino-mode-comment-delimiters ()
   "Redefines comment-start and comment-end for Arduino mode"
   (set (make-local-variable 'comment-start) "//")
-  (set (make-local-variable 'comment-end) ""))
+  (set (make-local-variable 'comment-end) "")
+  ;; this stopped working properly for some reason, so I'll see if setting
+  ;; comment-multi-line to nil fixes anything see
+  ;; http://www.gnu.org/software/emacs/manual/html_node/emacs/Multi_002dLine-Comments.html#Multi_002dLine-Comments
+  ;; hmm, it only seems to be that way for a particular file I'm editing; oh
+  ;; well, not important now
+  (set (make-local-variable 'comment-multi-line) nil))
 (add-hook 'arduino-mode-hook 'my:arduino-mode-comment-delimiters)
 
 ;;;; JavaScript ;;;;
