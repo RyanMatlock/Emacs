@@ -1081,3 +1081,6 @@
 (add-hook 'geiser-repl-mode-hook 'ac-geiser-setup)
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'geiser-repl-mode))
+
+;;;; Haskell
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
