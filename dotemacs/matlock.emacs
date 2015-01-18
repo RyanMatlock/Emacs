@@ -1107,5 +1107,6 @@
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-insert-where)
 
 (defun my-key:haskell-indent-align-guards-and-rhs ()
-  (local-set-key (kbd "C-c .") 'haskell-indent-align-guards-and-rhs))
+  (local-set-key (kbd "C-c a") 'haskell-indent-align-guards-and-rhs))
+;; for some reason, C-c . wasn't working well, so C-c a it is!
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-align-guards-and-rhs)
