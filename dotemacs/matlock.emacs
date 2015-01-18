@@ -1088,22 +1088,24 @@
 
 ;; handy commands that for some reason don't seem to be set up yet
 ;; http://www.cis.syr.edu/courses/cis252/emacs.html
+;; actually, it turns out some of these key combos don't work, so I'm just
+;; going to remove the second C- part and go ahead with that
 (defun my-key:haskell-indent-insert-equal ()
-  (local-set-key (kbd "C-c C-=") 'haskell-indent-insert-equal))
+  (local-set-key (kbd "C-c =") 'haskell-indent-insert-equal))
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-insert-equal)
 
 (defun my-key:haskell-indent-insert-guard ()
-  (local-set-key (kbd "C-c C-|") 'haskell-indent-insert-guard))
+  (local-set-key (kbd "C-c |") 'haskell-indent-insert-guard))
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-insert-guard)
 
 (defun my-key:haskell-indent-insert-otherwise ()
-  (local-set-key (kbd "C-c C-o") 'haskell-indent-insert-otherwise))
+  (local-set-key (kbd "C-c o") 'haskell-indent-insert-otherwise))
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-insert-otherwise)
 
 (defun my-key:haskell-indent-insert-where ()
-  (local-set-key (kbd "C-c C-w") 'haskell-indent-insert-where))
+  (local-set-key (kbd "C-c w") 'haskell-indent-insert-where))
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-insert-where)
 
 (defun my-key:haskell-indent-align-guards-and-rhs ()
-  (local-set-key (kbd "C-c C-.") 'haskell-indent-align-guards-and-rhs))
+  (local-set-key (kbd "C-c .") 'haskell-indent-align-guards-and-rhs))
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-align-guards-and-rhs)
