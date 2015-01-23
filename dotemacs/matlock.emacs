@@ -1085,6 +1085,7 @@
 ;;;; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'paredit-mode)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 ;; handy commands that for some reason don't seem to be set up yet
 ;; http://www.cis.syr.edu/courses/cis252/emacs.html
