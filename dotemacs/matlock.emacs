@@ -1122,3 +1122,9 @@
   (local-set-key (kbd "C-c a") 'haskell-indent-align-guards-and-rhs))
 ;; for some reason, C-c . wasn't working well, so C-c a it is!
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-align-guards-and-rhs)
+
+;; tried to install Helm with
+;; 「M-x package-install <RET> helm <RET>」
+;; but MELPA couldn't find the tarball, so I guess I'll try
+;; 「M-x package-list-packages」 instead; ok, that worked
+
