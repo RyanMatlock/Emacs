@@ -545,6 +545,14 @@
 
 ;;;; JavaScript ;;;;
 
+;; Er, commenting this out seems to be breaking things, but I think I'll see if
+;; I can do a package-install of js2-mode
+;;
+;; ok, 「M-x package-install RET js2-mode RET」 appeared to work, so let's
+;; quit, restart, and see what happens
+;;
+;; looks like everything's cool now
+;;
 ;; I'm going to skip js2-mode for now to see of context-coloring works without
 ;; it
 ;; followed instructions at
