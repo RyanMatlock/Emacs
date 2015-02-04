@@ -551,7 +551,14 @@
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-;;;; EAGLE UL mode ;;;;
+;; TODO
+;; Douglas Crockford-style context coloring
+;; https://github.com/jacksonrayhamilton/context-coloring/
+;; 「M-x package-refresh-contents RET」
+;; 「M-x package-install RET context-coloring RET」
+;; actually, this didn't work yet, but definitely come back to it!!
+
+;;;; Eagle UL mode ;;;;
 (add-to-list 'load-path "~/.emacs.d/plugins/eagle-ul-mode")
 (require 'eagle-ul-mode)
 
