@@ -545,18 +545,25 @@
 
 ;;;; JavaScript ;;;;
 
+;; I'm going to skip js2-mode for now to see of context-coloring works without
+;; it
 ;; followed instructions at
 ;; https://code.google.com/p/js2-mode/wiki/InstallationInstructions
-(add-to-list 'load-path "~/.emacs.d/plugins/js2-mode")
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+;; (add-to-list 'load-path "~/.emacs.d/plugins/js2-mode")
+;; (autoload 'js2-mode "js2" nil t)
+;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-;; TODO
 ;; Douglas Crockford-style context coloring
 ;; https://github.com/jacksonrayhamilton/context-coloring/
 ;; 「M-x package-refresh-contents RET」
 ;; 「M-x package-install RET context-coloring RET」
 ;; actually, this didn't work yet, but definitely come back to it!!
+;; ok, so I can't get the package-install method to work, so I just cloned the
+;; git repo to ~/.emacs.d and compiled from there
+(add-to-list 'load-path "~/.emacs.d/context-coloring")
+(require 'context-coloring)
+(add-hook 'js-mode-hook 'context-coloring-mode)
+(context-coloring-load-theme 'solarized)
 
 ;;;; Eagle UL mode ;;;;
 (add-to-list 'load-path "~/.emacs.d/plugins/eagle-ul-mode")
