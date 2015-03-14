@@ -1191,7 +1191,9 @@ add it to `before-save-hook'."
 ;; but MELPA couldn't find the tarball, so I guess I'll try
 ;; 「M-x package-list-packages」 instead; ok, that worked
 
-;;;;;; Seven languages in seven weeks languages
-;;;; Io
+;;;; Io language
 ;; 「M-x package-install <RET> io-mode <RET>」 worked
 ;; see https://github.com/superbobry/io-mode
+
+;;;; Julia language
+;; 「M-x package-install <RET> julia-mode <RET>」 worked
