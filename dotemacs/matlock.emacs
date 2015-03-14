@@ -1,5 +1,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Matlock's .emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;;;; TODOs ;;;;;;
+;; [ ] figure out differences between shell and GUI Emacs
+;; (For example, shell-mode in emacs -nw doesn't allow for 「C-<UP>」 to get
+;; the last command, but it does work in GUI Emacs for some reason. I bet a lot
+;; of other issues you've had in the past (e.g. 「C-.」 not working in Org mode
+;; (?) could be resolved by figuring this out). I guess what you really want is
+;; the same nice shell Emacs behavior from the GUI (i.e. familiar colors, no
+;; mouse, and maybe some other stuff.)
+;;;;; /TODOs ;;;;;;
+
 ;; good for when you've added something new, but doesn't need to be perpetually
 ;; enabled
 ;; (setq debug-on-error t)
