@@ -119,9 +119,15 @@
 ;; source: http://www.emacswiki.org/FrameSize
 ;; ...and do other things
 (when window-system
-  (set-frame-size (selected-frame) 80 45)
+  (defvar my:frame-width 80)
+  (defvar my:frame-height 45)
+  (set-frame-size (selected-frame) my:frame-width my:frame-height)
   ;; just like gnome terminal (except it needs to be a little bigger)
-  (set-default-font "Inconsolata-15")
+  (defvar my:font-face "Inconsolata")
+  (defvar my:font-size 15)
+  (set-default-font (concat my:font-face
+                            "-"
+                            (number-to-string my:font-size)))
   ;; already did 「M-x package-install <RET> solarized-theme <RET>」
   ;; installation documented here:
   ;; https://github.com/sellout/emacs-color-theme-solarized
@@ -153,6 +159,22 @@
                [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5]
                [triple-mouse-5]))
     (global-unset-key k))
+
+  ;; I bet I can define functions to resize the frame for side-by-side windows
+  ;; and another to revert to the default size
+  (defun side-by-side ()
+  "resizes the frame to accommodate two windows side-by-side"
+  (interactive)
+  (set-frame-size (selected-frame)
+                  (+ (* my:frame-width 2) 2)
+                  my:frame-height))
+
+  (defun std-frame ()
+    "reverts framesize to standard"
+    (interactive)
+    (set-frame-size (selected-frame)
+                    my:frame-width
+                    my:frame-height))
   )
 
 
