@@ -9,8 +9,15 @@
 ;; the same nice shell Emacs behavior from the GUI (i.e. familiar colors, no
 ;; mouse, and maybe some other stuff.)
 ;;
-;; [ ] get bash (i.e. 「M-x shell」) to work like it does in terminal
-;; (including stuff like extended globs)
+;; [x] get bash (i.e. 「M-x shell」) to work like it does in terminal
+;; (including stuff like extended globs)---did this; it was only *slightly*
+;; involved. Basically, I had to symlink /bin/bash to my latest version of the
+;; actual bash binary (as of 2015-03-15, that was
+;; /usr/local/Cellar/bash/4.3.27/bin/bash) to /bin/bash and then add a
+;; ~/.bashrc file (which just said "source /etc/.bashrc"), and now it seems
+;; that I (mostly?) get the behavior I want (to be fair, I haven't tried any
+;; really serious scripts yet; I just wanted to have a decent Julia lang REPL
+;; going on for me)
 ;;;;; /TODOs ;;;;;;
 
 ;; good for when you've added something new, but doesn't need to be perpetually
@@ -122,7 +129,24 @@
   (defvar my:frame-width 80)
   (defvar my:frame-height 45)
   (set-frame-size (selected-frame) my:frame-width my:frame-height)
-  ;; just like gnome terminal (except it needs to be a little bigger)
+  ;; I bet I can define functions to resize the frame for side-by-side windows
+  ;; and another to revert to the default size
+  ;; by the way, I checked, and neither of these work inside of the terminal
+  (defun side-by-side ()
+  "resizes the frame to accommodate two windows side-by-side"
+  (interactive)
+  (set-frame-size (selected-frame)
+                  (+ (* my:frame-width 2) 2)
+                  my:frame-height))
+
+  (defun std-frame ()
+    "reverts framesize to standard"
+    (interactive)
+    (set-frame-size (selected-frame)
+                    my:frame-width
+                    my:frame-height))
+
+  ;; set your font
   (defvar my:font-face "Inconsolata")
   (defvar my:font-size 15)
   (set-default-font (concat my:font-face
@@ -159,22 +183,6 @@
                [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5]
                [triple-mouse-5]))
     (global-unset-key k))
-
-  ;; I bet I can define functions to resize the frame for side-by-side windows
-  ;; and another to revert to the default size
-  (defun side-by-side ()
-  "resizes the frame to accommodate two windows side-by-side"
-  (interactive)
-  (set-frame-size (selected-frame)
-                  (+ (* my:frame-width 2) 2)
-                  my:frame-height))
-
-  (defun std-frame ()
-    "reverts framesize to standard"
-    (interactive)
-    (set-frame-size (selected-frame)
-                    my:frame-width
-                    my:frame-height))
   )
 
 
