@@ -8,6 +8,9 @@
 ;; (?) could be resolved by figuring this out). I guess what you really want is
 ;; the same nice shell Emacs behavior from the GUI (i.e. familiar colors, no
 ;; mouse, and maybe some other stuff.)
+;;
+;; [ ] get bash (i.e. 「M-x shell」) to work like it does in terminal
+;; (including stuff like extended globs)
 ;;;;; /TODOs ;;;;;;
 
 ;; good for when you've added something new, but doesn't need to be perpetually
@@ -98,6 +101,17 @@
 ;; enable this globally for C-c R
 (global-set-key (kbd "C-c R") 'delete-carriage-returns)
 
+;; highlight lines over 80 chars long
+;; see http://emacsredux.com/blog/2013/05/31/highlight-lines-that-exceed-a-certain-length-limit/
+;; and http://stackoverflow.com/questions/6344474/how-can-i-make-emacs-highlight-lines-that-go-over-80-chars
+(require 'whitespace)
+(setq whitespace-line-column 80)
+(setq whitespace-style '(face lines-tail))
+;; only turn on 80 char rule for programming modes
+;; (add-hook 'prog-mode-hook 'whitespace-mode)
+;; turn on 80 char rule for everything
+(global-whitespace-mode +1)
+
 ;;;; Windowed Emacs ;;;;
 ;; adding Windowed Emacs stuff from elematlock
 
@@ -106,18 +120,39 @@
 ;; ...and do other things
 (when window-system
   (set-frame-size (selected-frame) 80 45)
-  ;; just like gnome terminal
-  (set-default-font "Inconsolata-13")
+  ;; just like gnome terminal (except it needs to be a little bigger)
+  (set-default-font "Inconsolata-15")
   ;; already did 「M-x package-install <RET> solarized-theme <RET>」
   ;; installation documented here:
   ;; https://github.com/sellout/emacs-color-theme-solarized
-  (load-theme 'solarized-dark t)
+  ;; (load-theme 'solarized-dark t)
+  ;; hmm, solarized-dark doesn't work quite right
+  ;; according to http://www.emacswiki.org/emacs?action=browse;oldid=ColorTheme;id=ColorAndCustomThemes
+  ;; I should try
+  (require 'color-theme)
+  (color-theme-initialize)
+  (color-theme-solarized-dark)
+  ;; hooray! that worked
   ;; turn on mouse avoidance mode (you can toggle this off with
   ;; 「M-x mouse-avoidance-mode」
   ;; references: http://ergoemacs.org/emacs/emacs-tip_mode_on_off_toggle.html
   ;; and https://www.gnu.org/software/emacs/manual/html_node/emacs/Mouse-Avoidance.html
   ;; (mouse-avoidance-mode t)
   ;; ok, that's not working -- guess you'll have to figure out something else
+  ;; mouse avoidance is something else; in order to turn off mouse clicks so
+  ;; you don't accidentally change the cursor position when clicking back into
+  ;; the emacs window (although one wonders why you're not ⌘-tabbing back into
+  ;; the window) anyway,
+  ;; http://stackoverflow.com/questions/4906534/disable-mouse-clicks-in-emacs
+  ;; looks to have you covered
+  (dolist (k '([mouse-1] [down-mouse-1] [drag-mouse-1] [double-mouse-1]
+               [triple-mouse-1] [mouse-2] [down-mouse-2] [drag-mouse-2]
+               [double-mouse-2] [triple-mouse-2] [mouse-3] [down-mouse-3]
+               [drag-mouse-3] [double-mouse-3] [triple-mouse-3] [mouse-4]
+               [down-mouse-4] [drag-mouse-4] [double-mouse-4] [triple-mouse-4]
+               [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5]
+               [triple-mouse-5]))
+    (global-unset-key k))
   )
 
 
