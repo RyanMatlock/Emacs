@@ -183,6 +183,9 @@
                [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5]
                [triple-mouse-5]))
     (global-unset-key k))
+  ;; 「C-z」 has the annoying effect of minimizing Emacs in windowed mode, so
+  ;; I'm going to disable that
+  (global-unset-key (kbd "C-z"))
   )
 
 
