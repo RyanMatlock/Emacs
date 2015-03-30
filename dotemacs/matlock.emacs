@@ -488,6 +488,28 @@
 (setq tex-dvi-print-command "dvips")
 (setq tex-alt-dvi-print-command "dvips")
 
+;; Predictive Mode -- http://www.emacswiki.org/emacs/PredictiveMode
+;; mentioned in AUCTeX emacswiki page --
+;; http://www.emacswiki.org/emacs/AUCTeX#toc12 which is why it's here in my
+;; .emacs file (it looks like it'll work a little better than autocomplete)
+;; apparently there's no package-install compatibility at the moment, so you
+;; actually need to clone it into your .emacs.d directory, cd into it, run
+;; make, add the directory to your load path, and require predictive
+;;
+;; (add-to-list 'load-path "~/.emacs.d/predictive")
+;; (require 'predictive)
+;;
+;; weird:
+;; Warning (emacs): Predictive major-mode setup function predictive-setup-latex
+;; failed; latex-mode support disabled
+;; so I guess I'll remove this for now
+;; (although I'd run make while the folder was in ~/.emacs.d/predictive and
+;; then I moved it to ~/.emacs.d/plugins/predictive-mode, which could explain
+;; why it wasn't working)
+;;
+;; that didn't seem to help
+
+
 ;;;; yet another folding mode
 ;; ok, ignore yafolding -- see alternative below
 ;;;; source: http://www.emacswiki.org/emacs/FoldingMode
