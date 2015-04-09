@@ -20,6 +20,9 @@
 ;; going on for me)
 ;;;;; /TODOs ;;;;;;
 
+;; turn off welcome screen
+(setq inhibit-startup-message t)
+
 ;; good for when you've added something new, but doesn't need to be perpetually
 ;; enabled
 ;; (setq debug-on-error t)
