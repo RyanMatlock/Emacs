@@ -129,6 +129,23 @@
 ;; source: http://www.emacswiki.org/FrameSize
 ;; ...and do other things
 (when window-system
+  ;; make the window semi-transparent like my OS X terminal (which is at 96%
+  ;; opacity)
+  ;; see http://stackoverflow.com/questions/21946382/how-to-get-transparent-window-in-gnu-emacs-on-osx-mavericks
+  ;; (defvar my:default-opacity 96)
+  ;; (set-frame-parameter (selected-frame) 'alpha
+  ;;                      '(my:default-opacity my:default-opacity))
+  ;; this is giving my a wrong-type-argument numberp error, which is confusing
+  ;; (set-frame-parameter (selected-frame) 'alpha '(96 96))
+  ;; even at 99, it's too transparent
+  ;; (add-to-list 'default-frame-alist
+  ;;              '(alpha my:default-opacity my:default-opacity))
+  (set-frame-parameter (selected-frame) 'alpha '(96 96))
+  (add-to-list 'default-frame-alist '(alpha 96 96))
+  ;; ok, that works (for some reason, reloading .emacs didn't actually reset
+  ;; the opacity), although I wish I could have one single variable I need to
+  ;; change
+  ;; set frame size
   (defvar my:frame-width 80)
   (defvar my:frame-height 45)
   (set-frame-size (selected-frame) my:frame-width my:frame-height)
@@ -1030,7 +1047,8 @@ add it to `before-save-hook'."
                          "~/org-mode/things-ive-learned.org"
                          "~/org-mode/movies.org"
                          "~/org-mode/places-to-go.org"
-                         "~/org-mode/books-to-read.org"))
+                         "~/org-mode/books-to-read.org"
+                         "~/org-mode/scratch.org"))
 (setq org-mobile-inbox-for-pull "~/org-mode/from-mobile.org")
 
 (setq org-html-head-extra
