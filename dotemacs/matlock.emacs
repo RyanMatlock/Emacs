@@ -1318,3 +1318,8 @@ add it to `before-save-hook'."
 
 ;;;; Julia language
 ;; 「M-x package-install <RET> julia-mode <RET>」 worked
+
+;;;; (ANSI) Term stuff
+;; tab completion not working? try this
+;; source: http://stackoverflow.com/questions/18278310/emacs-ansi-term-not-tab-completing
+(add-hook 'term-mode-hook (lambda() (setq yas-dont-activate t)))
