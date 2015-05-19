@@ -471,6 +471,13 @@
 
 ;;;;;; source: http://www.stefanom.org/setting-up-a-nice-auctex-environment-on-mac-os-x/
 ;;;; AucTeX
+;; improve indentation?
+;; source http://stackoverflow.com/questions/2477195/latex-indentation-formatting-in-emacs
+;; and http://www.gnu.org/software/auctex/manual/auctex/Indenting.html
+(setq LaTeX-item-indent 0)
+(setq LaTeX-indent-level 2)
+;; cool, this seemed to work perfectly!
+
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
@@ -582,6 +589,14 @@
   :init-value nil
   :lighter " cktl")
 
+;;;; define minor mode for LaTeX'd cocktail menus, too
+(define-minor-mode drink-menu-mode
+  "drink-menu-mode provides a minor mode for 
+   yasnippet to hook onto in order to make
+   drink menu creation easier."
+  :init-value nil
+  :lighter " dmm")
+
 ;; in fact, I think this is how you bind special yasnippets to minor modes:
 ;; source: http://capitaomorte.github.io/yasnippet/snippet-expansion.html
 ;; Controlling Expansion -> Eligible snippets -> yas-activate-extra-mode
@@ -589,6 +604,9 @@
           '(lambda () ;; this line started with a # before -- pretty sure I can
                       ;; remove that
              (yas-activate-extra-mode 'cocktail-mode)))
+
+(add-hook 'drink-menu-mode-hook
+          '(lambda () (yas-activate-extra-mode 'drink-menu-mode)))
 
 
 ;;;; LaTeX/listings mode ;;;;
