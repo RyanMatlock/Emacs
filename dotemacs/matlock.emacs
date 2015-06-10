@@ -1352,14 +1352,19 @@ add it to `before-save-hook'."
 
 ;; interactive stuff (from
 ;; https://github.com/haskell/haskell-mode/wiki/Haskell-Interactive-Mode-Setup)
-(define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
-(define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
-(define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
-(define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
-(define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-(define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-(define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
-(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+;; apparently the latest update of haskell mode made this happen:
+;;
+;; Symbol's value as variable is void: haskell-mode-map
+;;
+;; so I'll comment out the following:
+;; (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+;; (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
+;; (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+;; (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+;; (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+;; (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+;; (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+;; (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
 
 ;; handy commands that for some reason don't seem to be set up yet
 ;; http://www.cis.syr.edu/courses/cis252/emacs.html
@@ -1402,3 +1407,8 @@ add it to `before-save-hook'."
 ;; tab completion not working? try this
 ;; source: http://stackoverflow.com/questions/18278310/emacs-ansi-term-not-tab-completing
 (add-hook 'term-mode-hook (lambda() (setq yas-dont-activate t)))
+
+;;;; Flyspell
+;; path to ispell
+;; source: http://unix.stackexchange.com/questions/38916/how-do-i-configure-emacs-to-use-ispell-on-mac-os-x
+(setq ispell-program-name "/usr/local/bin/ispell")
