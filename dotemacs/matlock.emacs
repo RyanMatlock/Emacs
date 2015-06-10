@@ -539,6 +539,29 @@
 ;; hmm, that didn't actually seem to work, so let's just comment this out for
 ;; now until I can take another look at it later
 
+;; Actually, it was working fine with vanilla enumerate and itemize
+;; environments, it was just being a little weird with your custom enumerate
+;; and itemize-like envrinoments (e.g. Ingredients, APAenumerate, etc.). It
+;; turns out an Emacs newb knew just what to do!
+;; see http://www.reddit.com/r/emacs/comments/24s200/custom_itemlike_environments_in_auctex/
+
+;; (defun my:add-latex-environments ()
+;;   (LaTeX-add-environments
+;;    '("APAenumerate" LaTeX-env-item)
+;;    '("aenum" LaTeX-env-item)
+;;    ))
+;; (add-hook 'LaTeX-mode-hook 'my:add-latex-environments)
+
+;; (add-hook 'LaTeX-mode-hook
+;;           '(lambda ()
+;;              (add-to-list 'LaTeX-item-list
+;;                           '("aenum" lambda ()
+;;                             (let (TeX-insert-braces)
+;;                               (TeX-insert-macro "item "))))))
+
+;; ok, this isn't really working like I'd hoped, but it's something I'll have
+;; to come back to later
+
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
@@ -629,20 +652,8 @@
 ;;             (local-set-key (kbd "C-c <C-return>") 'yafolding-toggle-element)))
 ;; that didn't work either.  Hmm!
 
-;;;; HideShow
-;; source: http://www.emacswiki.org/emacs/HideShow
-(add-hook 'c-mode-common-hook '(lambda () (hs-minor-mode)))
-(add-hook 'clojure-mode-hook '(lambda () (hs-minor-mode)))
-(add-hook 'latex-mode-hook '(lambda () (hs-minor-mode)))
-(add-hook 'python-mode-hook '(lambda () (hs-minor-mode)))
-(add-hook 'org-mode-hook '(lambda () (hs-minor-mode)))
-(add-hook 'css-mode-hook '(lambda () (hs-minor-mode)))
-(add-hook 'html-mode-hook '(lambda () (hs-minor-mode)))
-(add-hook 'emacs-lisp-mode-hook '(lambda () (hs-minor-mode)))
-
 ;;;; LaTeX/Cocktails ;;;;
-
-;;;; define minor mode for LaTeX'd cocktail recipes -- totally pesonal
+;; define minor mode for LaTeX'd cocktail recipes -- totally pesonal
 (define-minor-mode cocktail-mode
   "cocktail-mode provides a minor mode for 
    yasnippet to hook onto in order to make
@@ -669,6 +680,12 @@
 (add-hook 'drink-menu-mode-hook
           '(lambda () (yas-activate-extra-mode 'drink-menu-mode)))
 
+;; see above once this actually works right (APAenumerate, aenum, etc.)
+;; (defun my:cktl-add-latex-environments ()
+;;   (LaTeX-add-environments
+;;    '("Ingredients" LaTeX-env-item)
+;;    ))
+;; (add-hook 'cocktail-mode-hook 'my:cktl-add-latex-environments)
 
 ;;;; LaTeX/listings mode ;;;;
 (define-minor-mode listings-mode
@@ -680,6 +697,17 @@
 (add-hook 'listings-mode-hook
           '(lambda ()
              (yas-activate-extra-mode 'listings-mode)))
+
+;;;; HideShow
+;; source: http://www.emacswiki.org/emacs/HideShow
+(add-hook 'c-mode-common-hook '(lambda () (hs-minor-mode)))
+(add-hook 'clojure-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'latex-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'python-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'org-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'css-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'html-mode-hook '(lambda () (hs-minor-mode)))
+(add-hook 'emacs-lisp-mode-hook '(lambda () (hs-minor-mode)))
 
 ;;;; Arduino ;;;;
 
