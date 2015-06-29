@@ -562,6 +562,24 @@
 ;; ok, this isn't really working like I'd hoped, but it's something I'll have
 ;; to come back to later
 
+;; LaTeX word count using TeXcount
+;; see the various answers in
+;; http://superuser.com/questions/125027/word-count-for-latex-within-emacs
+(defun latex-word-count ()
+  (interactive)
+  (shell-command (concat "texcount "
+                         ;; options
+                         "-brief "
+                         ;; use shell-quote-argument to handle buffer names
+                         ;; with spaces or other weirdness
+                         (shell-quote-argument buffer-file-name))))
+;; see also
+;; http://stackoverflow.com/questions/8507695/using-texcount-in-emacs-to-determine-word-count-of-latex-or-tex-file-wanting-op
+;; if you want to make it a little fancier
+
+(add-hook 'LaTeX-mode-hook 'latex-word-count)
+(define-key LaTeX-mode-map (kbd "C-c w") 'latex-word-count)
+
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
