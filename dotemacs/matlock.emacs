@@ -578,7 +578,16 @@
 ;; if you want to make it a little fancier
 
 (add-hook 'LaTeX-mode-hook 'latex-word-count)
-(define-key LaTeX-mode-map (kbd "C-c w") 'latex-word-count)
+;; (define-key LaTeX-mode-map (kbd "C-c w") 'latex-word-count)
+;;
+;; I was seeing
+;; Symbol's value as variable is void: LaTeX-mode-map
+;; on opening Emacs (I'd previously tested the define-key without reloading
+;; Emacs), but I found this solution
+;; http://stackoverflow.com/questions/5500035/set-custom-keybinding-for-specific-emacs-mode
+(eval-after-load 'latex
+  '(define-key LaTeX-mode-map (kbd "C-c w") 'latex-word-count))
+
 
 (setq TeX-auto-save t)
 (setq TeX-parse-self t)
