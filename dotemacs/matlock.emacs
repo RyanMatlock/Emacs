@@ -1467,3 +1467,8 @@ add it to `before-save-hook'."
 ;; path to ispell
 ;; source: http://unix.stackexchange.com/questions/38916/how-do-i-configure-emacs-to-use-ispell-on-mac-os-x
 (setq ispell-program-name "/usr/local/bin/ispell")
+
+;;;; Markdown mode
+;; 「M-x package-list-packages」 and installed markdown-mode, markdown-mode+,
+;; and gh-md (GitHub markdown)
+
