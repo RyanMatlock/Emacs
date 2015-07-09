@@ -1102,7 +1102,8 @@ add it to `before-save-hook'."
 ;; active
 (add-hook 'org-extra-yas-mode-hook
           '(lambda ()
-             (yas-activate-extra-mode 'org-extra-yas-mode)))
+             (yas-activate-extra-mode 'org-extra-yas-mode)
+             (yas-minor-mode 1)))
 ;; see http://stackoverflow.com/questions/7421445/emacs-entering-minor-mode-with-major-mode
 ;; for how you should do this
 ;; (defun org-extra-yas-mode-hook ()
