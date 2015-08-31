@@ -93,6 +93,10 @@
 ;; source: http://stackoverflow.com/questions/18278310/emacs-ansi-term-not-tab-completing
 (add-hook 'term-mode-hook (lambda() (setq yas-dont-activate t)))
 
+;; evaluate your .bashrc and stuff?
+;; see comments on http://stackoverflow.com/a/4393645/2677392
+(setq shell-command-switch "-ic")
+
 ;; get rid of that annoying 「」 (which you can make with 「C-q C-m」) at the
 ;; end of lines created on some Windows machines
 ;; this code worked in *scratch*:
