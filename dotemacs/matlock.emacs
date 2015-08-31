@@ -1,6 +1,24 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Matlock's .emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;; TODOs ;;;;;;
+;; [ ] make .emacs resilient to a missing package even in the event of being
+;; unable to connect to the internet; see
+;; http://camdez.com/blog/2015/04/03/switching-to-melpa-stable/ point #3
+;; example:
+;;     (when (require 'keyfreq nil 'no-error)
+;;       (keyfreq-mode 1)           ; configuration of keyfreq
+;;       (keyfreq-autosave-mode 1)) ; more configuration of keyfreq
+;;
+;; [ ] break .emacs into manageable chunks a la
+;; http://ergoemacs.org/emacs/organize_your_dot_emacs.html (org-dotemacs.el
+;; doesn't necessarily seem like a long-term stable way to store your
+;; configuration, so avoid for now)
+;;
+;; [ ] move stuff out of ~/elisp; maybe keep ~/emacs for dotemacs stuff, but
+;; otherwise reorganize it a bit
+;;
+;; [ ] switch to MELPA-stable releases
+;;
 ;; [ ] figure out differences between shell and GUI Emacs
 ;; (For example, shell-mode in emacs -nw doesn't allow for 「C-<UP>」 to get
 ;; the last command, but it does work in GUI Emacs for some reason. I bet a lot
@@ -19,6 +37,9 @@
 ;; really serious scripts yet; I just wanted to have a decent Julia lang REPL
 ;; going on for me)
 ;;;;; /TODOs ;;;;;;
+
+;;;; installed packages -- last updated 2015-07-25
+
 
 ;; turn off welcome screen
 (setq inhibit-startup-message t)
@@ -57,9 +78,20 @@
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 ;; initialize package.el
 (package-initialize)
+
+;;;; Ido mode (interactively do things)
+(require 'ido)
+(ido-mode 1)
+
+;;;; (ANSI) Term stuff
+;; tab completion not working? try this
+;; source: http://stackoverflow.com/questions/18278310/emacs-ansi-term-not-tab-completing
+(add-hook 'term-mode-hook (lambda() (setq yas-dont-activate t)))
 
 ;; get rid of that annoying 「」 (which you can make with 「C-q C-m」) at the
 ;; end of lines created on some Windows machines
@@ -111,6 +143,14 @@
 ;; enable this globally for C-c R
 (global-set-key (kbd "C-c R") 'delete-carriage-returns)
 
+;; exec-path and $PATH behave differently apparently. As a result,
+;; cider-jack-in for clojure doesn't seem to be working right because it can't
+;; find lein
+(setq exec-path (append exec-path '("/usr/local/bin")))
+;; wait
+;; http://emacswiki.org/emacs/EmacsApp#toc3 and
+;; http://stackoverflow.com/questions/13243048/mac-osx-emacs-24-2-and-nrepl-el-not-working
+
 ;; highlight lines over 80 chars long
 ;; see http://emacsredux.com/blog/2013/05/31/highlight-lines-that-exceed-a-certain-length-limit/
 ;; and http://stackoverflow.com/questions/6344474/how-can-i-make-emacs-highlight-lines-that-go-over-80-chars
@@ -140,6 +180,10 @@
   ;; even at 99, it's too transparent
   ;; (add-to-list 'default-frame-alist
   ;;              '(alpha my:default-opacity my:default-opacity))
+  ;;
+  ;; disable menu bar
+  ;; see http://emacswiki.org/emacs/MenuBar#toc1
+  (menu-bar-mode -1)
   (set-frame-parameter (selected-frame) 'alpha '(96 96))
   (add-to-list 'default-frame-alist '(alpha 96 96))
   ;; ok, that works (for some reason, reloading .emacs didn't actually reset
@@ -209,67 +253,6 @@
   )
 
 
-;;;; load .el files
-(add-to-list 'load-path "~/elisp/")
-
-;;;; OS X ;;;;
-
-;; There's actually a bit of a problem when using this through Tramp -- it
-;; expects the local device to have pbcopy and pbpaste, which I can't
-;; guarantee.  So that makes this more trouble than it's worth.  Oh well.
-;; copy & paste to/from clipboard
-;; source: https://web.archive.org/web/20110504210857/http://blog.lathi.net/articles/2007/11/07/sharing-the-mac-clipboard-with-emacs
-;; (linked from http://stackoverflow.com/questions/9985316/how-to-paste-to-emacs-from-clipboard)
-;; it looks like I can check what my operating system is
-;; source: http://stackoverflow.com/questions/1817257/how-to-determine-operating-system-in-elisp and
-;; http://stackoverflow.com/questions/10088168/how-to-check-whether-a-minor-mode-e-g-flymake-mode-is-on
-;; so I think if I just do a
-;; (when (string-equal system-type "darwin")
-;;   (unless (bound-and-true-p tramp-mode)
-;;     ;; os x stuff
-;;     ))
-;; will work
-;; (when (string-equal system-type "darwin")
-;;   (unless (bound-and-true-p tramp-mode)
-;;     (message "os x sans tramp")))
-;; hmm
-;; (if (bound-and-true-p tramp-mode)
-;;     (message "tramp-mode is defined and active")
-;;   (message "tramp-mode is undefined and/or disabled"))
-;; see http://stackoverflow.com/questions/26579205/emacs-check-if-buffer-is-being-edited-through-tramp
-;; which was answered in
-;; http://stackoverflow.com/questions/3415830/does-tramp-offer-any-api-for-interrogating-information-from-the-buffer-file-name
-;; you can check if buffer is being managed by Tramp by checking truth value of
-;; variable 「tramp-tramp-file-p」, e.g.:
-;; (if (bound-and-true-p tramp-tramp-file-p)
-;;     (message "I'm a tramp")
-;;   (message "I ain't no tramp"))
-;; which, when I'm editing .emacs on my local machine, produces the output:
-;; "I ain't no tramp"
-
-;; (defun copy-from-osx ()
-;;   (shell-command-to-string "pbpaste"))
-
-;; (defun paste-to-osx (text &optional push)
-;;   (let ((process-connection-type nil)) 
-;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-;;       (process-send-string proc text)
-;;       (process-send-eof proc))))
-
-;; (when (string-equal system-type "darwin")
-;;   (unless (bound-and-true-p tramp-tramp-file-p)
-;;     (setq interprogram-cut-function 'paste-to-osx)
-;;     (setq interprogram-paste-function 'copy-from-osx)))
-
-;; cool, it seems to work!
-;; actually, I didn't test it out with Tramp, and all I'm getting is 
-;; /bin/bash: pbpaste: command not found
-;; when editing a file through Tramp
-
-;;;; General editing ;;;;
-;; get block indentation/unindentation working nicely at some point
-;; remember how great Command+[ used to be? Try to get C-[ and C-] working, or
-;; at least look into how Python-mode's C-c > and C-c < work so well
 
 ;;;; insert spaces instead of tabs
 (setq-default indent-tabs-mode nil)
@@ -299,20 +282,6 @@
 
 (add-hook 'before-save-hook 'untabify-except-makefiles)
 
-;; I think the c-mode-common-hook includes the makefile-modes, so it's untabifying those
-;; maybe not?
-;; (add-hook 'c-mode-common-hook 'untabify-everything-on-save)
-;; ;; (add-hook 'c-mode-hook 'untabify-everything-on-save)
-;; ;; (add-hook 'c++-mode-hook 'untabify-everything-on-save)
-;; ;; (add-hook 'java-mode-hook 'untabify-everything-on-save)
-;; (add-hook 'python-mode-hook 'untabify-everything-on-save)
-;; (add-hook 'latex-mode-hook 'untabify-everything-on-save)
-;; (add-hook 'org-mode-hook 'untabify-everything-on-save)
-;; (add-hook 'css-mode-hook 'untabify-everything-on-save)
-;; (add-hook 'html-mode-hook 'untabify-everything-on-save)
-;; (add-hook 'emacs-lisp-mode-hook 'untabify-everything-on-save)
-;; save?
-
 ;;;; copy selection without killing it
 ;;;; see: http://stackoverflow.com/questions/3158484/emacs-copying-text-without-killing-it and http://www.emacswiki.org/emacs/KeyboardMacros
 (global-set-key (kbd "M-w") 'kill-ring-save)
@@ -334,14 +303,6 @@
 ;;                             (setq tab-width 4)
 ;;                             (setq indent-tabs-mode nil)))
 
-;; set README, LICENSE.md files to open in text-mode
-;; let's set README, LICENSE.md file to text-mode like this:
-;; source: http://www.emacswiki.org/emacs/AutoModeAlist
-;; (plus slight modification to make things more efficient?)
-;; source: http://www.gnu.org/software/emacs/manual/html_node/elisp/List-Variables.html
-(add-to-list 'auto-mode-alist '("\\LICENSE.md\\'" . text-mode))
-(add-to-list 'auto-mode-alist '("\\README*\\'" . text-mode))
-
 ;; get auto-indentation to work right for lots of modes
 ;; source: http://www.emacswiki.org/emacs/AutoIndentation
 (defun set-newline-and-indent ()
@@ -354,11 +315,7 @@
 
 ;;;; C ;;;;
 
-;;;; auto-indent on newline
-;; (add-hook 'c-mode-common-hook '(lambda ()
-;;     (local-set-key (kbd "RET") 'newline-and-indent)))
-
-;;;; Allman-style indentation + indentation amount
+;; Allman-style indentation + indentation amount
 (setq c-default-style "bsd"
     c-basic-offset 4)
 
@@ -384,19 +341,9 @@
                                '("~/emacs/yasnippets")))
 (yas-global-mode 1)
 
-;; initialize auto-complete-c-headers and gets called for C/C++ hooks
-(defun my:ac-c-header-init ()
-  (require 'auto-complete-c-headers)
-  (add-to-list 'ac-sources 'ac-source-c-headers)
-  (add-to-list 'achead:include-directories
-               '"/usr/local/Cellar/gcc/4.8.2_1/lib/gcc/x86_64-apple-darwin13.2.0/4.8.2/include/c++"))
-;; call this from C/C++ hooks
-(add-hook 'c++-mode-hook 'my:ac-c-header-init)
-(add-hook 'c-mode-hook 'my:ac-c-header-init)
-
 ;; iedit
-;; (part 2 of making Emacs a good C/C++ editor/IDE,
-;; source: https://www.youtube.com/watch?v=r_HW0EB67eY)
+;; part 2 of making Emacs a good C/C++ editor/IDE,
+;; source: https://www.youtube.com/watch?v=r_HW0EB67eY
 
 ;; fix iedit keybinding bug for Macs
 (define-key global-map (kbd "C-c ;") 'iedit-mode)
@@ -418,34 +365,14 @@
 ;;seems to work in LaTeX, except auto complete tries to take precedence
 (setq ac-source-yasnippet nil)
 
-;; bind ac-expand to RET
-;; source: http://stackoverflow.com/questions/19900949/how-to-make-auto-complete-work-with-yasnippet-and-abbrev
-;; (add-hook 'auto-complete-mode-hook
-;;           (lambda ()
-;;             (local-set-key (kbd "RET")
-;;                            'ac-expand)))
-;; this had the unfortunate effect of preventing me from entering a newline
-
 ;; turn on EDE mode
 (global-ede-mode 1)
-;;;; template for creating projects for a program
-;; (ede-cpp-root-project "my project"
-;;                       :file "/path/to/src/main.cpp"
-;;                       :include-path '("/../include_folder"))
-;;;; you can use system-include-path for setting up system header file
-;;;; locations
 
 ;; turn on automatic reparsing of open buffers in Semantic
 (global-semantic-idle-scheduler-mode 1)
 
 ;;;; Python ;;;;
 
-;;;; python-mode.el
-;;;; taken from https://courses.csail.mit.edu/6.01/spring08/software/installing-software-emacs.html
-;;;;;(load "~/python-mode.el") ;; this line didn't work-- python-mode.el is
-;;;;; elsewhere
-(load "~/.emacs.d/plugins/python-mode.el")
-;;;; python
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
                                       interpreter-mode-alist))
@@ -832,6 +759,9 @@
 (require 'eagle-ul-mode)
 
 ;;;; Org Mode ;;;;
+
+;; turn on spell check by default
+(add-hook 'org-mode-hook 'flyspell-mode)
 
 ;; C-c . isn't working for org-time-stamp (shadowed by another mode, yet 
 ;; attempting to find which mode has been pretty fruitless), so I'm going to
@@ -1246,7 +1176,7 @@ add it to `before-save-hook'."
 ;; source: http://clojure-doc.org/articles/tutorials/emacs.html
 (defvar my:clojure-packages '(better-defaults
                       clojure-mode
-                      clojure-test-mode
+                      ;; clojure-test-mode ;; legacy mode
                       cider))
 
 (dolist (p my:clojure-packages)
@@ -1380,16 +1310,16 @@ add it to `before-save-hook'."
 
 ;; Paredit
 ;; source: http://www.emacswiki.org/emacs/ParEdit
-(autoload 'enable-paredit-mode 
-  "paredit" 
-  "Turn on pseudo-structural editing of Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-(add-hook 'ielm-mode-hook #'enable-paredit-mode)
-(add-hook 'lisp-mode-hook #'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-(add-hook 'scheme-mode-hook #'enable-paredit-mode)
-(add-hook 'geiser-repl-mode-hook #'enable-paredit-mode) ;; my addition
+;; (autoload 'enable-paredit-mode 
+;;   "paredit" 
+;;   "Turn on pseudo-structural editing of Lisp code." t)
+;; (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+;; (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+;; (add-hook 'ielm-mode-hook #'enable-paredit-mode)
+;; (add-hook 'lisp-mode-hook #'enable-paredit-mode)
+;; (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+;; (add-hook 'scheme-mode-hook #'enable-paredit-mode)
+;; (add-hook 'geiser-repl-mode-hook #'enable-paredit-mode) ;; my addition
 ;; after 30s of use: this is the greatest thing
 
 ;; ac-geiser
@@ -1459,15 +1389,17 @@ add it to `before-save-hook'."
 ;;;; Julia language
 ;; 「M-x package-install <RET> julia-mode <RET>」 worked
 
-;;;; (ANSI) Term stuff
-;; tab completion not working? try this
-;; source: http://stackoverflow.com/questions/18278310/emacs-ansi-term-not-tab-completing
-(add-hook 'term-mode-hook (lambda() (setq yas-dont-activate t)))
-
 ;;;; Flyspell
 ;; path to ispell
 ;; source: http://unix.stackexchange.com/questions/38916/how-do-i-configure-emacs-to-use-ispell-on-mac-os-x
 (setq ispell-program-name "/usr/local/bin/ispell")
+
+;; actually, it sounds like you should use aspell instead?
+;; see http://blog.binchen.org/posts/what-s-the-best-spell-check-set-up-in-emacs.html
+;; and http://emacs-fu.blogspot.com/2009/12/automatically-checking-your-spelling.html
+;; and http://blog.binchen.org/posts/effective-spell-check-in-emacs.html
+(setq ispell-program-name "aspell"
+      ispell-extra-args '("--sug-mode=ultra"))
 
 ;;;; Markdown mode
 ;; 「M-x package-list-packages」 and installed markdown-mode, markdown-mode+,
