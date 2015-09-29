@@ -376,6 +376,9 @@
 (global-semantic-idle-scheduler-mode 1)
 
 ;;;; Python ;;;;
+(add-to-list 'load-path "~/.emacs.d/plugins/python-mode/")
+(setq py-install-directory "~/.emacs.d/plugins/python-mode/")
+(require 'python-mode)
 
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
