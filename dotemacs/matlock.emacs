@@ -767,6 +767,11 @@
 
 ;;;; Org Mode ;;;;
 
+;; pdf processing to enable BiBTeX usage
+;; see http://tex.stackexchange.com/questions/197707/using-bibtex-from-org-mode-bbl-and-aux-files-are-incorrectly-generated
+(setq org-latex-pdf-process
+      '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+
 ;; turn on spell check by default
 (add-hook 'org-mode-hook 'flyspell-mode)
 
