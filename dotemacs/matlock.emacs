@@ -772,6 +772,12 @@
 (setq org-latex-pdf-process
       '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
 
+;; don't prompt for LaTeX code block evaluation
+;; see http://orgmode.org/manual/Code-evaluation-security.html
+(defun my-org-confirm-babel-evaluate (lang body)
+  (not (string= lang "latex")))
+(setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+
 ;; turn on spell check by default
 (add-hook 'org-mode-hook 'flyspell-mode)
 
