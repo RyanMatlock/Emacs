@@ -264,7 +264,7 @@
 (defun 8-ball ()
   (interactive)
   (setq 8-ball-input
-        (read-from-minibuffer "Pose your question: "))
+        (read-from-minibuffer "Ask the 8-ball a question: "))
   (setq 8-ball-output
         (substring 
          (shell-command-to-string (format "8-ball \"%s\"" 8-ball-input)) 
