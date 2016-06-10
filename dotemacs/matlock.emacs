@@ -40,7 +40,6 @@
 
 ;;;; installed packages -- last updated 2015-07-25
 
-
 ;; turn off welcome screen
 (setq inhibit-startup-message t)
 
@@ -83,6 +82,11 @@
 
 ;; initialize package.el
 (package-initialize)
+
+;; load local $PATH
+;; http://emacs.stackexchange.com/questions/14159/why-emacs-overrides-my-path-when-it-runs-bash
+;; requries exec-path-from-shell
+(exec-path-from-shell-initialize)
 
 ;;;; Ido mode (interactively do things)
 (require 'ido)
@@ -256,7 +260,27 @@
   (global-unset-key (kbd "C-z"))
   )
 
-
+;; Enable use of magic 8-ball Python script within Emacs
+(defun 8-ball ()
+  (interactive)
+  (setq 8-ball-input
+        (read-from-minibuffer "Pose your question: "))
+  (setq 8-ball-output
+        (substring 
+         (shell-command-to-string (format "8-ball \"%s\"" 8-ball-input)) 
+         0 -1))
+  (message "%s %s" 8-ball-input 8-ball-output))
+;; store last 8 ball question and answer to kill ring
+(defun 8-ball-recall-last-q-and-a ()
+  (interactive)
+  (kill-new (format "%s %s" 8-ball-input 8-ball-output)))
+;; store to kill ring and yank last 8 ball question and answer
+(defun 8-ball-yank-last-q-and-a ()
+  (interactive)
+  (8-ball-recall-last-q-and-a)
+  (yank))
+(global-set-key (kbd "C-c 8") '8-ball)
+(global-set-key (kbd "C-c *") '8-ball-yank-last-q-and-a)
 
 ;;;; insert spaces instead of tabs
 (setq-default indent-tabs-mode nil)
