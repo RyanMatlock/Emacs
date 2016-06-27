@@ -258,6 +258,24 @@
   ;; 「C-z」 has the annoying effect of minimizing Emacs in windowed mode, so
   ;; I'm going to disable that
   (global-unset-key (kbd "C-z"))
+  ;; ;; fix popup dialog problem (where you'd have to M-x redraw-display)
+  ;; ;; http://superuser.com/questions/125569/how-to-fix-emacs-popup-dialogs-on-mac-os-x
+  ;; ;; actually, that still isn't working
+  ;; (defadvice yes-or-no-p (around prevent-dialog activate)
+  ;; "Prevent yes-or-no-p from activating a dialog"
+  ;; (let ((use-dialog-box nil))
+  ;;   ad-do-it))
+  ;; (defadvice y-or-n-p (around prevent-dialog-yorn activate)
+  ;;   "Prevent y-or-n-p from activating a dialog"
+  ;;   (let ((use-dialog-box nil))
+  ;;     ad-do-it))
+  ;; ;; and from the comment
+  ;; (defadvice message-box (around prevent-dialog activate)
+  ;;   "Prevent message-box from activating a dialog"
+  ;;   (apply #'message (ad-get-args 0)))
+  ;; ;; let's add the following:
+  ;; (setq use-dialog-box nil)
+  ;; ;; ok, still not working
   )
 
 ;; Enable use of magic 8-ball Python script within Emacs
@@ -309,6 +327,17 @@
     (untabify (point-min) (point-max))))
 
 (add-hook 'before-save-hook 'untabify-except-makefiles)
+
+;; insert ISO 8601 format date
+(defun insert-current-date-iso-8601-format ()
+  (interactive)
+  (insert
+   ;; the substring part is necessary otherwise there's an unwanted newline
+   ;; inserted
+   (substring (shell-command-to-string "date +\"%F\"") 0 -1)))
+;; shortcut only enabled for YAML mode so far
+(define-key yaml-mode-map (kbd "C-c !") 'insert-current-date-iso-8601-format)
+
 
 ;;;; copy selection without killing it
 ;;;; see: http://stackoverflow.com/questions/3158484/emacs-copying-text-without-killing-it and http://www.emacswiki.org/emacs/KeyboardMacros
@@ -1446,4 +1475,3 @@ add it to `before-save-hook'."
 ;;;; Markdown mode
 ;; 「M-x package-list-packages」 and installed markdown-mode, markdown-mode+,
 ;; and gh-md (GitHub markdown)
-
