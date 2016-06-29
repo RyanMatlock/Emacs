@@ -694,6 +694,16 @@
 (add-hook 'drink-menu-mode-hook
           '(lambda () (yas-activate-extra-mode 'drink-menu-mode)))
 
+(define-minor-mode yaml-cocktail-mode
+  "cocktail-mode provides a minor mode for 
+   yasnippet to hook onto in order to make
+   cocktail creation easier."
+  :init-value nil
+  :lighter " yacm")
+
+(add-hook 'yaml-cocktail-mode-hook
+          '(lambda () (yas-activate-extra-mode 'yaml-cocktail-mode)))
+
 ;; see above once this actually works right (APAenumerate, aenum, etc.)
 ;; (defun my:cktl-add-latex-environments ()
 ;;   (LaTeX-add-environments
