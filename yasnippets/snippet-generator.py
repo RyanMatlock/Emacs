@@ -23,6 +23,11 @@ the target files will be overwritten.
 import re
 import sys
 import os
+import codecs  # for unicode reading
+
+# # enable printing utf-8 (for debugging later?)
+# # http://stackoverflow.com/questions/3597480/how-to-make-python-3-print-utf8
+# sys.stdout = open(1, 'w', encoding='utf-8', closefd=False)
 
 COMMENT_CHAR = "#"
 SPLIT_STR = ";;"
@@ -71,7 +76,7 @@ while True:
             
     try:
         source = os.path.expanduser(source)
-        with open(source) as f:
+        with codecs.open(source, "r", "utf-8") as f:
             for line in f:
                 if line:
                     if line[0] == COMMENT_CHAR:
@@ -112,7 +117,9 @@ for snippet_def in snippet_defs:
             snippet = escape_parser(snippet)
             
         try:
-            with open(os.path.join(target_path, name), "w") as out:
+            with open(os.path.join(target_path, name),
+                      "w",
+                      encoding="utf-8") as out:
                 out.write(NAME_PREFIX + name + "\n")
                 out.write(KEY_PREFIX + key + "\n")
                 out.write(CONTRIBUTOR_PREFIX + contributor + "\n")
