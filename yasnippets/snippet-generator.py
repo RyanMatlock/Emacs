@@ -23,11 +23,9 @@ the target files will be overwritten.
 import re
 import sys
 import os
-import codecs  # for unicode reading
+import logging
 
-# # enable printing utf-8 (for debugging later?)
-# # http://stackoverflow.com/questions/3597480/how-to-make-python-3-print-utf8
-# sys.stdout = open(1, 'w', encoding='utf-8', closefd=False)
+logging.basicConfig(level=logging.WARNING)
 
 COMMENT_CHAR = "#"
 SPLIT_STR = ";;"
@@ -38,30 +36,31 @@ CONTRIBUTOR_PREFIX = "# contributor: "
 contributor = "Ryan Matlock <ryan.matlock@gmail.com>"
 SEPARATOR = "# --"
 
-# make this an option eventually
-# the idea is that you can put the string "\n" in your snippet definition file
-# and get a newline out of it
-parse_escapes = True
+# this was causing your unicode bugs I think
+# # make this an option eventually
+# # the idea is that you can put the string "\n" in your snippet definition file
+# # and get a newline out of it
+# parse_escapes = True
 # make tab-related stuff parameters you can pass, too
 TAB_WIDTH = 4
 TAB = " " * TAB_WIDTH
 
 # see http://stackoverflow.com/questions/24917942/python-unexpected-behavior-with-printing-writing-escape-characters
 # for advice on how to proceed
-def escape_parser(snippet):
-    # the only ones you need to escape are backslash, tab, and newline
-    # i.e. \\, \t, and \n
-    # this is probably not what actually happens now, though
-    # print("pre-escaping: '{}'".format(snippet))
+# def escape_parser(snippet):
+#     # the only ones you need to escape are backslash, tab, and newline
+#     # i.e. \\, \t, and \n
+#     # this is probably not what actually happens now, though
+#     # print("pre-escaping: '{}'".format(snippet))
 
-    # snippet = re.sub(r"\\", r"\\", snippet)
-    # snippet = re.sub(r"\t", "\t", snippet)
-    # snippet = re.sub(r"\n", "\n", snippet)
-    snippet = bytes(snippet, "utf-8").decode("unicode_escape")
+#     # snippet = re.sub(r"\\", r"\\", snippet)
+#     # snippet = re.sub(r"\t", "\t", snippet)
+#     # snippet = re.sub(r"\n", "\n", snippet)
+#     snippet = bytes(snippet, "utf-8").decode("unicode_escape")
 
-    # print("post-escaping: '{}'".format(snippet))
+#     # print("post-escaping: '{}'".format(snippet))
 
-    return snippet
+#     return snippet
 
 snippet_defs = []
 while True:
@@ -76,7 +75,7 @@ while True:
             
     try:
         source = os.path.expanduser(source)
-        with codecs.open(source, "r", "utf-8") as f:
+        with open(source, "r", encoding="utf8") as f:
             for line in f:
                 if line:
                     if line[0] == COMMENT_CHAR:
@@ -113,18 +112,19 @@ for snippet_def in snippet_defs:
     try:
         name, key, snippet = snippet_def.split(SPLIT_STR)
 
-        if parse_escapes:
-            snippet = escape_parser(snippet)
+        # if parse_escapes:
+        #     snippet = escape_parser(snippet)
             
         try:
             with open(os.path.join(target_path, name),
                       "w",
-                      encoding="utf-8") as out:
+                      encoding="utf8") as out:
                 out.write(NAME_PREFIX + name + "\n")
                 out.write(KEY_PREFIX + key + "\n")
                 out.write(CONTRIBUTOR_PREFIX + contributor + "\n")
                 out.write(SEPARATOR + "\n")
                 out.write(snippet)
+                logging.debug(snippet)
         except OSError as e:
             print("{}".format(e))
             print("Writing snippet '{}' failed; skipping".format(name))
