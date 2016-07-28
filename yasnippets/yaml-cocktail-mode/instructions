@@ -4,7 +4,7 @@
 # --
 instructions:
   glass: ${1:<glass>}
-  served: ${2:<up/on the rocks/???>}
+  ice: ${2:<up/on the rocks/???>}
   garnish: ${3:None}
   method:
     - $0
