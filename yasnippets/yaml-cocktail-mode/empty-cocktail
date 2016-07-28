@@ -6,4 +6,7 @@
   source: ${2:<source>}
   date_added: ${3:1969-12-31}
 
+  tags:
+    $4
+
   $0

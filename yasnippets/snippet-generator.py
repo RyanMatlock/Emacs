@@ -25,7 +25,7 @@ import sys
 import os
 import logging
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 
 COMMENT_CHAR = "#"
 SPLIT_STR = ";;"
@@ -77,8 +77,9 @@ while True:
         source = os.path.expanduser(source)
         with open(source, "r", encoding="utf8") as f:
             for line in f:
+                logging.debug("line: '{}'".format(line))
                 if line:
-                    if line[0] == COMMENT_CHAR:
+                    if line[0] == COMMENT_CHAR or line[0] == '\n':
                         pass
                     else:
                         # I want to explicity add newline characters
@@ -109,8 +110,10 @@ except OSError as e:
 
 
 for snippet_def in snippet_defs:
+    logging.debug("snippet_def: '{}'".format(snippet_def))
     try:
         name, key, snippet = snippet_def.split(SPLIT_STR)
+        logging
 
         # if parse_escapes:
         #     snippet = escape_parser(snippet)
@@ -124,7 +127,6 @@ for snippet_def in snippet_defs:
                 out.write(CONTRIBUTOR_PREFIX + contributor + "\n")
                 out.write(SEPARATOR + "\n")
                 out.write(snippet)
-                logging.debug(snippet)
         except OSError as e:
             print("{}".format(e))
             print("Writing snippet '{}' failed; skipping".format(name))
