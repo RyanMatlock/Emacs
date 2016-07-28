@@ -336,7 +336,17 @@
    ;; inserted
    (substring (shell-command-to-string "date +\"%F\"") 0 -1)))
 ;; shortcut only enabled for YAML mode so far
-(define-key yaml-mode-map (kbd "C-c !") 'insert-current-date-iso-8601-format)
+;; looks like this is how you need to add a keybinding to a specific mode
+;; (add-hook 'yaml-mode-hook
+;;           (lambda ()
+;;             (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+;; source: https://www.emacswiki.org/emacs/YamlMode
+(add-hook 'yaml-mode-hook
+          (lambda () 
+            (define-key yaml-mode-map
+              (kbd "C-c !") 'insert-current-date-iso-8601-format)))
+
+
 
 
 ;;;; copy selection without killing it
@@ -703,6 +713,8 @@
 
 (add-hook 'yaml-cocktail-mode-hook
           '(lambda () (yas-activate-extra-mode 'yaml-cocktail-mode)))
+
+(add-to-list 'auto-mode-alist '("\\.ctl\\.yml\\'" . yaml-cocktail-mode))
 
 ;; see above once this actually works right (APAenumerate, aenum, etc.)
 ;; (defun my:cktl-add-latex-environments ()
