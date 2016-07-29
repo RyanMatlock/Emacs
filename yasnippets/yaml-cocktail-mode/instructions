@@ -6,6 +6,6 @@
 instructions:
   glass: ${1:<glass>}
   ice: ${2:<up/on the rocks/???>}
-  garnish: ${3:None}
+  garnish: $3
   method:
     - $0
