@@ -1,3 +1,4 @@
+# -*- mode: snippet -*-
 # name: Failed Cocktail
 # key: newf
 # contributor: Ryan Matlock <ryan.matlock@gmail.com>
@@ -9,4 +10,3 @@
       qty: ${3:<amount>}
       unit: ${4:oz}
     $0
-
