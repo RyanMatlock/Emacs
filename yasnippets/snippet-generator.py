@@ -30,6 +30,7 @@ logging.basicConfig(level=logging.DEBUG)
 COMMENT_CHAR = "#"
 SPLIT_STR = ";;"
 
+EMACS_SNIPPET_MODE = "# -*- mode: snippet -*-"
 NAME_PREFIX = "# name: "
 KEY_PREFIX = "# key: "
 CONTRIBUTOR_PREFIX = "# contributor: "
@@ -122,6 +123,7 @@ for snippet_def in snippet_defs:
             with open(os.path.join(target_path, name),
                       "w",
                       encoding="utf8") as out:
+                out.write(EMACS_SNIPPET_MODE + "\n")
                 out.write(NAME_PREFIX + name + "\n")
                 out.write(KEY_PREFIX + key + "\n")
                 out.write(CONTRIBUTOR_PREFIX + contributor + "\n")
