@@ -716,6 +716,8 @@
 
 (add-to-list 'auto-mode-alist '("\\.ctl\\.yml\\'" . yaml-cocktail-mode))
 
+(add-hook 'yaml-cocktail-mode-hook 'auto-fill-mode)
+
 ;; see above once this actually works right (APAenumerate, aenum, etc.)
 ;; (defun my:cktl-add-latex-environments ()
 ;;   (LaTeX-add-environments
@@ -1403,16 +1405,16 @@ add it to `before-save-hook'."
 
 ;; Paredit
 ;; source: http://www.emacswiki.org/emacs/ParEdit
-;; (autoload 'enable-paredit-mode 
-;;   "paredit" 
-;;   "Turn on pseudo-structural editing of Lisp code." t)
-;; (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-;; (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-;; (add-hook 'ielm-mode-hook #'enable-paredit-mode)
-;; (add-hook 'lisp-mode-hook #'enable-paredit-mode)
-;; (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-;; (add-hook 'scheme-mode-hook #'enable-paredit-mode)
-;; (add-hook 'geiser-repl-mode-hook #'enable-paredit-mode) ;; my addition
+(autoload 'enable-paredit-mode 
+  "paredit" 
+  "Turn on pseudo-structural editing of Lisp code." t)
+(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+(add-hook 'ielm-mode-hook #'enable-paredit-mode)
+(add-hook 'lisp-mode-hook #'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+(add-hook 'scheme-mode-hook #'enable-paredit-mode)
+(add-hook 'geiser-repl-mode-hook #'enable-paredit-mode) ;; my addition
 ;; after 30s of use: this is the greatest thing
 
 ;; ac-geiser
