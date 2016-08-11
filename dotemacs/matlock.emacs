@@ -705,6 +705,7 @@
 (add-to-list 'auto-mode-alist '("\\.ctl\\.yml\\'" . yaml-cocktail-mode))
 
 (add-hook 'yaml-cocktail-mode-hook 'auto-fill-mode)
+(add-hook 'yaml-cocktail-mode-hook 'yaml-mode)
 
 ;; see above once this actually works right (APAenumerate, aenum, etc.)
 ;; (defun my:cktl-add-latex-environments ()
@@ -1459,6 +1460,39 @@ add it to `before-save-hook'."
   (local-set-key (kbd "C-c a") 'haskell-indent-align-guards-and-rhs))
 ;; for some reason, C-c . wasn't working well, so C-c a it is!
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-align-guards-and-rhs)
+
+;; Haskell REPL stuff
+;;https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
+(custom-set-variables '(haskell-process-type 'cabal-repl))
+
+(custom-set-variables
+  '(haskell-process-suggest-remove-import-lines t)
+  '(haskell-process-auto-import-loaded-modules t)
+  '(haskell-process-log t))
+(eval-after-load 'haskell-mode '(progn
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+  (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
+  (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
+  (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
+  (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)))
+(eval-after-load 'haskell-cabal
+  '(progn
+     (define-key haskell-cabal-mode-map (kbd "C-c C-z")
+       'haskell-interactive-switch)
+     (define-key haskell-cabal-mode-map (kbd "C-c C-k")
+       'haskell-interactive-mode-clear)
+     (define-key haskell-cabal-mode-map (kbd "C-c C-c")
+       'haskell-process-cabal-build)
+     (define-key haskell-cabal-mode-map (kbd "C-c c")
+       'haskell-process-cabal)))
+
+(eval-after-load 'haskell-mode
+          '(define-key haskell-mode-map [f8] 'haskell-navigate-imports))
+(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+  (setenv "PATH" (concat my-cabal-path path-separator (getenv "PATH")))
+  (add-to-list 'exec-path my-cabal-path))
+(custom-set-variables '(haskell-tags-on-save t))
 
 ;; tried to install Helm with
 ;; 「M-x package-install <RET> helm <RET>」
