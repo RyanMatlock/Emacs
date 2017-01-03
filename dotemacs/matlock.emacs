@@ -702,10 +702,12 @@
 (add-hook 'yaml-cocktail-mode-hook
           '(lambda () (yas-activate-extra-mode 'yaml-cocktail-mode)))
 
+(add-hook 'yaml-cocktail-mode-hook 'auto-fill-mode)
+(add-hook 'yaml-cocktail-mode-hook 'yas-minor-mode)
+(add-hook 'yaml-cocktail-mode-hook 'yaml-mode)
+
 (add-to-list 'auto-mode-alist '("\\.ctl\\.yml\\'" . yaml-cocktail-mode))
 
-(add-hook 'yaml-cocktail-mode-hook 'auto-fill-mode)
-(add-hook 'yaml-cocktail-mode-hook 'yaml-mode)
 
 ;; see above once this actually works right (APAenumerate, aenum, etc.)
 ;; (defun my:cktl-add-latex-environments ()
@@ -903,11 +905,22 @@
                  (lambda ()
                    (interactive)
                    (insert "」"))))
+(defun my:insert-corner-brackets ()
+  "easier than C-c l (whatever you were going to write) C-c r, but not as good
+   as a snippet"
+  (local-set-key (kbd "C-c e")
+                 (lambda ()
+                   (interactive)
+                   (insert "「」")
+                   ; need to move cursor back a space
+                   (left-char))))
 (add-hook 'org-mode-hook 'my:insert-left-corner-bracket)
 (add-hook 'org-mode-hook 'my:insert-right-corner-bracket)
-;; also add these two to Emacs Lisp mode
+(add-hook 'org-mode-hook 'my:insert-corner-brackets)
+;; also add these ~two~ three to Emacs Lisp mode
 (add-hook 'emacs-lisp-mode-hook 'my:insert-left-corner-bracket)
 (add-hook 'emacs-lisp-mode-hook 'my:insert-right-corner-bracket)
+(add-hook 'emacs-lisp-mode-hook 'my:insert-corner-brackets)
 
 ;; TODO list intermediate state colors
 ;; source: http://cjohansen.no/en/emacs/emacs_org_mode_todo_colors
