@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: natural language method
+# key: nlm
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+nl_method: |-
+  $0

@@ -3,9 +3,7 @@
 # key: instr
 # contributor: Ryan Matlock <ryan.matlock@gmail.com>
 # --
-instructions:
-  glass: ${1:<glass>}
-  ice: ${2:<up/on the rocks/???>}
-  garnish: ${3:<none>}
-  method:
-    - $0
+glass: ${1:<glass>}
+ice: ${2:<up/on the rocks/???>}
+garnish: ${3:<none>}
+method: $0
