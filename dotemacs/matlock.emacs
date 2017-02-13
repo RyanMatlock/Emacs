@@ -266,7 +266,11 @@
   ;; If not, look into creating a custom ring-bell-function
   )
 
-;; Enable use of magic 8-ball Python script within Emacs
+;;;; Enable use of magic 8-ball Python script within Emacs
+;; 「C-c 8」 calls the 8-ball
+;; 「C-c *」 yanks the last 8-ball question response
+;; 「C-u C-c *」 calls the 8-ball and yanks question and response
+;; question and response are now timestamped when yanked
 (defun 8-ball ()
   (interactive)
   (setq 8-ball-input
@@ -275,18 +279,30 @@
         (substring 
          (shell-command-to-string (format "8-ball \"%s\"" 8-ball-input)) 
          0 -1))
+  ;; see https://www.emacswiki.org/emacs/InsertingTodaysDate
+  (setq 8-ball-timestamp
+        (shell-command-to-string "echo -n $(date +\"%F %H:%M:%S\")"))
   (message "%s %s" 8-ball-input 8-ball-output))
-;; store last 8 ball question and answer to kill ring
+;; store last 8 ball question and answer to kill ring -- it's cleaner this way
 (defun 8-ball-recall-last-q-and-a ()
   (interactive)
-  (kill-new (format "%s %s" 8-ball-input 8-ball-output)))
-;; store to kill ring and yank last 8 ball question and answer
-(defun 8-ball-yank-last-q-and-a ()
-  (interactive)
-  (8-ball-recall-last-q-and-a)
-  (yank))
+  (let ((formatted-timestamp (format "[%s]" 8-ball-timestamp)))
+    (kill-new (format "%s %s %s"
+                      formatted-timestamp
+                      8-ball-input
+                      8-ball-output))))
+(defun 8-ball-yank (&optional call-and-yank-p)
+  (interactive "P")
+  (if (equal call-and-yank-p nil)
+      (progn
+       (8-ball-recall-last-q-and-a)
+       (yank))
+    (progn
+     (8-ball)
+     (8-ball-recall-last-q-and-a)
+     (yank))))
 (global-set-key (kbd "C-c 8") '8-ball)
-(global-set-key (kbd "C-c *") '8-ball-yank-last-q-and-a)
+(global-set-key (kbd "C-c *") '8-ball-yank)
 
 ;;;; insert spaces instead of tabs
 (setq-default indent-tabs-mode nil)
