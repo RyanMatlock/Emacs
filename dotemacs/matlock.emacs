@@ -1557,3 +1557,6 @@ add it to `before-save-hook'."
 
 ;;;; Magit
 (global-set-key (kbd "C-c 0") 'magit-status)
+
+;;;; ANSI term
+(global-set-key (kbd "C-c +") 'ansi-term)
