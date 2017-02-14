@@ -1554,3 +1554,6 @@ add it to `before-save-hook'."
 ;;;; Markdown mode
 ;; 「M-x package-list-packages」 and installed markdown-mode, markdown-mode+,
 ;; and gh-md (GitHub markdown)
+
+;;;; Magit
+(global-set-key (kbd "C-c 0") 'magit-status)
