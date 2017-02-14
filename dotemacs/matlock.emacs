@@ -937,6 +937,10 @@
 (add-hook 'emacs-lisp-mode-hook 'my:insert-left-corner-bracket)
 (add-hook 'emacs-lisp-mode-hook 'my:insert-right-corner-bracket)
 (add-hook 'emacs-lisp-mode-hook 'my:insert-corner-brackets)
+;; useful in text mode too because that's where you edit git commit messages
+(add-hook 'text-mode-hook 'my:insert-left-corner-bracket)
+(add-hook 'text-mode-hook 'my:insert-right-corner-bracket)
+(add-hook 'text-mode-hook 'my:insert-corner-brackets)
 
 ;; TODO list intermediate state colors
 ;; source: http://cjohansen.no/en/emacs/emacs_org_mode_todo_colors
