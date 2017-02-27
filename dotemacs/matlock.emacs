@@ -268,11 +268,12 @@
 
 ;;;; Enable use of magic 8-ball Python script within Emacs
 ;; 「C-c 8」 calls the 8-ball
+;; 「C-u C-c 8」 calls the 8-ball, prints the response, and forgets it happened
 ;; 「C-c *」 yanks the last 8-ball question response
 ;; 「C-u C-c *」 calls the 8-ball and yanks question and response
 ;; question and response are now timestamped when yanked
-(defun 8-ball ()
-  (interactive)
+(defun 8-ball (&optional dont-save)
+  (interactive "P")
   (setq 8-ball-input
         (read-from-minibuffer "Ask the 8-ball a question: "))
   (setq 8-ball-output
@@ -282,7 +283,13 @@
   ;; see https://www.emacswiki.org/emacs/InsertingTodaysDate
   (setq 8-ball-timestamp
         (shell-command-to-string "echo -n $(date +\"%F %H:%M:%S\")"))
-  (message "%s %s" 8-ball-input 8-ball-output))
+  (message "%s %s" 8-ball-input 8-ball-output)
+  (if (equal dont-save nil)
+      nil
+    (progn
+      (setq 8-ball-timestamp "1969-12-31 11:59:59")
+      (setq 8-ball-input "(Last question forgotten)")
+      (setq 8-ball-output ""))))
 ;; store last 8 ball question and answer to kill ring -- it's cleaner this way
 (defun 8-ball-recall-last-q-and-a ()
   (interactive)
