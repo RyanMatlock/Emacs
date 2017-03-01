@@ -1578,7 +1578,7 @@ add it to `before-save-hook'."
   (let ((command-string "daily-todo --print_path"))
     (if overwrite?
         (setq command-string (concat command-string " --overwrite"))
-      nil)
+      (setq command-string (concat command-string " --no_prompts")))
     (let ((new-daily-todo-path
            (replace-regexp-in-string "\n" "" (shell-command-to-string
                                               command-string))))
