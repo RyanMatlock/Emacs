@@ -1567,3 +1567,19 @@ add it to `before-save-hook'."
 
 ;;;; ANSI term
 (global-set-key (kbd "C-c +") 'ansi-term)
+
+;;;; daily-todo script
+(defun daily-todo (&optional overwrite?)
+  "call daily-todo script and open the newly-created file
+   
+   optional overwrite? arg will overwrite existing file without complaint, so
+   be careful"
+  (interactive "P")
+  (let ((command-string "daily-todo --print_path"))
+    (if overwrite?
+        (setq command-string (concat command-string " --overwrite"))
+      nil)
+    (let ((new-daily-todo-path
+           (replace-regexp-in-string "\n" "" (shell-command-to-string
+                                              command-string))))
+      (find-file new-daily-todo-path))))
