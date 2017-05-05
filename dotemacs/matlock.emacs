@@ -1583,3 +1583,8 @@ add it to `before-save-hook'."
            (replace-regexp-in-string "\n" "" (shell-command-to-string
                                               command-string))))
       (find-file new-daily-todo-path))))
+
+;;;; Markdown mode
+(defun markdown-set-markdown-preview-key ()
+  (local-set-key (kbd "C-c p") 'markdown-preview))
+(add-hook 'markdown-mode-hook 'markdown-set-markdown-preview-key)
