@@ -1328,6 +1328,11 @@ add it to `before-save-hook'."
       (cons '("\\.snip$" . snippet-mode)
             auto-mode-alist))
 
+;; bind M-<TAB> to yas-expand in addition to tab so you can have a snippet
+;; within a snippet
+;; see https://joaotavora.github.io/yasnippet/snippet-expansion.html
+(define-key yas-minor-mode-map (kbd "M-TAB") 'yas-expand)
+
 ;; this never ended up being useful
 ;; ;; bracket-mode minor mode
 ;; (define-minor-mode bracket-mode
