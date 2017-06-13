@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Image
+# key: img
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+img:
+  filename: {$1:<filename>}
+  caption: {$2:<caption>}
+$0

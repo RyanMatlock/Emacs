@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Origin (bar)
+# key: orb
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+origin:
+  type: bar
+  name: ${1:<name>}
+  establishment: ${2:<establishment>}
+  location: ${3:<location>}
+  date: ${4:<date>}
+$0

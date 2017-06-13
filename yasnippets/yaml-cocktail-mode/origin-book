@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Origin (book)
+# key: bor
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+origin:
+  type: book
+  author: ${1:<author>}
+  title: ${2:<title>}
+  date: ${3:<date>}
+$0

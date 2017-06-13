@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Miscellaneous notes
+# key: mnot
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+misc_notes: |-
+  $0

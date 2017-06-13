@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: Glass served garnish
+# key: gsg
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+glass: ${1:<glass>}
+served: ${2:<served>}
+garnish: ${3:<garnish>}
+$0

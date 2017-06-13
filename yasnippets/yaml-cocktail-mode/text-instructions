@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Text notes
+# key: tinst
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+text_instructions: |-
+  $0

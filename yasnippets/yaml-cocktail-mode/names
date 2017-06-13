@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Names
+# key: nams
+# contributor: Ryan Matlock <ryan.matlock@gmail.com>
+# --
+ascii_name: ${1:<ascii_name>}
+latex_name: ${2:<latex_name>}
+$0
