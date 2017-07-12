@@ -218,6 +218,32 @@
                     my:frame-width
                     my:frame-height))
 
+  (defun my:calculate-frame-width (num-windows
+                                   inter-window-space)
+    "calculate how wide the frame should be for a number of windows"
+    (+ (* my:frame-width num-windows)
+       (* inter-window-space (- num-windows 1))))
+
+  (defun lg-frame ()
+    "resize frame for 2 side-by-side windows (same as side-by-side function,
+     which is being kept for now for the sake of legacy)"
+    (interactive)
+    (let ((num-windows 2)
+          (inter-window-space 2))
+      (set-frame-size (selected-frame)
+                      (my:calculate-frame-width num-windows inter-window-space)
+                      my:frame-height)))
+
+  (defun xl-frame ()
+    "resize frame for 3 side-by-side-by-side windows + extra height"
+    (interactive)
+    (let ((num-windows 3)
+          (inter-window-space 2)
+          (height-multiplier 1.3))
+      (set-frame-size (selected-frame)
+                      (my:calculate-frame-width num-windows inter-window-space)
+                      (floor (* my:frame-height height-multiplier)))))
+
   ;; set your font
   (defvar my:font-face "Inconsolata")
   (defvar my:font-size 15)
