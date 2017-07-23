@@ -5,7 +5,7 @@
 # --
 source:
   type: book
-  name: ${1:<name>}
-  title: ${2: <title>}
-  date: ${3:<date>}
+  author: ${1:<author>}
+  title: ${2:<title>}
+  year: ${3:<year>}
 $0

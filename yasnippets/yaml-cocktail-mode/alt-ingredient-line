@@ -6,4 +6,5 @@
 - name: ${1:<name>}
   alt: ${2:<alt>}
   qty: ${3:<amount>}
-  unit: ${4:oz}$0
+  unit: ${4:oz}
+$0
