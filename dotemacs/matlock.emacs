@@ -390,7 +390,7 @@
 
 ;; see: http://stackoverflow.com/questions/143072/in-emacs-what-is-the-opposite-function-of-other-window-c-x-o
 ;; I originally thought it would be 'previous-window
-(global-set-key (kbd "C-x O") 'previous-multiframe-window)
+(global-set-key (kbd "C-x p") 'previous-multiframe-window)
 
 ;; set columns to 80 characters long (as per PEP 8/good programming practice)
 ;; !! maybe you need to do this for Fundamental as well ???
