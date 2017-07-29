@@ -291,11 +291,11 @@
   )
 
 ;; unset C-[ from being bound to ESC (too close to C-p) and bind C-] to ESC
-(global-unset-key (kbd "C-["))
+;; (global-unset-key (kbd "C-["))
 ;; https://stackoverflow.com/questions/10452532/make-a-key-behave-as-another-key
 ;; (define-key key-translation-map (kbd "C-c {") (kbd ESC))
 ;; not sure why that isn't working
-(define-key key-translation-map (kbd "C-c {") (kbd "ESC"))
+;; (define-key key-translation-map (kbd "C-c {") (kbd "ESC"))
 ;; ok, that's weird ESC ESC ESC is now undefined, but it has the unintended
 ;; consequence of not killing my window setup now at least
 
