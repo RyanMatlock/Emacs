@@ -667,6 +667,19 @@
 (setq tex-dvi-print-command "dvips")
 (setq tex-alt-dvi-print-command "dvips")
 
+;; add pdftex for plain TeX compilation
+;; https://www.gnu.org/software/auctex/manual/auctex/Selecting-a-Command.html
+;; example:
+;; (eval-after-load "tex"
+;;   '(add-to-list 'TeX-command-list
+;;                 '("foo" "foo %s" TeX-run-command t t
+;;                   :help "Run foo") t))
+(eval-after-load "tex"
+  '(add-to-list 'TeX-command-list
+                '("pdftex" "pdftex %s" TeX-run-command t t
+                  :help "Run pdftex on file") t))
+
+
 ;; Predictive Mode -- http://www.emacswiki.org/emacs/PredictiveMode
 ;; mentioned in AUCTeX emacswiki page --
 ;; http://www.emacswiki.org/emacs/AUCTeX#toc12 which is why it's here in my
