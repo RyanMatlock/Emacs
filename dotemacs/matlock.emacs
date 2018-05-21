@@ -1423,9 +1423,16 @@ add it to `before-save-hook'."
 ;; configure it to open up with python-mode
 (add-hook 'python-mode-hook 'flycheck-mode)
 
+;;;; Shell (ansi-term)
+;; https://stackoverflow.com/a/12679864
+(setq explicit-shell-file-name "/usr/local/bin/bash")
+
 ;;;; Tramp Mode ;;;;
 ;; problem with hanging; trying this:
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+;; maybe this should be updated to /usr/local/bin/bash or I should figure out
+;; how to symlink /usr/local/bin/bash to /bin/bash; if so, the above
+;; explicit-shell-file-name should be updated
 
 ;; use ssh as default for Tramp
 ;; see
