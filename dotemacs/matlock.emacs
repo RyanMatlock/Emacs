@@ -1504,6 +1504,29 @@ add it to `before-save-hook'."
 (add-hook 'geiser-repl-mode-hook #'enable-paredit-mode) ;; my addition
 ;; after 30s of use: this is the greatest thing
 
+;;;; SLIME, SBCL, & quicklisp
+;; https://coderwall.com/p/vrky8q/emacs-sbcl-and-slime
+
+;;;; I'm going to ignore the following from the installation of
+;;;; quicklisp-slime-helper and do what was recommended on coderwall
+;; [package quicklisp-slime-helper]
+;; slime-helper.el installed in "/Users/matlock/quicklisp/slime-helper.el"
+
+;; To use, add this to your ~/.emacs:
+
+;;   (load (expand-file-name "~/quicklisp/slime-helper.el"))
+;;   ;; Replace "sbcl" with the path to your implementation
+;;   (setq inferior-lisp-program "sbcl")
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; my SBCL is in /usr/local/bin
+;; (setq inferior-lisp-program "/usr/bin/sbcl")
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(require 'slime)
+(slime-setup '(slime-fancy slime-tramp slime-asdf))
+(slime-require :swank-listener-hooks)
+;; this works, just note that the article you're basing this on was published
+;; 2016-02-25 and you're following these instructions on 2018-05-21
+
 ;; ac-geiser
 ;; source: https://github.com/xiaohanyu/ac-geiser/
 ;; 「M-x package install <RET> ac-geiser <RET>」
