@@ -75,6 +75,10 @@
              '("gnu" . "http://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;; 2018-05-30: ignoring marmalade repo because it keeps prompting me about
+;; some security thing, so I'm not going to bother
+;; (add-to-list 'package-archives
+;;              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives
@@ -1584,12 +1588,21 @@ add it to `before-save-hook'."
 
 ;; Haskell REPL stuff
 ;;https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
-(custom-set-variables '(haskell-process-type 'cabal-repl))
-
 (custom-set-variables
-  '(haskell-process-suggest-remove-import-lines t)
-  '(haskell-process-auto-import-loaded-modules t)
-  '(haskell-process-log t))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t)
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-process-type (quote cabal-repl))
+ '(haskell-tags-on-save t)
+ '(package-selected-packages
+   (quote
+    (electric-case electric-operator electric-spacing elein eldoc-overlay eldoc-eval ac-slime elisp-slime-nav slime auto-complete emojify yaml-mode wgrep-ack wget web-beautify tagedit sx scion pytest paredit pandoc-mode org-bullets org-ac org nodejs-repl magithub json-mode js3-mode iedit help-mode+ help-fns+ help+ helm-ghc helm-bibtex gist flycheck-pyflakes exec-path-from-shell d-mode company-auctex color-theme-solarized cider blank-mode bison-mode better-defaults awk-it auto-complete-chunk auto-complete-c-headers auctex-latexmk arduino-mode ac-python ac-js2 ac-geiser))))
+
+
 (eval-after-load 'haskell-mode '(progn
   (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
   (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
@@ -1613,7 +1626,7 @@ add it to `before-save-hook'."
 (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
   (setenv "PATH" (concat my-cabal-path path-separator (getenv "PATH")))
   (add-to-list 'exec-path my-cabal-path))
-(custom-set-variables '(haskell-tags-on-save t))
+
 
 ;; tried to install Helm with
 ;; 「M-x package-install <RET> helm <RET>」
@@ -1669,3 +1682,9 @@ add it to `before-save-hook'."
 (defun markdown-set-markdown-preview-key ()
   (local-set-key (kbd "C-c p") 'markdown-preview))
 (add-hook 'markdown-mode-hook 'markdown-set-markdown-preview-key)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
