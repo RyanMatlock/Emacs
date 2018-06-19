@@ -73,8 +73,6 @@
 ;; this is the new, right way from elematlock:
 (add-to-list 'package-archives
              '("gnu" . "http://elpa.gnu.org/packages/") t)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
 ;; 2018-05-30: ignoring marmalade repo because it keeps prompting me about
 ;; some security thing, so I'm not going to bother
 ;; (add-to-list 'package-archives
@@ -903,8 +901,24 @@
 (context-coloring-load-theme 'solarized)
 
 ;;;; Eagle UL mode ;;;;
-(add-to-list 'load-path "~/.emacs.d/plugins/eagle-ul-mode")
-(require 'eagle-ul-mode)
+;; (add-to-list 'load-path "~/.emacs.d/plugins/eagle-ul-mode")
+;; (require 'eagle-ul-mode)
+;;;; disabling EAGLE UL mode because:
+;;;; (started with upgrade to Emacs 25)
+;; Debugger entered--Lisp error: (wrong-number-of-arguments setq 3)
+;;   (setq eagle-ul-all-constants eagle-ul-single-valued-constants eagle-ul-array-constants)
+;;   eval-buffer(#<buffer  *load*-259146> nil "/Users/matlock/.emacs.d/plugins/eagle-ul-mode/eagle-ul-mode.el" nil t)  ; Reading at buffer position 3155
+;;   load-with-code-conversion("/Users/matlock/.emacs.d/plugins/eagle-ul-mode/eagle-ul-mode.el" "/Users/matlock/.emacs.d/plugins/eagle-ul-mode/eagle-ul-mode.el" nil t)
+;;   require(eagle-ul-mode)
+;;   eval-buffer(#<buffer  *load*> nil "/Users/matlock/.emacs" nil t)  ; Reading at buffer position 37218
+;;   load-with-code-conversion("/Users/matlock/.emacs" "/Users/matlock/.emacs" nil nil)
+;;   load("/Users/matlock/.emacs" nil nil t)
+;;   load-file("~/.emacs")
+;;   reload-dotemacs()
+;;   funcall-interactively(reload-dotemacs)
+;;   call-interactively(reload-dotemacs nil nil)
+;;   command-execute(reload-dotemacs)
+
 
 ;;;; Org Mode ;;;;
 
@@ -1509,27 +1523,57 @@ add it to `before-save-hook'."
 ;; after 30s of use: this is the greatest thing
 
 ;;;; SLIME, SBCL, & quicklisp
-;; https://coderwall.com/p/vrky8q/emacs-sbcl-and-slime
 
-;;;; I'm going to ignore the following from the installation of
-;;;; quicklisp-slime-helper and do what was recommended on coderwall
-;; [package quicklisp-slime-helper]
-;; slime-helper.el installed in "/Users/matlock/quicklisp/slime-helper.el"
+;; ignore until the 2018-05-30 update
+;; ;; https://coderwall.com/p/vrky8q/emacs-sbcl-and-slime
 
-;; To use, add this to your ~/.emacs:
+;; ;;;; I'm going to ignore the following from the installation of
+;; ;;;; quicklisp-slime-helper and do what was recommended on coderwall
+;; ;; [package quicklisp-slime-helper]
+;; ;; slime-helper.el installed in "/Users/matlock/quicklisp/slime-helper.el"
 
-;;   (load (expand-file-name "~/quicklisp/slime-helper.el"))
-;;   ;; Replace "sbcl" with the path to your implementation
-;;   (setq inferior-lisp-program "sbcl")
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
-;; my SBCL is in /usr/local/bin
-;; (setq inferior-lisp-program "/usr/bin/sbcl")
+;; ;; To use, add this to your ~/.emacs:
+
+;; ;;   (load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; ;;   ;; Replace "sbcl" with the path to your implementation
+;; ;;   (setq inferior-lisp-program "sbcl")
+;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; ;; my SBCL is in /usr/local/bin
+;; ;; (setq inferior-lisp-program "/usr/bin/sbcl")
+;; (setq inferior-lisp-program "/usr/local/bin/sbcl")
+;; (require 'slime)
+;; (slime-setup '(slime-fancy slime-tramp slime-asdf))
+;; (slime-require :swank-listener-hooks)
+;; ;; this works, just note that the article you're basing this on was published
+;; ;; 2016-02-25 and you're following these instructions on 2018-05-21
+
+;; 2018-05-30
+;; since upgrading to Emacs 26.1 I've been getting
+;; error in process filter: Wrong number of arguments (0 . 1), 2
+;; when slime is connected (or so it appears)
+;; as such, I'm just going to follow the instructions from
+;; https://github.com/slime/slime which are as follows:
+
+;; Set your lisp system and, optionally, some contribs
+;; (setq inferior-lisp-program "/opt/sbcl/bin/sbcl")
+;; (setq inferior-lisp-program "/usr/local/bin/sbcl")
+;; (setq slime-contribs '(slime-fancy
+;;                        slime-tramp
+;;                        ))
+;; (slime-require :swank-listener-hooks)
+;; still getting the error in process filter issue
+;; going to comment out slime-fancy
+;; ok, that didn't work, but slime took way longer to connect
+
+;; updated slime and it's working again---and loading quickly!
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
-(require 'slime)
-(slime-setup '(slime-fancy slime-tramp slime-asdf))
+(setq slime-contribs '(slime-fancy
+                       slime-tramp
+                       slime-asdf))
 (slime-require :swank-listener-hooks)
-;; this works, just note that the article you're basing this on was published
-;; 2016-02-25 and you're following these instructions on 2018-05-21
+
+;; add paredit to slime-repl-mode
+(add-hook 'slime-repl-mode-hook 'paredit-mode)
 
 ;; ac-geiser
 ;; source: https://github.com/xiaohanyu/ac-geiser/
