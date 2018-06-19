@@ -56,27 +56,13 @@
 
 ;; open .emacs files in Emacs Lisp mode
 ;; (helpful since you store your different .emacs files as <hostname>.emacs)
-;; (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
-;; also, do it with add-to-list instead
 (add-to-list 'auto-mode-alist '("\\.emacs$" . emacs-lisp-mode))
 
 ;; start package.el with Emacs
 (require 'package)
-;; add MELPA to repository list
-;; also need to add marmalade for Clojure packages (and other stuff eventually,
-;; probably)
-;; this is the old, bad way:
-;; (add-to-list  'package-archives 
-;;               '("marmalade" . "http://marmalade-repo.org/packages/")
-;;               '("melpa" . "http://melpa.milkbox.net/packages/"))
-;;               ;; '("gnu" . "http://elpa.gnu.org/packages/"))
 ;; this is the new, right way from elematlock:
 (add-to-list 'package-archives
              '("gnu" . "http://elpa.gnu.org/packages/") t)
-;; 2018-05-30: ignoring marmalade repo because it keeps prompting me about
-;; some security thing, so I'm not going to bother
-;; (add-to-list 'package-archives
-;;              '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives
@@ -105,39 +91,6 @@
 
 ;; get rid of that annoying 「」 (which you can make with 「C-q C-m」) at the
 ;; end of lines created on some Windows machines
-;; this code worked in *scratch*:
-;;     (defun my:rep-str (target replacement)
-;;       "I want to see if I can define a command for common find/replace operations"
-;;       (interactive)
-;;       (replace-string target replacement))
-;;     (defun my:foo-bar ()
-;;       (interactive)
-;;       (my:rep-str "foo" "bar"))
-;; but if I wanted to be really cool, I'd have it only do the replacement from
-;; current cursor position, but if it were called with the C-u prefix, it would
-;; start from the beginning of the document (and we'd also save the previous
-;; cursor position)
-;; see http://ergoemacs.org/emacs/elisp_universal_argument.html
-;; and http://www.delorie.com/gnu/docs/emacs/emacs_28.html
-;; and https://www.gnu.org/software/emacs/manual/html_node/eintr/save_002dexcursion.html#save_002dexcursion
-;; and http://www.chemie.fu-berlin.de/chemnet/use/info/elisp/elisp_28.html
-;; this works
-;;     (defun my:replace-foo-with-bar (&optional whole-document-p)
-;;       (interactive "P")
-;;       (if (equal whole-document-p nil)
-;;           (replace-string "foo" "bar")
-;;         (message "Soon...")))
-;; this totally works
-;;     (defun my:replace-foo-with-bar-helper ()
-;;       (replace-string "foo" "bar"))
-;;     (defun my:replace-foo-with-bar (&optional whole-document-p)
-;;       (interactive "P")
-;;       (if (equal whole-document-p nil)
-;;           (my:replace-foo-with-bar-helper)
-;;         (save-excursion
-;;           (goto-char (point-min))
-;;           (my:replace-foo-with-bar-helper))
-;;         (message "%s" (point))))
 (defun my:delete-carriage-returns-helper ()
   (replace-string "" ""))
 (defun delete-carriage-returns (&optional whole-document-p)
@@ -203,21 +156,18 @@
   (defvar my:frame-width 80)
   (defvar my:frame-height 45)
   (set-frame-size (selected-frame) my:frame-width my:frame-height)
-  ;; I bet I can define functions to resize the frame for side-by-side windows
-  ;; and another to revert to the default size
-  ;; by the way, I checked, and neither of these work inside of the terminal
   (defun side-by-side ()
   "resizes the frame to accommodate two windows side-by-side"
   (interactive)
   (set-frame-size (selected-frame)
-                  (+ (* my:frame-width 2) 2)
+                  (+ (* my:frame-width 2) 3)
                   my:frame-height))
 
   (defun std-frame ()
     "reverts framesize to standard"
     (interactive)
     (set-frame-size (selected-frame)
-                    my:frame-width
+                    (+ 1 my:frame-width)
                     my:frame-height))
 
   (defun my:calculate-frame-width (num-windows)
@@ -250,13 +200,6 @@
   (set-default-font (concat my:font-face
                             "-"
                             (number-to-string my:font-size)))
-  ;; already did 「M-x package-install <RET> solarized-theme <RET>」
-  ;; installation documented here:
-  ;; https://github.com/sellout/emacs-color-theme-solarized
-  ;; (load-theme 'solarized-dark t)
-  ;; hmm, solarized-dark doesn't work quite right
-  ;; according to http://www.emacswiki.org/emacs?action=browse;oldid=ColorTheme;id=ColorAndCustomThemes
-  ;; I should try
   (require 'color-theme)
   (color-theme-initialize)
   (color-theme-solarized-dark)
@@ -360,11 +303,6 @@
 ;; http://stackoverflow.com/questions/318553/getting-emacs-to-untabify-when-saving-certain-file-types-and-only-those-file-ty
 ;; and a little help from http://ergoemacs.org/emacs/emacs_avoid_lambda_in_hook.html
 ;; and help from http://stackoverflow.com/questions/1931784/emacs-is-before-save-hook-a-local-variable
-;; (defun untabify-everything ()
-;;   (untabify (point-min) (point-max)))
-;; (defun untabify-everything-on-save ()
-;;   (add-hook 'write-contents-functions 'untabify-everything)
-;;   nil)
 
 ;; this runs for all modes except makefile-derived modes
 ;; source: http://stackoverflow.com/questions/24832699/emacs-24-untabify-on-save-for-everything-except-makefiles/24857101#24857101
@@ -391,9 +329,6 @@
           (lambda () 
             (define-key yaml-mode-map
               (kbd "C-c !") 'insert-current-date-iso-8601-format)))
-
-
-
 
 ;;;; copy selection without killing it
 ;;;; see: http://stackoverflow.com/questions/3158484/emacs-copying-text-without-killing-it and http://www.emacswiki.org/emacs/KeyboardMacros
@@ -498,14 +433,6 @@
 ;;;; end of borrowed-from-MIT configuration code
 (put 'upcase-region 'disabled nil)
 
-;; ignore this; use flycheck with flake8 instead
-;;;; python-pep8 minor mode
-;; checks that syntax follows http://legacy.python.org/dev/peps/pep-0008/
-;; (load "~/emacs/python-pep8/python-pep8.el")
-;; (autoload 'python-pep8 "python-pep8")
-;; (autoload 'pep8 "python-pep8"
-;; this doesn't seem to be working well yet
-
 ;;;; LaTeX ;;;;
 
 ;;;; get Emacs to read the PATH variable
@@ -519,91 +446,6 @@
 ;; and http://www.gnu.org/software/auctex/manual/auctex/Indenting.html
 (setq LaTeX-item-indent 0)
 (setq LaTeX-indent-level 2)
-;; cool, this seemed to work perfectly!
-;; well, almost perfectly---stuff underneath an item doesn't get indented by 2
-;; spaces like it ought to
-;; fortunately, there's a solution (with a great explanation)
-;; http://emacs.stackexchange.com/questions/3083/how-to-indent-items-in-latex-auctex-itemize-environments
-;; with the particular answer at http://emacs.stackexchange.com/a/3100
-
-;; (defun LaTeX-indent-item ()
-;;   "Provide proper indentation for LaTeX \"itemize\",\"enumerate\", and
-;; \"description\" environments.
-
-;;   \"\\item\" is indented `LaTeX-indent-level' spaces relative to
-;;   the the beginning of the environment.
-
-;;   Continuation lines are indented either twice
-;;   `LaTeX-indent-level', or `LaTeX-indent-level-item-continuation'
-;;   if the latter is bound."
-;;   (save-match-data
-;;     (let* ((offset LaTeX-indent-level)
-;;            (contin (or (and (boundp 'LaTeX-indent-level-item-continuation)
-;;                             LaTeX-indent-level-item-continuation)
-;;                        (* 2 LaTeX-indent-level)))
-;;            (re-beg "\\\\begin{")
-;;            (re-end "\\\\end{")
-;;            (re-env "\\(itemize\\|\\enumerate\\|description\\)")
-;;            (indent (save-excursion
-;;                      (when (looking-at (concat re-beg re-env "}"))
-;;                        (end-of-line))
-;;                      (LaTeX-find-matching-begin)
-;;                      (current-column))))
-;;       (cond ((looking-at (concat re-beg re-env "}"))
-;;              (or (save-excursion
-;;                    (beginning-of-line)
-;;                    (ignore-errors
-;;                      (LaTeX-find-matching-begin)
-;;                      (+ (current-column)
-;;                         (if (looking-at (concat re-beg re-env "}"))
-;;                             contin
-;;                           offset))))
-;;                  indent))
-;;             ((looking-at (concat re-end re-env "}"))
-;;              indent)
-;;             ((looking-at "\\\\item")
-;;              (+ offset indent))
-;;             (t
-;;              (+ contin indent))))))
-
-;; (defcustom LaTeX-indent-level-item-continuation 4
-;;   "*Indentation of continuation lines for items in itemize-like
-;; environments."
-;;   :group 'LaTeX-indentation
-;;   :type 'integer)
-
-;; (eval-after-load "latex"
-;;   '(setq LaTeX-indent-environment-list
-;;          (nconc '(("itemize" LaTeX-indent-item)
-;;                   ("enumerate" LaTeX-indent-item)
-;;                   ("description" LaTeX-indent-item))
-;;                 LaTeX-indent-environment-list)))
-
-;; hmm, that didn't actually seem to work, so let's just comment this out for
-;; now until I can take another look at it later
-
-;; Actually, it was working fine with vanilla enumerate and itemize
-;; environments, it was just being a little weird with your custom enumerate
-;; and itemize-like envrinoments (e.g. Ingredients, APAenumerate, etc.). It
-;; turns out an Emacs newb knew just what to do!
-;; see http://www.reddit.com/r/emacs/comments/24s200/custom_itemlike_environments_in_auctex/
-
-;; (defun my:add-latex-environments ()
-;;   (LaTeX-add-environments
-;;    '("APAenumerate" LaTeX-env-item)
-;;    '("aenum" LaTeX-env-item)
-;;    ))
-;; (add-hook 'LaTeX-mode-hook 'my:add-latex-environments)
-
-;; (add-hook 'LaTeX-mode-hook
-;;           '(lambda ()
-;;              (add-to-list 'LaTeX-item-list
-;;                           '("aenum" lambda ()
-;;                             (let (TeX-insert-braces)
-;;                               (TeX-insert-macro "item "))))))
-
-;; ok, this isn't really working like I'd hoped, but it's something I'll have
-;; to come back to later
 
 ;; LaTeX word count using TeXcount
 ;; see the various answers in
@@ -621,13 +463,6 @@
 ;; if you want to make it a little fancier
 
 (add-hook 'LaTeX-mode-hook 'latex-word-count)
-;; (define-key LaTeX-mode-map (kbd "C-c w") 'latex-word-count)
-;;
-;; I was seeing
-;; Symbol's value as variable is void: LaTeX-mode-map
-;; on opening Emacs (I'd previously tested the define-key without reloading
-;; Emacs), but I found this solution
-;; http://stackoverflow.com/questions/5500035/set-custom-keybinding-for-specific-emacs-mode
 (eval-after-load 'latex
   '(define-key LaTeX-mode-map (kbd "C-c w") 'latex-word-count))
 
@@ -669,71 +504,10 @@
 (setq tex-dvi-print-command "dvips")
 (setq tex-alt-dvi-print-command "dvips")
 
-;; add pdftex for plain TeX compilation
-;; https://www.gnu.org/software/auctex/manual/auctex/Selecting-a-Command.html
-;; example:
-;; (eval-after-load "tex"
-;;   '(add-to-list 'TeX-command-list
-;;                 '("foo" "foo %s" TeX-run-command t t
-;;                   :help "Run foo") t))
 (eval-after-load "tex"
   '(add-to-list 'TeX-command-list
                 '("pdftex" "pdftex %s" TeX-run-command t t
                   :help "Run pdftex on file") t))
-
-
-;; Predictive Mode -- http://www.emacswiki.org/emacs/PredictiveMode
-;; mentioned in AUCTeX emacswiki page --
-;; http://www.emacswiki.org/emacs/AUCTeX#toc12 which is why it's here in my
-;; .emacs file (it looks like it'll work a little better than autocomplete)
-;; apparently there's no package-install compatibility at the moment, so you
-;; actually need to clone it into your .emacs.d directory, cd into it, run
-;; make, add the directory to your load path, and require predictive
-;;
-;; (add-to-list 'load-path "~/.emacs.d/predictive")
-;; (require 'predictive)
-;;
-;; weird:
-;; Warning (emacs): Predictive major-mode setup function predictive-setup-latex
-;; failed; latex-mode support disabled
-;; so I guess I'll remove this for now
-;; (although I'd run make while the folder was in ~/.emacs.d/predictive and
-;; then I moved it to ~/.emacs.d/plugins/predictive-mode, which could explain
-;; why it wasn't working)
-;;
-;; that didn't seem to help
-
-
-;;;; yet another folding mode
-;; ok, ignore yafolding -- see alternative below
-;;;; source: http://www.emacswiki.org/emacs/FoldingMode
-;; (load "~/elisp/yafolding.el")
-
-;;;; yafolding example config
-;; these key bindings didn't work
-;; (define-key global-map (kbd "C-'") 'yafolding)
-;; ;;(define-key global-map (kbd "C-c C-f") 'yafolding-toggle-all)
-;; (define-key global-map (kbd "C-c C-f") 'yafolding-toggle-all-by-current-level)
-
-;; following yafolding instructions from https://github.com/zenozeng/yafolding.el as of 2014-07-07
-;; hook into prog-mode-hook
-;; (add-hook 'prog-mode-hook
-;;           (lambda () (yafolding-mode)))
-;; modify keybindings
-;(require 'yafolding)
-;; (define-key yafolding-mode-map
-;;   (kbd "<C-S-return>") nil)
-;; (define-key yafolding-mode-map
-;;   (kbd "<C-return>") nil)
-;; (define-key yafolding-mode-map
-;;   (kbd "C-c <C-S-return>") 'yafolding-toggle-all)
-;; (define-key yafolding-mode-map
-;;   (kbd "C-c <C-return>") 'yafolding-toggle-element)
-;; ok, that didn't work; let's try this:
-;; (add-hook 'yafolding-mode-hook
-;;           (lambda ()
-;;             (local-set-key (kbd "C-c <C-return>") 'yafolding-toggle-element)))
-;; that didn't work either.  Hmm!
 
 ;;;; LaTeX/Cocktails ;;;;
 ;; define minor mode for LaTeX'd cocktail recipes -- totally pesonal
@@ -872,22 +646,6 @@
 
 ;;;; JavaScript ;;;;
 
-;; Er, commenting this out seems to be breaking things, but I think I'll see if
-;; I can do a package-install of js2-mode
-;;
-;; ok, 「M-x package-install RET js2-mode RET」 appeared to work, so let's
-;; quit, restart, and see what happens
-;;
-;; looks like everything's cool now
-;;
-;; I'm going to skip js2-mode for now to see of context-coloring works without
-;; it
-;; followed instructions at
-;; https://code.google.com/p/js2-mode/wiki/InstallationInstructions
-;; (add-to-list 'load-path "~/.emacs.d/plugins/js2-mode")
-;; (autoload 'js2-mode "js2" nil t)
-;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
 ;; Douglas Crockford-style context coloring
 ;; https://github.com/jacksonrayhamilton/context-coloring/
 ;; 「M-x package-refresh-contents RET」
@@ -956,15 +714,6 @@
 
 ;; let C-c S insert a symbol sign (easier than typing "C-x 8 <RET> section 
 ;; sign")
-;; never mind, you're dumb
-;; (defun my:section-sign ()
-;;   "easier than M-x insert char <RET> section sign"
-;;   (interactive)
-;;   (insert-char "SECTION SIGN"))
-;; (defun my:insert-section-sign ()
-;;   "bind my:section-sign to C-c S"
-;;   (local-set-key (kbd "C-c s") 'my:section-sign))
-;; (add-hook 'org-mode-hook 'my:insert-section-sign)
 ;; how to really do it:  http://ergoemacs.org/emacs/emacs_n_unicode.html
 (defun my:insert-section-sign ()
   "easier than M-x insert char <RET> section sign"
@@ -1021,23 +770,6 @@
         ("IN-PROGRESS" . (:foreground "yellow" :weight bold))
         ("ON-HOLD" . (:foreground "yellow" :weight bold))))
 
-;; set org-mode keybinding C-c C-v C-b to the string "- [ ] " and
-;; C-c C-v C-v to "[ ] " and
-;; C-c C-b C-b to "\n- [ ] "
-;; source: http://stackoverflow.com/questions/5500035/set-custom-keybinding-for-specific-emacs-mode
-;; (add-hook 'org-mode-hook
-;;           (lambda ()
-;;             (local-set-key (kbd "C-c C-v C-b") (insert "\n- [ ] "))))
-;; (add-hook 'org-mode-hook
-;;           (lambda ()
-;;             (local-set-key (kbd "M-)")
-;;                            (insert "[ ] "))))
-;; (add-hook 'org-mode-hook
-;;           (lambda ()
-;;             (local-set-key (kbd "M-|")
-;;                            (insert "\n- [ ] "))))
-;; ignore the above key bindings and look at the docstrings/code below
-;; I think (insert <string>) was the key here
 (defun my:org-insert-checkbox-item ()
   "「C-c i」 inserts '\n- [ ] '"
   (interactive)
@@ -1055,16 +787,6 @@
 (defun hookify:my:org-insert-visible-space-char ()
   (local-set-key (kbd "C-c M-<SPC>") 'my:org-insert-visible-space-char))
 (add-hook 'org-mode-hook 'hookify:my:org-insert-visible-space-char)
-
-;; (defun my:org-insert-just-checkbox ()
-;;   "「M-)」 inserts '[ ] '"
-;;   (interactive)
-;;   (insert "[ ] "))
-;; (defun hookify:my:org-insert-just-checkbox ()
-;;   (local-set-key (kbd "M-)") (insert "[ ] ")))
-;; (add-hook 'org-mode-hook 'hookify:my:org-insert-just-checkbox)
-;; I seem to be getting a lot of weird "[ ] " floating around in my documents
-;; these days, and I think this might be to blame
 
 ;; syntax highlighting in BEGIN_SRC ... END_SRC blocks
 ;; source: http://stackoverflow.com/questions/10642888/syntax-highlighting-within-begin-src-block-in-emacs-orgmode-not-working
@@ -1094,26 +816,6 @@
 ;; see http://orgmode.org/manual/Languages.html#Languages
 ;; maybe C++ will work now that I've upgrade Org mode to v8.2.10 -- eh
 (setq org-src-fontify-natively t)
-
-;; to get syntax highlighting working with HTML output, htmlize may need to be
-;; installed separately
-;; see http://stackoverflow.com/questions/24082430/org-mode-no-syntax-highlighting-in-exported-html-page
-;; 「M-x package-install <RET> htmlize <RET>」
-
-;; Org 8.2.10 no longer supports $\implies$, it seems I need to include the 
-;; amsmath and amssymb packages
-;; see http://orgmode.org/worg/org-contrib/babel/examples/article-class.html#latex-proglang
-;; (require 'org-latex)
-;; (setq org-export-latex-listings t)
-;; (add-to-list 'org-export-latex-packages-alist
-;;              '(("AUTO" "amsmath" t)))
-;; (add-to-list 'org-export-latex-packages-alist
-;;              '(("AUTO" "amssymb" t)))
-;; (add-to-list 'org-export-latex-packages-alist
-;;              '(("AUTO" "inputenc" t)))
-;; hmm, that's not working right
-;; maybe stackoverflow will find the solution:
-;; http://stackoverflow.com/questions/26517510/org-mode-8-2-10-no-longer-supporting-certain-special-characters
 
 ;; org-mode fancy HTML5 export
 ;; source: http://orgmode.org/manual/HTML-doctypes.html
@@ -1222,29 +924,7 @@ add it to `before-save-hook'."
           '(lambda ()
              (yas-activate-extra-mode 'org-extra-yas-mode)
              (yas-minor-mode 1)))
-;; see http://stackoverflow.com/questions/7421445/emacs-entering-minor-mode-with-major-mode
-;; for how you should do this
-;; (defun org-extra-yas-mode-hook ()
-;;   (lambda ()
-;;     (require 'yasnippet)
-;;     (yas-activate-extra-mode 'org-extra-yas-mode)))
-;; or just do it the way suggested in the link
-;; (defun org-extra-yas-mode-hook ()
-;;   (org-extra-yas-mode 1))
-;; (add-hook 'org-mode-hook 'org-extra-yas-mode-hook)
-;; maybe try it in interactive mode because the documentation in yasnippet.el
-;; says the following:
-;;
-;;   M-x yas-activate-extra-mode
-;;
-;;     Prompts you for an extra mode to add snippets for in the
-;;     current buffer.
-;; hmm, this isn't working
-;; (defun org-extra-yas-mode-hook ()
-;;   (lambda ()
-;;     (require 'yasnippet)
-;;     (interactive)
-;;     (yas-activate-extra-mode 'org-extra-yas-mode)))
+
 (defun org-extra-yas-mode-activation-kludge ()
   (org-extra-yas-mode 1))
 (add-hook 'org-mode-hook 'org-extra-yas-mode-activation-kludge)
@@ -1252,23 +932,6 @@ add it to `before-save-hook'."
 
 ;; subscript and superscript behavior -- turn it off without curly braces
 ;; source: http://orgmode.org/manual/Subscripts-and-superscripts.html
-;; (setq 'org-use-sub-superscripts '{})
-;; I'm not really sure what I'm supposed to set that to, but I guess on a
-;; per-file basis I can add
-;; #+OPTIONS: ^:{}
-;; source: 
-;; http://stackoverflow.com/questions/698562/disabling-underscore-to-subscript-in-emacs-org-mode-export
-;; not ideal, but better than nothing
-;; now that I'm using a newer Org (8.2.10 instead of 7.9.x), let's try this
-;; again
-;; (setq org-use-sub-superscripts "{}")
-;; hmm, maybe the export is different, so let's try that
-;; see http://lists.gnu.org/archive/html/emacs-orgmode/2013-11/msg00624.html
-;; (setq org-export-with-sub-superscripts "{}")
-;; (setq org-use-sub-superscripts "{}")
-;; answer from stackoverflow:
-;; You must write instead:
-;;     (setq org-use-sub-superscripts '{})
 (setq org-use-sub-superscripts '{})
 ;; you actually need the following for the HTML (and LaTeX?) exporting to work
 ;; as you'd like, too
@@ -1307,14 +970,6 @@ add it to `before-save-hook'."
 (setq org-html-head-extra
       "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://RyanMatlock.github.io/org-style/org-style.css\" />")
 
-;;;; Sunrise Commander ;;;;
-;; repo source: https://github.com/escherdragon/sunrise-commander
-;; documentation source: http://www.emacswiki.org/emacs/Sunrise_Commander
-;; noob documentation: http://www.emacswiki.org/emacs/Sunrise_Commander_For_Noobs
-;; so, I actually installed it through the github repo and 
-;; M-x package-install-file, and now I can bring it up using 
-;; M-x sunrise-commmander; still, there's much to learn about it
-
 ;;;; Magzor-specific modes for extra yasnippets ;;;;
 (define-minor-mode magzor-cpp-mode
   "magzor-cpp-mode allows for extra snippets
@@ -1349,17 +1004,6 @@ add it to `before-save-hook'."
 
 (add-hook 'makefile-mode-hook '(lambda () (auto-complete-mode)))
 
-;;;; CSS ;;;;
-;; get indentation working nicely
-;; source: http://superuser.com/questions/381801/emacs-css-modes-most-feature-complete-and-maintained
-;; (setq cssm-indent-function #'cssm-c-style-indenter)
-
-;; ;; more attempts at getting it to work right
-;; ;; source: http://stackoverflow.com/questions/4006005/how-can-i-set-emacs-tab-settings-by-file-type
-;; (add-hook 'css-mode-hook
-;;           '(lambda ()
-;;              (setq indent-tabs-mode nil)))
-
 ;;;; Clojure ;;;;
 ;; source: http://clojure-doc.org/articles/tutorials/emacs.html
 (defvar my:clojure-packages '(better-defaults
@@ -1370,20 +1014,6 @@ add it to `before-save-hook'."
 (dolist (p my:clojure-packages)
   (when (not (package-installed-p p))
     (package-install p)))
-
-;; never mind, everything was fine; I just forgot to run 
-;; M-x package-refresh-contents after adding this clojure stuff
-
-;; trying it some alternate horrible way (downloaded files from marmalade-repo
-;; manually, file names were <something-something>-<version>.el; symlinked them
-;; in ~/emacs/clojure to <something-something>.el, but cider seems a little too
-;; complicated
-;; still, cider-<version> was symlinked to cider
-;; (add-to-list 'load-path "~/emacs/clojure/cider/")
-;; (add-to-list 'load-path "~/emacs/clojure/")
-;; (load "~/emacs/clojure/clojure-mode.el")
-;; (load "~/emacs/clojure/clojure-test-mode.el")
-;; (load "~/emacs/clojure/better-defaults.el")
 
 ;;;; supplemental yasnippet stuff ;;;;
 ;; define .snip files to be snippet definition templates; have them use
@@ -1396,32 +1026,6 @@ add it to `before-save-hook'."
 ;; within a snippet
 ;; see https://joaotavora.github.io/yasnippet/snippet-expansion.html
 (define-key yas-minor-mode-map (kbd "M-TAB") 'yas-expand)
-
-;; this never ended up being useful
-;; ;; bracket-mode minor mode
-;; (define-minor-mode bracket-mode
-;;   "bracket-mode allows slightly more ergonomic
-;;    entry of brackets and parentheses -- useful
-;;    for a number of major modes"
-;;   :init-value nil
-;;   :lighter " brkt")
-
-;; ;; entering minor mode with major mode
-;; ;; source: http://stackoverflow.com/questions/7421445/emacs-entering-minor-mode-with-major-mode
-;; (add-hook 'bracket-mode-hook
-;;           '(lambda ()
-;;              (yas-activate-extra-mode 'bracket-mode)))
-;; ;; (defun c-commmon-bracket-hook ()
-;; ;;    (bracket-mode 1) nil)
-;; ;; (add-hook 'c-mode-common-hook 'c-common-bracket-hook)
-;; ;; see also http://stackoverflow.com/questions/4253473/emacs-how-do-i-automatically-enter-minor-modes-when-i-enter-a-major-mode
-;; (add-hook 'c-mode-common-hook '(lambda () (bracket-mode)))
-;; (add-hook 'org-mode-hook '(lambda () (bracket-mode)))
-;; (add-hook 'text-mode-hook '(lambda () (bracket-mode)))
-;; (add-hook 'latex-mode-hook '(lambda () (bracket-mode)))
-;; (add-hook 'python-mode-hook '(lambda () (bracket-mode)))
-;; (add-hook 'makefile-mode-hook '(lambda() (bracket-mode)))
-
 
 ;; allman-c-mode minor mode
 (define-minor-mode allman-c-mode
@@ -1457,31 +1061,6 @@ add it to `before-save-hook'."
 ;; https://www.gnu.org/software/emacs/manual/html_node/tramp/Default-Method.html
 (setq tramp-default-method "ssh")
 
-;; sudo through Tramp
-
-;; not working exactly right
-;; source: http://stackoverflow.com/questions/3465567/how-to-use-ssh-and-sudo-together-with-tramp-in-emacs
-;; usage: C-x C-f /sudo:root@host[#port]:/path/to/file
-;; It will ask you for your password to access remote shell and then your 
-;; password again for sudo access.
-;; (set-default 'tramp-default-proxies-alist 
-;;              (quote ((".*" "\\`root\\'" "/ssh:%h:"))))
-
-;; this doesn't seem right either
-;; trying this instead: http://irreal.org/blog/?p=895
-;; (add-to-list 'tramp-default-proxies-alist
-;;              '(nil "\\`root\\'" "/ssh:%h:"))
-;; (add-to-list 'tramp-default-proxies-alist
-;;              '((regexp-quote (system-name)) nil nil))
-;; usage: C-x C-f /sudo:root@<remote_host>:/path/to/file
-
-
-;;;; Color themes for GUI Emacs ;;;;
-;; this looks really bizarre when Terminal is already Solarized, although it
-;; works well in the GUI Emacs
-;; (load-theme 'solarized-dark t)
-
-
 ;;;; Dot Mode (graphviz)
 (load "~/.emacs.d/plugins/dot-mode/dot-mode.el")
 
@@ -1489,24 +1068,6 @@ add it to `before-save-hook'."
 ;; http://www.emacswiki.org/emacs/AlignColumn
 (add-to-list 'load-path "~/.emacs.d/plugins/align")
 (autoload 'align-cols "align" "Align text in the region." t)
-
-;;;; Scheme, Common Lisp, Racket, etc. ;;;;
-;; installed geiser with 「M-x package install <RET> geiser <RET>」
-;; see: http://nongnu.org/geiser/geiser_2.html#Installation
-;; to install guile and racket, I've just done a simple
-;; $ brew install guile
-;; $ guile --version
-;; guile (GNU Guile) 2.0.11
-;; $ brew install plt-racket
-;; $ racket --version
-;; Welcome to Racket v6.1.
-;; (current as of 2014-10-08)
-;; as per http://www.nongnu.org/geiser/geiser_2.html#Friends, I'll also install
-;; Paredit and ac-geiser
-
-;; pretty sure
-;; (require 'geiser)
-;; is *not* necessary
 
 ;; Paredit
 ;; source: http://www.emacswiki.org/emacs/ParEdit
@@ -1519,53 +1080,11 @@ add it to `before-save-hook'."
 (add-hook 'lisp-mode-hook #'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
 (add-hook 'scheme-mode-hook #'enable-paredit-mode)
-(add-hook 'geiser-repl-mode-hook #'enable-paredit-mode) ;; my addition
-;; after 30s of use: this is the greatest thing
+(add-hook 'geiser-repl-mode-hook #'enable-paredit-mode)
+(add-hook 'slime-repl-mode-hook #'enable-paredit-mode)
 
 ;;;; SLIME, SBCL, & quicklisp
 
-;; ignore until the 2018-05-30 update
-;; ;; https://coderwall.com/p/vrky8q/emacs-sbcl-and-slime
-
-;; ;;;; I'm going to ignore the following from the installation of
-;; ;;;; quicklisp-slime-helper and do what was recommended on coderwall
-;; ;; [package quicklisp-slime-helper]
-;; ;; slime-helper.el installed in "/Users/matlock/quicklisp/slime-helper.el"
-
-;; ;; To use, add this to your ~/.emacs:
-
-;; ;;   (load (expand-file-name "~/quicklisp/slime-helper.el"))
-;; ;;   ;; Replace "sbcl" with the path to your implementation
-;; ;;   (setq inferior-lisp-program "sbcl")
-;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
-;; ;; my SBCL is in /usr/local/bin
-;; ;; (setq inferior-lisp-program "/usr/bin/sbcl")
-;; (setq inferior-lisp-program "/usr/local/bin/sbcl")
-;; (require 'slime)
-;; (slime-setup '(slime-fancy slime-tramp slime-asdf))
-;; (slime-require :swank-listener-hooks)
-;; ;; this works, just note that the article you're basing this on was published
-;; ;; 2016-02-25 and you're following these instructions on 2018-05-21
-
-;; 2018-05-30
-;; since upgrading to Emacs 26.1 I've been getting
-;; error in process filter: Wrong number of arguments (0 . 1), 2
-;; when slime is connected (or so it appears)
-;; as such, I'm just going to follow the instructions from
-;; https://github.com/slime/slime which are as follows:
-
-;; Set your lisp system and, optionally, some contribs
-;; (setq inferior-lisp-program "/opt/sbcl/bin/sbcl")
-;; (setq inferior-lisp-program "/usr/local/bin/sbcl")
-;; (setq slime-contribs '(slime-fancy
-;;                        slime-tramp
-;;                        ))
-;; (slime-require :swank-listener-hooks)
-;; still getting the error in process filter issue
-;; going to comment out slime-fancy
-;; ok, that didn't work, but slime took way longer to connect
-
-;; updated slime and it's working again---and loading quickly!
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
 (setq slime-contribs '(slime-fancy
                        slime-tramp
@@ -1589,26 +1108,6 @@ add it to `before-save-hook'."
 (add-hook 'haskell-mode-hook 'paredit-mode)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
-;; interactive stuff (from
-;; https://github.com/haskell/haskell-mode/wiki/Haskell-Interactive-Mode-Setup)
-;; apparently the latest update of haskell mode made this happen:
-;;
-;; Symbol's value as variable is void: haskell-mode-map
-;;
-;; so I'll comment out the following:
-;; (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
-;; (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
-;; (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
-;; (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
-;; (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-;; (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-;; (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
-;; (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
-
-;; handy commands that for some reason don't seem to be set up yet
-;; http://www.cis.syr.edu/courses/cis252/emacs.html
-;; actually, it turns out some of these key combos don't work, so I'm just
-;; going to remove the second C- part and go ahead with that
 (defun my-key:haskell-indent-insert-equal ()
   (local-set-key (kbd "C-c =") 'haskell-indent-insert-equal))
 (add-hook 'haskell-mode-hook 'my-key:haskell-indent-insert-equal)
@@ -1670,19 +1169,6 @@ add it to `before-save-hook'."
 (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
   (setenv "PATH" (concat my-cabal-path path-separator (getenv "PATH")))
   (add-to-list 'exec-path my-cabal-path))
-
-
-;; tried to install Helm with
-;; 「M-x package-install <RET> helm <RET>」
-;; but MELPA couldn't find the tarball, so I guess I'll try
-;; 「M-x package-list-packages」 instead; ok, that worked
-
-;;;; Io language
-;; 「M-x package-install <RET> io-mode <RET>」 worked
-;; see https://github.com/superbobry/io-mode
-
-;;;; Julia language
-;; 「M-x package-install <RET> julia-mode <RET>」 worked
 
 ;;;; Flyspell
 ;; path to ispell
