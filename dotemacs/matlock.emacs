@@ -1089,7 +1089,7 @@ add it to `before-save-hook'."
 (setq slime-contribs '(slime-fancy
                        slime-tramp
                        slime-asdf))
-(slime-require :swank-listener-hooks)
+;; (slime-require :swank-listener-hooks)
 
 ;; add paredit to slime-repl-mode
 (add-hook 'slime-repl-mode-hook 'paredit-mode)
