@@ -481,11 +481,6 @@
 ;; Use Skim as viewer, enable source <-> PDF sync
 ;; make latexmk available via C-c C-c
 ;; Note: SyncTeX is setup via ~/.latexmkrc (see below)
-(add-hook 'LaTeX-mode-hook (lambda ()
-  (push
-    '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
-      :help "Run latexmk on file")
-    TeX-command-list)))
 (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
  
 ;; use Skim as default pdf viewer
@@ -750,9 +745,16 @@
                    (insert "「」")
                    ; need to move cursor back a space
                    (left-char))))
+(defun my:org-insert-bullet ()
+  "easier than C-x 8 <RET> bullet <RET>"
+  (local-set-key (kbd "C-c b")
+                 (lambda ()
+                   (interactive)
+                   (insert "• "))))
 (add-hook 'org-mode-hook 'my:insert-left-corner-bracket)
 (add-hook 'org-mode-hook 'my:insert-right-corner-bracket)
 (add-hook 'org-mode-hook 'my:insert-corner-brackets)
+(add-hook 'org-mode-hook 'my:org-insert-bullet)
 ;; also add these ~two~ three to Emacs Lisp mode
 (add-hook 'emacs-lisp-mode-hook 'my:insert-left-corner-bracket)
 (add-hook 'emacs-lisp-mode-hook 'my:insert-right-corner-bracket)
@@ -761,6 +763,7 @@
 (add-hook 'text-mode-hook 'my:insert-left-corner-bracket)
 (add-hook 'text-mode-hook 'my:insert-right-corner-bracket)
 (add-hook 'text-mode-hook 'my:insert-corner-brackets)
+(add-hook 'text-mode-hook 'my:org-insert-bullet)
 
 ;; TODO list intermediate state colors
 ;; source: http://cjohansen.no/en/emacs/emacs_org_mode_todo_colors
