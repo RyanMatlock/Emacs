@@ -481,6 +481,18 @@
 ;; Use Skim as viewer, enable source <-> PDF sync
 ;; make latexmk available via C-c C-c
 ;; Note: SyncTeX is setup via ~/.latexmkrc (see below)
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (push
+             '("latexmk" "latexmk -pdf %s" TeX-run-TeX nil t
+               :help "Run latexmk on file")
+             TeX-command-list)))
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (push
+             '("xelatexmk" "latexmk -xelatex -pdf %s" TeX-run-TeX nil t
+               :help "Run latexmk -xelatex on file")
+             TeX-command-list)))
 (add-hook 'TeX-mode-hook '(lambda () (setq TeX-command-default "latexmk")))
  
 ;; use Skim as default pdf viewer
