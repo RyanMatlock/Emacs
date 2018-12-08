@@ -830,6 +830,8 @@
   (local-set-key (kbd "C-c M-<SPC>") 'my:org-insert-visible-space-char))
 (add-hook 'org-mode-hook 'hookify:my:org-insert-visible-space-char)
 
+(require 'ob-ipython)
+
 ;; syntax highlighting in BEGIN_SRC ... END_SRC blocks
 ;; source: http://stackoverflow.com/questions/10642888/syntax-highlighting-within-begin-src-block-in-emacs-orgmode-not-working
 ;; have to load org babel languages
@@ -853,7 +855,8 @@
                                (haskell . t)
                                (ditaa . t)
                                (dot . t)
-                               (org . t)))
+                               (org . t)
+                               (ipython . t)))
 ;; not sure why C++ isn't working
 ;; see http://orgmode.org/manual/Languages.html#Languages
 ;; maybe C++ will work now that I've upgrade Org mode to v8.2.10 -- eh
@@ -1185,7 +1188,7 @@ add it to `before-save-hook'."
  '(haskell-tags-on-save t)
  '(package-selected-packages
    (quote
-    (electric-case electric-operator electric-spacing elein eldoc-overlay eldoc-eval ac-slime elisp-slime-nav slime auto-complete emojify yaml-mode wgrep-ack wget web-beautify tagedit sx scion pytest paredit pandoc-mode org-bullets org-ac org nodejs-repl magithub json-mode js3-mode iedit help-mode+ help-fns+ help+ helm-ghc helm-bibtex gist flycheck-pyflakes exec-path-from-shell d-mode company-auctex color-theme-solarized cider blank-mode bison-mode better-defaults awk-it auto-complete-chunk auto-complete-c-headers auctex-latexmk arduino-mode ac-python ac-js2 ac-geiser))))
+    (s ob-ipython ein electric-case electric-operator electric-spacing elein eldoc-overlay eldoc-eval ac-slime elisp-slime-nav slime auto-complete emojify yaml-mode wgrep-ack wget web-beautify tagedit sx scion pytest paredit pandoc-mode org-bullets org-ac org nodejs-repl magithub json-mode js3-mode iedit help-mode+ help-fns+ help+ helm-ghc helm-bibtex gist flycheck-pyflakes exec-path-from-shell d-mode company-auctex color-theme-solarized cider blank-mode bison-mode better-defaults awk-it auto-complete-chunk auto-complete-c-headers auctex-latexmk arduino-mode ac-python ac-js2 ac-geiser))))
 
 
 (eval-after-load 'haskell-mode '(progn
@@ -1260,3 +1263,18 @@ add it to `before-save-hook'."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;;;; IPython/EIN
+;; (require 'ein)
+;; ;; ;; https://stackoverflow.com/a/32086985/2677392
+;; ;; (require 'python)
+;; ;; (setq python-shell-interpreter "ipython")
+;; ;; (setq python-shell-interpreter-args "--pylab")
+;; ;; ;; Emacs froze when I tried to open a new .py file with that in effect
+;; ;; this seems reasonable:
+;; ;; https://stackoverflow.com/a/17822336/2677392
+;; (when (executable-find "ipython")
+;;   (setq python-shell-interpreter "ipython"))
+;; Emacs froze again when I tried to open a new .py file (but in a different
+;; way--it was after loading yasnippets this time)
+;; I'm just going to try using IPython through the shell for now
