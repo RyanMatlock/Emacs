@@ -250,13 +250,40 @@
 ;; 「C-c *」 yanks the last 8-ball question response
 ;; 「C-u C-c *」 calls the 8-ball and yanks question and response
 ;; question and response are now timestamped when yanked
+;;
+;; [2018-12-07 11:39:52] What if I asked a question with "quotes" in it? Ask a question of the virtual magic 8-ball:
+;; Traceback (most recent call last):
+;;   File "/usr/local/bin/8-ball", line 41, in <module>
+;;     question = input("Ask a question of the virtual magic 8-ball:\n")
+;; EOFError: EOF when reading a line
+;;
+;; Ok, looks like I need to escape quotes in 8-ball-input
+;; per https://stackoverflow.com/a/23218390/2677392 I'm going to use a function
+;; from s.el, but in case that ever breaks:
+;; (defun replace-in-string (what with in)
+;;   (replace-regexp-in-string (regexp-quote what) with in nil 'literal))
+;; from https://stackoverflow.com/a/17325791/2677392 would also work
+;;
+;; this test works:
+;; (defun my:temp-formatter (&optional dont-save)
+;;   (interactive "P")
+;;   (setq my:temp-input
+;;         (read-from-minibuffer "Say it: "))
+;;   (message (format "output: %s"
+;;                    (s-replace "\"" "\\\"" my:temp-input))))
+;;
+;; [2018-12-08 10:21:54] Am I "living my best life?" As I see it, yes
+;; success!
+
 (defun 8-ball (&optional dont-save)
   (interactive "P")
   (setq 8-ball-input
         (read-from-minibuffer "Ask the 8-ball a question: "))
   (setq 8-ball-output
         (substring 
-         (shell-command-to-string (format "8-ball \"%s\"" 8-ball-input)) 
+         (shell-command-to-string
+          (format "8-ball \"%s\""
+                  (s-replace "\"" "\\\"" my:temp-input)))
          0 -1))
   ;; see https://www.emacswiki.org/emacs/InsertingTodaysDate
   (setq 8-ball-timestamp
