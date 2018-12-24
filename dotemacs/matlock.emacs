@@ -283,7 +283,7 @@
         (substring 
          (shell-command-to-string
           (format "8-ball \"%s\""
-                  (s-replace "\"" "\\\"" my:temp-input)))
+                  (s-replace "\"" "\\\"" 8-ball-input)))
          0 -1))
   ;; see https://www.emacswiki.org/emacs/InsertingTodaysDate
   (setq 8-ball-timestamp
